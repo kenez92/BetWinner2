@@ -1,0 +1,32 @@
+package com.kenez92.betwinner.domain.fotballdata;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class FootballTeam {
+    @JsonProperty("id")
+    private long id;
+
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("wins")
+    private int wins;
+
+    @JsonProperty("draws")
+    private int draws;
+
+    @JsonProperty("losses")
+    private int losses;
+
+    private double chanceToWin = 50;
+
+    private int positionInTable;
+}
