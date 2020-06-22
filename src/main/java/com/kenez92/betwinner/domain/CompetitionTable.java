@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -24,10 +23,9 @@ public class CompetitionTable {
     private String type;
 
     @ManyToOne
-    private Competition competition;
+    private CurrentMatchDay currentMatchDay;
 
 
-    @Builder.Default
     @OneToMany(
             targetEntity = CompetitionTableElement.class,
             fetch = FetchType.LAZY,

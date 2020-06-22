@@ -9,12 +9,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-public class CompetitionTableDto {
+@Builder
+public class CurrentMatchDayDto {
     private Long id;
-    private String stage;
-    private String type;
-    private CurrentMatchDayDto currentMatchDay;
-    private List<CompetitionTableElementDto> competitionTableElements;
+    private CompetitionSeasonDto competitionSeason;
+    private List<CompetitionTableDto> competitionTableList;
 }

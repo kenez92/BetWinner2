@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper
 public interface CompetitionMapper {
+
     Competition mapToCompetition(CompetitionDto competitionDto);
 
     CompetitionDto mapToCompetitionDto(Competition competition);
