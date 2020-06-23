@@ -39,6 +39,9 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_COUPON_NOT_FOUND_EXCEPTION = "Coupon not found!";
     public static final String ERR_COUPON_ID_MUST_BE_NOT_NULL_EXCEPTION = "Coupon ID must be null or 0!";
 
+    //betwinner2
+    public static final String ERR_COMPETITION_NOT_FOUND_EXCEPTION = "Competition not found!";
+
 
     public BetWinnerException(String message) {
         super(message);

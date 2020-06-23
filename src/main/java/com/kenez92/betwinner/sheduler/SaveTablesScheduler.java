@@ -8,10 +8,8 @@ import com.kenez92.betwinner.domain.fotballdata.standings.FootballTables;
 import com.kenez92.betwinner.football.client.FootballClient;
 import com.kenez92.betwinner.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class SaveTablesScheduler {
     private final CompetitionSeasonService competitionSeasonService;
     private final CurrentMatchDayService currentMatchDayService;
 
-    @Scheduled(fixedDelay = 10000)
+    //@Scheduled(fixedDelay = 10000)
     private void saveTable() {
         List<Long> availableCompetition = availableCompetitions.getAvailableCompetitionList();
         for (Long competitionId : availableCompetition) {
