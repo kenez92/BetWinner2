@@ -41,6 +41,8 @@ public class BetWinnerException extends RuntimeException {
 
     //betwinner2
     public static final String ERR_COMPETITION_NOT_FOUND_EXCEPTION = "Competition not found!";
+    public static final String ERR_COMPETITION_SEASON_NOT_FOUND_EXCEPTION = "Competition season not found!";
+    public static final String ERR_CURRENT_MATCH_DAY_NOT_FOUND_EXCEPTION = "Current match day not found!";
 
 
     public BetWinnerException(String message) {

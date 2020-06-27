@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 public class CompetitionSeasonDto {
     private Long id;
+    private Long footballId;
     private LocalDate startDate;
     private LocalDate endDate;
     private String winner;

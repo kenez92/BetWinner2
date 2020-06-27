@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.controller;
 
 import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatchList;
-import com.kenez92.betwinner.domain.fotballdata.standings.FootballTables;
+import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.football.client.FootballClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class Controller {
     }
 
     @GetMapping("getTables")
-    public FootballTables getTables() {
+    public FootballTable getTables() {
         return footballClient.getTable(2002L);
     }
 }

@@ -16,8 +16,8 @@ public class CompetitionService {
     private final CompetitionRepository competitionRepository;
     private final CompetitionMapper competitionMapper;
 
-    public boolean competitionExistById(Long competitionId) {
-        boolean result = competitionRepository.existsById(competitionId);
+    public boolean competitionExistByFootballId(Long competitionId) {
+        boolean result = competitionRepository.existsByFootballId(competitionId);
         return result;
     }
 
@@ -29,9 +29,9 @@ public class CompetitionService {
         return savedCompetitionDto;
     }
 
-    public CompetitionDto getCompetitionById(Long competitionId) {
+    public CompetitionDto getCompetitionByFootballId(Long competitionId) {
         log.info("Getting competition by id: {}", competitionId);
-        Competition competition = competitionRepository.findById(competitionId).orElseThrow(()
+        Competition competition = competitionRepository.findByFootballId(competitionId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
         CompetitionDto competitionDto = competitionMapper.mapToCompetitionDto(competition);
         return competitionDto;

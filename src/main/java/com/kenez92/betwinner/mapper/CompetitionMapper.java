@@ -1,30 +1,15 @@
 package com.kenez92.betwinner.mapper;
 
-import com.kenez92.betwinner.domain.*;
+import com.kenez92.betwinner.domain.Competition;
+import com.kenez92.betwinner.domain.CompetitionDto;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
-//@Mapper
-public class CompetitionMapper {
+@Mapper
+public interface CompetitionMapper {
 
-    //Competition mapToCompetition(CompetitionDto competitionDto);
+    Competition mapToCompetition(CompetitionDto competitionDto);
 
-    //CompetitionDto mapToCompetitionDto(Competition competition);
-
-    public Competition mapToCompetition(CompetitionDto competitionDto) {
-        List<CompetitionSeason> competitionSeasonDtoList = new ArrayList<>();
-        return new Competition(competitionDto.getId(),
-                competitionDto.getName(),
-                competitionSeasonDtoList);
-    }
-    public CompetitionDto mapToCompetitionDto(Competition competition) {
-        return CompetitionDto.builder()
-                .id(competition.getId())
-                .name(competition.getName())
-                .competitionSeasonList(new ArrayList<>())
-                .build();
-    }
+    CompetitionDto mapToCompetitionDto(Competition competition);
 }

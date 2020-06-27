@@ -1,7 +1,6 @@
 package com.kenez92.betwinner.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,9 +15,14 @@ import java.util.List;
 @Table
 public class Competition {
     @Id
-    @Column(unique = true)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
+    private Long footballId;
+
     private String name;
+
     @OneToMany(
             targetEntity = CompetitionSeason.class,
             fetch = FetchType.LAZY,

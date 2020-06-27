@@ -2,7 +2,7 @@ package com.kenez92.betwinner.football.client;
 
 import com.kenez92.betwinner.domain.fotballdata.match.FootballMatchById;
 import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatchList;
-import com.kenez92.betwinner.domain.fotballdata.standings.FootballTables;
+import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,12 +60,12 @@ public class FootballClient {
         return response.getBody();
     }
 
-    public FootballTables getTable(Long competitionId) {
+    public FootballTable getTable(Long competitionId) {
         String url = "https://api.football-data.org/v2/competitions/" + competitionId + "/standings";
         HttpEntity entity = createEntity();
-        ResponseEntity<FootballTables> response = null;
+        ResponseEntity<FootballTable> response = null;
         try {
-            response = restTemplate.exchange(url, HttpMethod.GET, entity, FootballTables.class);
+            response = restTemplate.exchange(url, HttpMethod.GET, entity, FootballTable.class);
         } catch (HttpClientErrorException e) {
             if (e.getRawStatusCode() == 403) {
                 throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_MATCH_WE_DONT_HAVE_ACCESS_EXCEPTION);

@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,6 +13,7 @@ import java.util.List;
 @Data
 public class CompetitionDto {
     private Long id;
+    private Long footballId;
     private String name;
     private List<CompetitionSeasonDto> competitionSeasonList;
 }

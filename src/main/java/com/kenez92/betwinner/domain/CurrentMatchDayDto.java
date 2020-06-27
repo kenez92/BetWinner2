@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 public class CurrentMatchDayDto {
     private Long id;
+    private Integer matchDay;
     private CompetitionSeasonDto competitionSeason;
     private List<CompetitionTableDto> competitionTableList;
 }

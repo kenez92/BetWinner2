@@ -18,4 +18,7 @@ public interface CompetitionRepository extends CrudRepository<Competition, Long>
     @Override
     List<Competition> findAll();
 
+    Optional<Competition> findByFootballId(Long id);
+
+    boolean existsByFootballId(Long id);
 }

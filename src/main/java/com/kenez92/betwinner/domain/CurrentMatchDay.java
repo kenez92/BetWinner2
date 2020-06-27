@@ -1,7 +1,6 @@
 package com.kenez92.betwinner.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +17,8 @@ public class CurrentMatchDay {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    private Integer matchDay;
 
     @ManyToOne
     private CompetitionSeason competitionSeason;

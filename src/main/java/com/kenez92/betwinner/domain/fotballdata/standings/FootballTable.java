@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FootballTables {
+public class FootballTable {
 
     @JsonProperty("competition")
     private FootballCompetition footballCompetition;
