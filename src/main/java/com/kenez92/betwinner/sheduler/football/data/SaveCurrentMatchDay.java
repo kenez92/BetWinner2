@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SaveCurrentMatchDay {
     private final CurrentMatchDayService currentMatchDayService;
+    private final SaveCompetitionTableList saveCompetitionTableList;
 
     public void saveCurrentMatchDay(CompetitionSeasonDto competitionSeasonDto, FootballTable footballTable) {
         Integer currentMatchDayNumber = footballTable.getSeason().getCurrentMatchday();
@@ -22,16 +23,16 @@ public class SaveCurrentMatchDay {
                 .build();
         CurrentMatchDayDto currentMatchDayDto;
         if (currentMatchDayService.currentMatchDayExistBySeasonAndMatchDay(competitionSeasonDto, currentMatchDayNumber)) {
-            log.info("This match day already exist");
             currentMatchDayDto = currentMatchDayService.getCurrentMatchDayBySeasonAndMatchDay(competitionSeasonDto, currentMatchDayNumber);
+            log.info("This match day already exist");
             if (!currentMatchDayDto.equals(tmpCurrentMatchDayDto)) {
-                log.info("Updating match day");
-                currentMatchDayDto = tmpCurrentMatchDayDto;
+                currentMatchDayDto = currentMatchDayService.saveCurrentMatchDay(tmpCurrentMatchDayDto);
+                log.info("Updating match day: {}", currentMatchDayDto);
             }
         } else {
-            currentMatchDayDto = tmpCurrentMatchDayDto;
-            log.info("Creating new match day");
+            currentMatchDayDto = currentMatchDayService.saveCurrentMatchDay(tmpCurrentMatchDayDto);
+            log.info("Creating new match day: {}", currentMatchDayDto);
         }
-        currentMatchDayService.saveCurrentMatchDay(currentMatchDayDto);
+        saveCompetitionTableList.saveCompetitionTableList(currentMatchDayDto, footballTable);
     }
 }
