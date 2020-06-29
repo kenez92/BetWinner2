@@ -1,6 +1,5 @@
 package com.kenez92.betwinner.repository;
 
-import com.kenez92.betwinner.domain.Competition;
 import com.kenez92.betwinner.domain.CompetitionSeason;
 import com.kenez92.betwinner.domain.CurrentMatchDay;
 import org.springframework.data.repository.CrudRepository;
@@ -23,4 +22,6 @@ public interface CurrentMatchDayRepository extends CrudRepository<CurrentMatchDa
     Optional<CurrentMatchDay> findByCompetitionSeasonAndMatchDay(CompetitionSeason competitionSeason, Integer matchDay);
 
     boolean existsByCompetitionSeasonAndMatchDay(CompetitionSeason competitionSeason, Integer matchDay);
+
+    List<CurrentMatchDay> findByCompetitionSeason(CompetitionSeason competitionSeason);
 }

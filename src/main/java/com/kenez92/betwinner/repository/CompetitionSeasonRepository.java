@@ -22,4 +22,5 @@ public interface CompetitionSeasonRepository extends CrudRepository<CompetitionS
 
     boolean existsByFootballId(Long id);
 
+    List<CompetitionSeason> findByCompetition(Competition competition);
 }
