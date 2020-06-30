@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class SaveCompetitionSeason {
+    private final static String SEASON_IN_PROGRESS = "Season still in progress";
     private final CompetitionSeasonService competitionSeasonService;
     private final SaveCurrentMatchDay saveCurrentMatchDay;
 
-    public void saveCompetitionSeason(CompetitionDto competitionDto, FootballTable footballTable) {
-        String winner = "Season still in progress";
+    public void saveCompetitionSeason(final CompetitionDto competitionDto, final FootballTable footballTable) {
+        String winner = SEASON_IN_PROGRESS;
         if (footballTable.getSeason().getWinner() != null) {
             winner = footballTable.getSeason().getWinner().getName();
         }
@@ -33,7 +34,6 @@ public class SaveCompetitionSeason {
             competitionSeasonDto = competitionSeasonService.getCompetitionSeasonByFootballId(tmpCompetitionSeasonDto.getFootballId());
             log.info("This season already exist: {}", competitionSeasonDto);
             Long competitionSeasonDtoId = competitionSeasonDto.getId();
-            //if (!competitionSeasonDto.equals(tmpCompetitionSeasonDto)) {
             if (!competitionSeasonDto.getFootballId().equals(tmpCompetitionSeasonDto.getFootballId()) ||
                     !competitionSeasonDto.getStartDate().equals(tmpCompetitionSeasonDto.getStartDate()) ||
                     !competitionSeasonDto.getEndDate().equals(tmpCompetitionSeasonDto.getEndDate()) ||

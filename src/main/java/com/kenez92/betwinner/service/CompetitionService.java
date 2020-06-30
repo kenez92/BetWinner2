@@ -40,6 +40,7 @@ public class CompetitionService {
                 -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
         fetchCompetitionSeason(competition);
         CompetitionDto competitionDto = competitionMapper.mapToCompetitionDto(competition);
+        log.info("Return competition: {}", competitionDto);
         return competitionDto;
     }
 

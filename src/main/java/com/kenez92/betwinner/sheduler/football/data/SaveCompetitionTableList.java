@@ -15,9 +15,9 @@ public class SaveCompetitionTableList {
     private final CompetitionTableService competitionTableService;
     private final SaveCompetitionTableElement saveCompetitionTableElement;
 
-    public void saveCompetitionTableList(CurrentMatchDayDto currentMatchDayDto, FootballTable footballTable) {
+    public void saveCompetitionTableList(final CurrentMatchDayDto currentMatchDayDto, final FootballTable footballTable) {
         final int size = footballTable.getFootballStandings().length;
-        for (int i = 0; i < size; i++) {
+        for (Integer i = 0; i < size; i++) {
             CompetitionTableDto competitionTableDto = CompetitionTableDto.builder()
                     .stage(footballTable.getFootballStandings()[i].getStage())
                     .type(footballTable.getFootballStandings()[i].getType())
@@ -27,12 +27,13 @@ public class SaveCompetitionTableList {
             if (competitionTableService.existsByFields(competitionTableDto.getStage(),
                     competitionTableDto.getType(), competitionTableDto.getCurrentMatchDay())) {
                 competitionTableDto = competitionTableService.getByFields(competitionTableDto.getStage(),
-                competitionTableDto.getType(), competitionTableDto.getCurrentMatchDay());
+                        competitionTableDto.getType(), competitionTableDto.getCurrentMatchDay());
                 log.info("This table already exists: {}", competitionTableDto);
             } else {
                 competitionTableDto = competitionTableService.saveCompetitionTable(competitionTableDto);
                 log.info("Creating new table :{}", competitionTableDto);
             }
+            saveCompetitionTableElement.saveCompetitionTableElement(competitionTableDto, footballTable, i);
         }
     }
 }

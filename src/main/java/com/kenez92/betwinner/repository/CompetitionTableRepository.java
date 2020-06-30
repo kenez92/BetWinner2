@@ -18,4 +18,7 @@ public interface CompetitionTableRepository extends CrudRepository<CompetitionTa
     Optional<CompetitionTable> findByStageAndTypeAndCurrentMatchDay(String stage, String type, CurrentMatchDay currentMatchDay);
 
     List<CompetitionTable> findByCurrentMatchDay(CurrentMatchDay currentMatchDay);
+
+    @Override
+    Optional<CompetitionTable> findById(Long competitionTableId);
 }

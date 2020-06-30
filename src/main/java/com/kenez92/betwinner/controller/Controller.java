@@ -19,7 +19,7 @@ public class Controller {
         return footballClient.getMatches(LocalDate.now());
     }
 
-    @GetMapping("getTables")
+    @GetMapping("/getTables")
     public FootballTable getTables() {
         return footballClient.getTable(2002L);
     }

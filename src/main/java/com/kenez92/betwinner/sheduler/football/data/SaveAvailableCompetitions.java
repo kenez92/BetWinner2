@@ -14,7 +14,7 @@ public class SaveAvailableCompetitions {
     private final CompetitionService competitionService;
     private final SaveCompetitionSeason saveCompetitionSeason;
 
-    public void saveCompetitions(FootballTable footballTable) {
+    public void saveCompetitions(final FootballTable footballTable) {
         CompetitionDto tmpCompetitionDto = CompetitionDto.builder()
                 .footballId((footballTable.getFootballCompetition().getId()))
                 .name(footballTable.getFootballCompetition().getName())

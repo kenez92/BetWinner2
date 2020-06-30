@@ -12,7 +12,7 @@ public class BetWinnerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<String> handleBetWinnerException(BetWinnerException e) {
-        log.info("Error occured: {}", e.getMessage());
+        log.info("Error occurred: {}", e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

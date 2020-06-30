@@ -28,8 +28,11 @@ public class CurrentMatchDayService {
     }
 
     public CurrentMatchDayDto saveCurrentMatchDay(final CurrentMatchDayDto currentMatchDayDto) {
+        log.info("Saving current match day: {}", currentMatchDayDto);
         CurrentMatchDay currentMatchDay = currentMatchDayRepository.save(currentMatchDayMapper.mapToCurrentMatchDay(currentMatchDayDto));
-        return currentMatchDayMapper.mapToCurrentMatchDayDto(currentMatchDay);
+        CurrentMatchDayDto savedCurrentMatchDayDto = currentMatchDayMapper.mapToCurrentMatchDayDto(currentMatchDay);
+        log.info("Return saved current match day: {}", savedCurrentMatchDayDto);
+        return savedCurrentMatchDayDto;
     }
 
     public CurrentMatchDayDto getCurrentMatchDayBySeasonAndMatchDay(final CompetitionSeasonDto competitionSeasonDto, final Integer matchDay) {
@@ -39,13 +42,12 @@ public class CurrentMatchDayService {
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_CURRENT_MATCH_DAY_NOT_FOUND_EXCEPTION));
         fetchAndSetData(currentMatchDay);
         CurrentMatchDayDto currentMatchDayDto = currentMatchDayMapper.mapToCurrentMatchDayDto(currentMatchDay);
+        log.info("Return current match day by season and matchDay: {}", currentMatchDayDto);
         return currentMatchDayDto;
     }
 
     private void fetchAndSetData(final CurrentMatchDay currentMatchDay) {
         List<CompetitionTable> competitionTableList = competitionTableRepository.findByCurrentMatchDay(currentMatchDay);
         currentMatchDay.setCompetitionTableList(competitionTableList);
-
     }
-
 }

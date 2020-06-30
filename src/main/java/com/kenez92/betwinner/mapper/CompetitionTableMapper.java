@@ -62,27 +62,29 @@ public class CompetitionTableMapper {
 
     public List<CompetitionTableElement> mapToCompetitionTableElements(List<CompetitionTableElementDto> competitionTableElementDtoList) {
         List<CompetitionTableElement> competitionTableElements = new ArrayList<>();
-        for (CompetitionTableElementDto competitionTableElementDto : competitionTableElementDtoList) {
-            competitionTableElements.add(CompetitionTableElement.builder()
-                    .id(competitionTableElementDto.getId())
-                    .competitionTable(CompetitionTable.builder()
-                            .id(competitionTableElementDto.getCompetitionTable().getId())
-                            .stage(competitionTableElementDto.getCompetitionTable().getStage())
-                            .type(competitionTableElementDto.getCompetitionTable().getType())
-                            .currentMatchDay(new CurrentMatchDay())
-                            .competitionTableElements(new ArrayList<>())
-                            .build())
-                    .name(competitionTableElementDto.getName())
-                    .position(competitionTableElementDto.getPosition())
-                    .playedGames(competitionTableElementDto.getPlayedGames())
-                    .won(competitionTableElementDto.getWon())
-                    .draw(competitionTableElementDto.getDraw())
-                    .lost(competitionTableElementDto.getLost())
-                    .points(competitionTableElementDto.getPoints())
-                    .goalsFor(competitionTableElementDto.getGoalsFor())
-                    .goalsAgainst(competitionTableElementDto.getGoalsAgainst())
-                    .goalDifference(competitionTableElementDto.getGoalDifference())
-                    .build());
+        if (competitionTableElementDtoList != null) {
+            for (CompetitionTableElementDto competitionTableElementDto : competitionTableElementDtoList) {
+                competitionTableElements.add(CompetitionTableElement.builder()
+                        .id(competitionTableElementDto.getId())
+                        .competitionTable(CompetitionTable.builder()
+                                .id(competitionTableElementDto.getCompetitionTable().getId())
+                                .stage(competitionTableElementDto.getCompetitionTable().getStage())
+                                .type(competitionTableElementDto.getCompetitionTable().getType())
+                                .currentMatchDay(new CurrentMatchDay())
+                                .competitionTableElements(new ArrayList<>())
+                                .build())
+                        .name(competitionTableElementDto.getName())
+                        .position(competitionTableElementDto.getPosition())
+                        .playedGames(competitionTableElementDto.getPlayedGames())
+                        .won(competitionTableElementDto.getWon())
+                        .draw(competitionTableElementDto.getDraw())
+                        .lost(competitionTableElementDto.getLost())
+                        .points(competitionTableElementDto.getPoints())
+                        .goalsFor(competitionTableElementDto.getGoalsFor())
+                        .goalsAgainst(competitionTableElementDto.getGoalsAgainst())
+                        .goalDifference(competitionTableElementDto.getGoalDifference())
+                        .build());
+            }
         }
         return competitionTableElements;
     }

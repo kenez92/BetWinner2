@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MatchService {
     private final MatchRepository matchRepository;
 
-    public void saveMatch(Match match) {
+    public void saveMatch(final Match match) {
         if (!matchRepository.existsById(match.getId())) {
             matchRepository.save(match);
         } else {
