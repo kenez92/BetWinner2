@@ -47,5 +47,4 @@ public class CompetitionService {
         List<CompetitionSeason> competitionSeasons = competitionSeasonRepository.findByCompetition(competition);
         competition.setCompetitionSeasonList(competitionSeasons);
     }
-
 }

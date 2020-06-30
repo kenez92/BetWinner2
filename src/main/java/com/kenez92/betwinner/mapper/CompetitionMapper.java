@@ -2,14 +2,71 @@ package com.kenez92.betwinner.mapper;
 
 import com.kenez92.betwinner.domain.Competition;
 import com.kenez92.betwinner.domain.CompetitionDto;
-import org.mapstruct.Mapper;
+import com.kenez92.betwinner.domain.CompetitionSeason;
+import com.kenez92.betwinner.domain.CompetitionSeasonDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
-@Mapper
-public interface CompetitionMapper {
+public class CompetitionMapper {
 
-    Competition mapToCompetition(CompetitionDto competitionDto);
+    public Competition mapToCompetition(final CompetitionDto competitionDto) {
+        return Competition.builder()
+                .id(competitionDto.getId())
+                .footballId(competitionDto.getFootballId())
+                .name(competitionDto.getName())
+                .competitionSeasonList(competitionSeasonList(competitionDto))
+                .build();
+    }
 
-    CompetitionDto mapToCompetitionDto(Competition competition);
+    public CompetitionDto mapToCompetitionDto(final Competition competition) {
+        return CompetitionDto.builder()
+                .id(competition.getId())
+                .footballId(competition.getFootballId())
+                .name(competition.getName())
+                .competitionSeasonList(competitionSeasonDtoList(competition))
+                .build();
+    }
+
+    public List<CompetitionDto> mapToCompetitionDtoList(final List<Competition> competitionList) {
+        return new ArrayList<>(competitionList).stream()
+                .map(this::mapToCompetitionDto)
+                .collect(Collectors.toList());
+    }
+
+    private List<CompetitionSeason> competitionSeasonList(final CompetitionDto competitionDto) {
+        List<CompetitionSeason> competitionSeasons = new ArrayList<>();
+        if (competitionDto.getCompetitionSeasonList() != null) {
+            for (CompetitionSeasonDto competitionSeasonDto : competitionDto.getCompetitionSeasonList()) {
+                competitionSeasons.add(CompetitionSeason.builder()
+                        .id(competitionSeasonDto.getId())
+                        .footballId(competitionSeasonDto.getFootballId())
+                        .startDate(competitionSeasonDto.getStartDate())
+                        .endDate(competitionSeasonDto.getEndDate())
+                        .winner(competitionSeasonDto.getWinner())
+                        .currentMatchDayList(new ArrayList<>())
+                        .build());
+            }
+        }
+        return competitionSeasons;
+    }
+
+    private List<CompetitionSeasonDto> competitionSeasonDtoList(final Competition competition) {
+        List<CompetitionSeasonDto> competitionSeasons = new ArrayList<>();
+        for (CompetitionSeason competitionSeason : competition.getCompetitionSeasonList()) {
+            competitionSeasons.add(CompetitionSeasonDto.builder()
+                    .id(competitionSeason.getId())
+                    .footballId(competitionSeason.getFootballId())
+                    .startDate(competitionSeason.getStartDate())
+                    .endDate(competitionSeason.getEndDate())
+                    .winner(competitionSeason.getWinner())
+                    .currentMatchDayList(new ArrayList<>())
+                    .build());
+
+        }
+        return competitionSeasons;
+    }
 }

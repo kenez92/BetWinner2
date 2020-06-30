@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @Table
 @Entity
 public class CompetitionTable {
@@ -24,7 +26,7 @@ public class CompetitionTable {
     @ManyToOne
     private CurrentMatchDay currentMatchDay;
 
-
+    @Builder.Default
     @OneToMany(
             targetEntity = CompetitionTableElement.class,
             fetch = FetchType.LAZY,

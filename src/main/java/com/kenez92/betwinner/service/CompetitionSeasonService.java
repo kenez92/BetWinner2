@@ -28,6 +28,7 @@ public class CompetitionSeasonService {
 
     public CompetitionSeasonDto saveCompetitionSeason(CompetitionSeasonDto competitionSeasonDto) {
         CompetitionSeason competitionSeason = competitionSeasonMapper.mapToCompetitionSeason(competitionSeasonDto);
+        log.info("competition seasn ===============: {}", competitionSeason);
         CompetitionSeason savedCompetitionDto = competitionSeasonRepository.save(competitionSeason);
         return competitionSeasonMapper.mapToCompetitionSeasonDto(savedCompetitionDto);
     }
@@ -43,6 +44,12 @@ public class CompetitionSeasonService {
 
     public void fetchCurrentMatchDayList(CompetitionSeason competitionSeason) {
         List<CurrentMatchDay> currentMatchDayList = currentMatchDayRepository.findByCompetitionSeason(competitionSeason);
+//        for(CurrentMatchDay currentMatchDay : currentMatchDayList) {
+//            currentMatchDay.getCompetitionSeason().getCompetition().setCompetitionSeasonList(new ArrayList<>());
+//            currentMatchDay.setCompetitionSeason(null);
+//            currentMatchDay.setCompetitionTableList(new ArrayList<>());
+//        }
+//        competitionSeason.getCompetition().setCompetitionSeasonList(new ArrayList<>());
         competitionSeason.setCurrentMatchDayList(currentMatchDayList);
 
     }

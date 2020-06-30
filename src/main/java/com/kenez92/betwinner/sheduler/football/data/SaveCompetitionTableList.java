@@ -18,31 +18,21 @@ public class SaveCompetitionTableList {
     public void saveCompetitionTableList(CurrentMatchDayDto currentMatchDayDto, FootballTable footballTable) {
         final int size = footballTable.getFootballStandings().length;
         for (int i = 0; i < size; i++) {
-            CompetitionTableDto resultCompetitionTableDto;
             CompetitionTableDto competitionTableDto = CompetitionTableDto.builder()
                     .stage(footballTable.getFootballStandings()[i].getStage())
                     .type(footballTable.getFootballStandings()[i].getType())
                     .currentMatchDay(currentMatchDayDto)
                     .build();
-            resultCompetitionTableDto = process(competitionTableDto);
-            saveCompetitionTableElement.saveCompetitionTableElement(resultCompetitionTableDto, footballTable);
-        }
-    }
 
-    private CompetitionTableDto process(CompetitionTableDto competitionTableDto) {
-        CompetitionTableDto tmpCompetitionTableDto;
-        if (competitionTableService.existsByFields(competitionTableDto.getStage(),
-                competitionTableDto.getType(), competitionTableDto.getCurrentMatchDay())) {
-            log.info("This table already exists");
-            tmpCompetitionTableDto = competitionTableService.getByFields(competitionTableDto.getStage(),
-                    competitionTableDto.getType(), competitionTableDto.getCurrentMatchDay());
-            if (!tmpCompetitionTableDto.equals(competitionTableDto)) {
-                tmpCompetitionTableDto = competitionTableService.saveCompetitionTable(competitionTableDto);
-                log.info("Updating table: {}", tmpCompetitionTableDto);
+            if (competitionTableService.existsByFields(competitionTableDto.getStage(),
+                    competitionTableDto.getType(), competitionTableDto.getCurrentMatchDay())) {
+                competitionTableDto = competitionTableService.getByFields(competitionTableDto.getStage(),
+                competitionTableDto.getType(), competitionTableDto.getCurrentMatchDay());
+                log.info("This table already exists: {}", competitionTableDto);
+            } else {
+                competitionTableDto = competitionTableService.saveCompetitionTable(competitionTableDto);
+                log.info("Creating new table :{}", competitionTableDto);
             }
-        } else {
-            tmpCompetitionTableDto = competitionTableService.saveCompetitionTable(competitionTableDto);
         }
-        return competitionTableDto;
     }
 }

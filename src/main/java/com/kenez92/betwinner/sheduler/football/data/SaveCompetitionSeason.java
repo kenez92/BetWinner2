@@ -30,9 +30,15 @@ public class SaveCompetitionSeason {
         CompetitionSeasonDto competitionSeasonDto;
 
         if (competitionSeasonService.competitionSeasonExistByFootballId(tmpCompetitionSeasonDto.getFootballId())) {
-            competitionSeasonDto = competitionSeasonService.getCompetitionSeasonByFootballId(tmpCompetitionSeasonDto.getId());
+            competitionSeasonDto = competitionSeasonService.getCompetitionSeasonByFootballId(tmpCompetitionSeasonDto.getFootballId());
             log.info("This season already exist: {}", competitionSeasonDto);
-            if (!competitionSeasonDto.equals(tmpCompetitionSeasonDto)) {
+            Long competitionSeasonDtoId = competitionSeasonDto.getId();
+            //if (!competitionSeasonDto.equals(tmpCompetitionSeasonDto)) {
+            if (!competitionSeasonDto.getFootballId().equals(tmpCompetitionSeasonDto.getFootballId()) ||
+                    !competitionSeasonDto.getStartDate().equals(tmpCompetitionSeasonDto.getStartDate()) ||
+                    !competitionSeasonDto.getEndDate().equals(tmpCompetitionSeasonDto.getEndDate()) ||
+                    !competitionSeasonDto.getWinner().equals(tmpCompetitionSeasonDto.getWinner())) {
+                tmpCompetitionSeasonDto.setId(competitionSeasonDtoId);
                 competitionSeasonDto = competitionSeasonService.saveCompetitionSeason(tmpCompetitionSeasonDto);
                 log.info("Updating season: {}", competitionSeasonDto);
             }

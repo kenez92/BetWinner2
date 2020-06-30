@@ -15,11 +15,21 @@ public class SaveAvailableCompetitions {
     private final SaveCompetitionSeason saveCompetitionSeason;
 
     public void saveCompetitions(FootballTable footballTable) {
+        CompetitionDto tmpCompetitionDto = CompetitionDto.builder()
+                .footballId((footballTable.getFootballCompetition().getId()))
+                .name(footballTable.getFootballCompetition().getName())
+                .build();
         Long competitionId = footballTable.getFootballCompetition().getId();
         CompetitionDto competitionDto;
         if (competitionService.competitionExistByFootballId(competitionId)) {
             competitionDto = competitionService.getCompetitionByFootballId(competitionId);
             log.info("Competition already exist: {}", competitionDto);
+            if (!competitionDto.getFootballId().equals(tmpCompetitionDto.getFootballId()) ||
+                    !competitionDto.getName().equals(tmpCompetitionDto.getName())) {
+                tmpCompetitionDto.setId(competitionDto.getId());
+                competitionDto = competitionService.saveCompetition(tmpCompetitionDto);
+                log.info("Updating competition: {}", competitionDto);
+            }
         } else {
             competitionDto = competitionService.saveCompetition(CompetitionDto.builder()
                     .footballId(footballTable.getFootballCompetition().getId())

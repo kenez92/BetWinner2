@@ -1,20 +1,21 @@
 package com.kenez92.betwinner.service;
 
-import com.kenez92.betwinner.domain.CompetitionTable;
-import com.kenez92.betwinner.domain.CompetitionTableDto;
-import com.kenez92.betwinner.domain.CurrentMatchDay;
-import com.kenez92.betwinner.domain.CurrentMatchDayDto;
+import com.kenez92.betwinner.domain.*;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CompetitionTableMapper;
 import com.kenez92.betwinner.mapper.CurrentMatchDayMapper;
+import com.kenez92.betwinner.repository.CompetitionTableElementRepository;
 import com.kenez92.betwinner.repository.CompetitionTableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CompetitionTableService {
     private final CompetitionTableRepository competitionTableRepository;
+    private final CompetitionTableElementRepository competitionTableElementRepository;
     private final CompetitionTableMapper competitionTableMapper;
     private final CurrentMatchDayMapper currentMatchDayMapper;
 
@@ -35,9 +36,14 @@ public class CompetitionTableService {
         CompetitionTable competitionTable = competitionTableRepository
                 .findByStageAndTypeAndCurrentMatchDay(stage, type, currentMatchDay).orElseThrow(() ->
                         new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_NOT_FOUND_EXCEPTION));
+        fetchCompetitionTableElements(competitionTable);
         CompetitionTableDto competitionTableDto = competitionTableMapper.mapToCompetitionTableDto(competitionTable);
         return competitionTableDto;
+    }
 
-
+    private void fetchCompetitionTableElements(final CompetitionTable competitionTable) {
+        List<CompetitionTableElement> competitionTableElements = competitionTableElementRepository
+                .findByCompetitionTable(competitionTable);
+        competitionTable.setCompetitionTableElements(competitionTableElements);
     }
 }

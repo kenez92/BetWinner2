@@ -28,7 +28,7 @@ public class Match {
 //    )
 //    private List<Coupon> coupon;
 
-//    @Column(unique = true)
+    //    @Column(unique = true)
 //    private Long matchId;
     private Date matchDate;
     private String homeTeam;

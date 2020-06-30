@@ -24,8 +24,11 @@ public class SaveCurrentMatchDay {
         CurrentMatchDayDto currentMatchDayDto;
         if (currentMatchDayService.currentMatchDayExistBySeasonAndMatchDay(competitionSeasonDto, currentMatchDayNumber)) {
             currentMatchDayDto = currentMatchDayService.getCurrentMatchDayBySeasonAndMatchDay(competitionSeasonDto, currentMatchDayNumber);
-            log.info("This match day already exist");
-            if (!currentMatchDayDto.equals(tmpCurrentMatchDayDto)) {
+            log.info("This match day already exist: {}", currentMatchDayDto);
+            if (!currentMatchDayDto.getMatchDay().equals(tmpCurrentMatchDayDto.getMatchDay()) ||
+                    !currentMatchDayDto.getCompetitionSeason().getId()
+                            .equals(tmpCurrentMatchDayDto.getCompetitionSeason().getId())) {
+                tmpCurrentMatchDayDto.setId(competitionSeasonDto.getId());
                 currentMatchDayDto = currentMatchDayService.saveCurrentMatchDay(tmpCurrentMatchDayDto);
                 log.info("Updating match day: {}", currentMatchDayDto);
             }
