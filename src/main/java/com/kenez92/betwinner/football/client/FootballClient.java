@@ -46,7 +46,6 @@ public class FootballClient {
         HttpEntity entity = createEntity();
         ResponseEntity<FootballMatchById> response = null;
         try {
-            System.out.println(url);
             response = restTemplate.exchange(url, HttpMethod.GET, entity, FootballMatchById.class);
         } catch (HttpClientErrorException e) {
             if (e.getRawStatusCode() == 400) {
@@ -73,7 +72,6 @@ public class FootballClient {
                 throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_SOMETHING_WENT_WRONG_EXCEPTION);
             }
         }
-        System.out.println(response.getBody());
         return response.getBody();
     }
 

@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+import java.util.Objects;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -16,10 +19,12 @@ public class MatchDto {
     private String awayTeam;
     private Long competitionId;
     private Long seasonId;
+    private Date date;
     private Integer homeTeamPositionInTable;
     private Integer awayTeamPositionInTable;
     private Double homeTeamChance;
     private Double awayTeamChance;
     private Integer round;
     private MatchDayDto matchDay;
+    private MatchScoreDto matchScore;
 }

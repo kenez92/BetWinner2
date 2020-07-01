@@ -17,9 +17,9 @@ public class CountChance {
 
     public void countChance(FootballMatchById footballMatch, MatchDto matchDto) {
         setPositionTeam.setPosition(matchDto);
-        if (footballMatch.getMatch().getScore().getWinner() != null) {
-            throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_MATCH_IS_FINISHED);
-        }
+//        if (footballMatch.getMatch().getScore().getWinner() != null) {
+//            throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_MATCH_IS_FINISHED);
+//        }
 
         FootballTeam homeTeam = footballMatch.getHead2head().getHomeTeam();
         FootballTeam awayTeam = footballMatch.getHead2head().getAwayTeam();

@@ -3,6 +3,7 @@ package com.kenez92.betwinner.sheduler.football.data.matches;
 import com.kenez92.betwinner.domain.fotballdata.match.FootballMatchById;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.MatchDto;
+import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.logic.CountChance;
 import com.kenez92.betwinner.service.matches.MatchService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class SaveMatch {
     private final MatchService matchService;
     private final CountChance countChance;
+    private final SaveMatchScore saveMatchScore;
 
 
     public void saveMatch(FootballMatchById footballMatchById, MatchDayDto matchDayDto) {
@@ -24,6 +26,7 @@ public class SaveMatch {
                 .awayTeam(footballMatchById.getHead2head().getAwayTeam().getName())
                 .competitionId(footballMatchById.getMatch().getCompetition().getId())
                 .seasonId(footballMatchById.getMatch().getSeason().getId())
+                .date(footballMatchById.getMatch().getUtcDate())
                 .homeTeamPositionInTable(0)
                 .awayTeamPositionInTable(0)
                 .homeTeamChance(0.0)
@@ -32,6 +35,8 @@ public class SaveMatch {
                 .matchDay(matchDayDto)
                 .build();
         countChance.countChance(footballMatchById, matchDto);
+        MatchScoreDto matchScoreDto = saveMatchScore.saveMatchScore(footballMatchById.getMatch().getScore(), matchDto.getFootballId());
+        matchDto.setMatchScore(matchScoreDto);
         if (matchService.existsByFields(matchDto.getHomeTeam(), matchDto.getAwayTeam(), matchDto.getRound())) {
             MatchDto tmpMatchDto = matchService.findByFields(matchDto.getHomeTeam(), matchDto.getAwayTeam(),
                     matchDto.getRound());

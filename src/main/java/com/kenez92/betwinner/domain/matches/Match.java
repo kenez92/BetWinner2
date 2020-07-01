@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +23,7 @@ public class Match {
     private String awayTeam;
     private Long competitionId;
     private Long seasonId;
+    private Date date;
     private Integer homeTeamPositionInTable;
     private Integer awayTeamPositionInTable;
     private Double homeTeamChance;
@@ -29,4 +31,10 @@ public class Match {
     private Integer round;
     @ManyToOne
     private MatchDay matchDay;
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    @JoinColumn(name = "MATCH_SCORE_ID")
+    private MatchScore matchScore;
 }
