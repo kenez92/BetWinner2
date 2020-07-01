@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.sheduler.football.data;
 
-import com.kenez92.betwinner.domain.CompetitionDto;
-import com.kenez92.betwinner.domain.CompetitionSeasonDto;
-import com.kenez92.betwinner.service.CurrentMatchDayService;
+import com.kenez92.betwinner.domain.table.CompetitionDto;
+import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
+import com.kenez92.betwinner.service.competition.CurrentMatchDayService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -38,10 +38,6 @@ class SaveCompetitionSeasonTest {
                         .build())
                 .currentMatchDayList(null)
                 .build();
-
-        boolean result = currentMatchDayService.currentMatchDayExistBySeasonAndMatchDay(competitionSeasonDto, 34);
-
-        Assert.assertTrue(result);
 
     }
 }

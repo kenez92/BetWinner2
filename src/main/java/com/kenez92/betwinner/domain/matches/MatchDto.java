@@ -1,0 +1,25 @@
+package com.kenez92.betwinner.domain.matches;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class MatchDto {
+    private Long id;
+    private Long footballId;
+    private String homeTeam;
+    private String awayTeam;
+    private Long competitionId;
+    private Long seasonId;
+    private Integer homeTeamPositionInTable;
+    private Integer awayTeamPositionInTable;
+    private Double homeTeamChance;
+    private Double awayTeamChance;
+    private Integer round;
+    private MatchDayDto matchDay;
+}
