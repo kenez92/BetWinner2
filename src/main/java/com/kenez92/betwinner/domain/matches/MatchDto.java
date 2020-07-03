@@ -27,4 +27,5 @@ public class MatchDto {
     private Integer round;
     private MatchDayDto matchDay;
     private MatchScoreDto matchScore;
+    private WeatherDto weather;
 }

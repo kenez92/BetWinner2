@@ -4,8 +4,10 @@ import com.kenez92.betwinner.domain.fotballdata.match.FootballMatchById;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.domain.matches.WeatherDto;
 import com.kenez92.betwinner.logic.CountChance;
 import com.kenez92.betwinner.service.matches.MatchService;
+import com.kenez92.betwinner.sheduler.openweathermap.SaveWeather;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,9 +19,10 @@ public class SaveMatch {
     private final MatchService matchService;
     private final CountChance countChance;
     private final SaveMatchScore saveMatchScore;
+    private final SaveWeather saveWeather;
 
 
-    public void saveMatch(FootballMatchById footballMatchById, MatchDayDto matchDayDto) {
+    public void saveMatch(FootballMatchById footballMatchById, MatchDayDto matchDayDto, WeatherDto weatherDto) {
         MatchDto matchDto = MatchDto.builder()
                 .footballId(footballMatchById.getMatch().getId())
                 .homeTeam(footballMatchById.getHead2head().getHomeTeam().getName())
@@ -33,6 +36,7 @@ public class SaveMatch {
                 .awayTeamChance(0.0)
                 .round(footballMatchById.getMatch().getMatchDay())
                 .matchDay(matchDayDto)
+                .weather(weatherDto)
                 .build();
         countChance.countChance(footballMatchById, matchDto);
         MatchScoreDto matchScoreDto = saveMatchScore.saveMatchScore(footballMatchById.getMatch().getScore(), matchDto.getFootballId());

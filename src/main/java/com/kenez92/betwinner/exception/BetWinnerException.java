@@ -47,6 +47,9 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_COMPETITION_TABLE_ELEMENT_NOT_FOUND_EXCEPTION = "Competition table element not found!";
     public static final String ERR_FILTERED_LIST_EXCEPTION = "Size of the filtered list is not equal to 1!";
     public static final String ERR_MATCH_SCORE_NOT_FOUND_EXCEPTION = "Match score not found!";
+    public static final String ERR_WEATHER_NULL_EXCEPTION = "Weather class is equal to null!";
+    public static final String ERR_WEATHER_NOT_FOUND_EXCEPTION = "Weather not found!";
+    public static final String ERR_DATE_TIME_IS_WRONG_EXCEPTION = "Date time is wrong!";
 
 
     public BetWinnerException(String message) {

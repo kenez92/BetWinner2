@@ -29,12 +29,14 @@ public class Match {
     private Double homeTeamChance;
     private Double awayTeamChance;
     private Integer round;
+
     @ManyToOne
     private MatchDay matchDay;
-    @OneToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.MERGE
-    )
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "MATCH_SCORE_ID")
     private MatchScore matchScore;
+
+    @ManyToOne
+    private Weather weather;
 }

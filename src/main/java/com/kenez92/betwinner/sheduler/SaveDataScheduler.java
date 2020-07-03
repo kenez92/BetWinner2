@@ -5,12 +5,15 @@ import com.kenez92.betwinner.domain.fotballdata.match.FootballMatchById;
 import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatch;
 import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatchList;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
+import com.kenez92.betwinner.domain.matches.WeatherDto;
 import com.kenez92.betwinner.football.client.FootballClient;
 import com.kenez92.betwinner.sheduler.football.data.matches.SaveMatch;
 import com.kenez92.betwinner.sheduler.football.data.matches.SaveMatchDay;
 import com.kenez92.betwinner.sheduler.football.data.table.SaveAvailableCompetitions;
+import com.kenez92.betwinner.sheduler.openweathermap.SaveWeather;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +30,14 @@ public class SaveDataScheduler {
     private final SaveAvailableCompetitions saveAvailableCompetitions;
     private final SaveMatchDay saveMatchDay;
     private final SaveMatch saveMatch;
+    private final SaveWeather saveWeather;
 
-    //@Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 10000)
+    private void saveData() throws InterruptedException {
+        saveTables();
+        saveMatches();
+    }
+
     private void saveTables() throws InterruptedException {
         log.info("Starting saving data");
         for (Long competitionId : availableCompetitions.getAvailableCompetitionList()) {
@@ -39,7 +48,6 @@ public class SaveDataScheduler {
         }
     }
 
-    @Scheduled(fixedDelay = 10000)
     private void saveMatches() throws InterruptedException {
         log.info("Starting saving matches");
         FootballMatchList footballMatchList = footballClient.getMatches(LocalDate.now());
@@ -52,7 +60,10 @@ public class SaveDataScheduler {
                 if (availableCompetitions.getAvailableCompetitionList().contains(footballMatch.getCompetition().getId())) {
                     TimeUnit.SECONDS.sleep(DELAY);
                     FootballMatchById footballMatchById = footballClient.getMatch(footballMatch.getId());
-                    saveMatch.saveMatch(footballMatchById, matchDayDto);
+                    DateTime dateTime = new DateTime(footballMatchById.getMatch().getUtcDate()).minuteOfHour().setCopy(0);
+                    WeatherDto weatherDto = saveWeather.getWeather(dateTime,
+                            footballMatchById.getMatch().getCompetition().getArea().getName());
+                    saveMatch.saveMatch(footballMatchById, matchDayDto, weatherDto);
                 }
             }
         }

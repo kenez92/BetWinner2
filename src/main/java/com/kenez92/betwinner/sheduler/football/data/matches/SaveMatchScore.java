@@ -32,7 +32,7 @@ public class SaveMatchScore {
         if (matchScoreService.existByMatchId(tmpMatchScoreDto.getMatchId())) {
             matchScoreDto = matchScoreService.getByMatchId(tmpMatchScoreDto.getMatchId());
             log.info("Match score already exists: {}", matchScoreDto);
-            if (!matchScoreDto.getWinner().equals(tmpMatchScoreDto.getWinner())) {
+            if (matchScoreDto.getWinner() == null && tmpMatchScoreDto.getWinner() != null) {
                 tmpMatchScoreDto.setId(matchScoreDto.getId());
                 matchScoreDto = matchScoreService.saveMatchScore(tmpMatchScoreDto);
                 log.info("Updating match score: {}", matchScoreDto);

@@ -27,13 +27,13 @@ public class SetPositionTeam {
 
     private CompetitionTableElementDto getTeam(String teamName, Integer round) {
         List<CompetitionTableElementDto> teamDtoList = competitionTableElementService.findByName(teamName);
-        List<CompetitionTableElementDto> filteredHomeTeamDtoList = teamDtoList.stream()
+        List<CompetitionTableElementDto> filteredTeamDtoList = teamDtoList.stream()
                 .filter(element -> element.getCompetitionTable().getType().equals(TYPE_TOTAL))
                 .filter(element -> element.getCompetitionTable().getStage().equals(STAGE_SEASON_REGULAR))
                 .filter(element -> element.getCompetitionTable().getCurrentMatchDay().getMatchDay().equals(round))
                 .collect(Collectors.toList());
-        if (filteredHomeTeamDtoList.size() == 1) {
-            return filteredHomeTeamDtoList.get(0);
+        if (filteredTeamDtoList.size() == 1) {
+            return filteredTeamDtoList.get(0);
         } else {
             throw new BetWinnerException(BetWinnerException.ERR_FILTERED_LIST_EXCEPTION);
         }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Component
 public class MatchMapper {
-    public Match mapToMatch(MatchDto matchDto) {
+    public Match mapToMatch(final MatchDto matchDto) {
         return Match.builder()
                 .id(matchDto.getId())
                 .footballId(matchDto.getFootballId())
@@ -23,10 +23,11 @@ public class MatchMapper {
                 .round(matchDto.getRound())
                 .matchDay(mapToMatchDay(matchDto.getMatchDay()))
                 .matchScore(mapToMatchScore(matchDto.getMatchScore()))
+                .weather(mapToWeather(matchDto.getWeather()))
                 .build();
     }
 
-    public MatchDto mapToMatchDto(Match match) {
+    public MatchDto mapToMatchDto(final Match match) {
         return MatchDto.builder()
                 .id(match.getId())
                 .footballId(match.getFootballId())
@@ -42,10 +43,11 @@ public class MatchMapper {
                 .round(match.getRound())
                 .matchDay(mapToMatchDayDto(match.getMatchDay()))
                 .matchScore(mapToMatchScoreDto(match.getMatchScore()))
+                .weather(mapToWeatherDto(match.getWeather()))
                 .build();
     }
 
-    private MatchDay mapToMatchDay(MatchDayDto matchDayDto) {
+    private MatchDay mapToMatchDay(final MatchDayDto matchDayDto) {
         return MatchDay.builder()
                 .id(matchDayDto.getId())
                 .localDate(matchDayDto.getLocalDate())
@@ -53,7 +55,7 @@ public class MatchMapper {
                 .build();
     }
 
-    private MatchDayDto mapToMatchDayDto(MatchDay matchDay) {
+    private MatchDayDto mapToMatchDayDto(final MatchDay matchDay) {
         return MatchDayDto.builder()
                 .id(matchDay.getId())
                 .localDate(matchDay.getLocalDate())
@@ -61,7 +63,7 @@ public class MatchMapper {
                 .build();
     }
 
-    private MatchScoreDto mapToMatchScoreDto(MatchScore matchScore) {
+    private MatchScoreDto mapToMatchScoreDto(final MatchScore matchScore) {
         System.out.println(matchScore);
         return MatchScoreDto.builder()
                 .id(matchScore.getId())
@@ -80,7 +82,7 @@ public class MatchMapper {
                 .build();
     }
 
-    private MatchScore mapToMatchScore(MatchScoreDto matchScoreDto) {
+    private MatchScore mapToMatchScore(final MatchScoreDto matchScoreDto) {
         return MatchScore.builder()
                 .id(matchScoreDto.getId())
                 .matchId(matchScoreDto.getMatchId())
@@ -95,6 +97,32 @@ public class MatchMapper {
                 .extraTimeAwayTeam(matchScoreDto.getExtraTimeAwayTeam())
                 .penaltiesHomeTeam(matchScoreDto.getPenaltiesHomeTeam())
                 .penaltiesAwayTeam(matchScoreDto.getPenaltiesAwayTeam())
+                .build();
+    }
+
+    private Weather mapToWeather(final WeatherDto weatherDto) {
+        return Weather.builder()
+                .id(weatherDto.getId())
+                .country(weatherDto.getCountry())
+                .date(weatherDto.getDate())
+                .tempFelt(weatherDto.getTempFelt())
+                .tempMin(weatherDto.getTempMin())
+                .tempMax(weatherDto.getTempMax())
+                .pressure(weatherDto.getPressure())
+                .matchList(new ArrayList<>())
+                .build();
+    }
+
+    private WeatherDto mapToWeatherDto(final Weather weather) {
+        return WeatherDto.builder()
+                .id(weather.getId())
+                .country(weather.getCountry())
+                .date(weather.getDate())
+                .tempFelt(weather.getTempFelt())
+                .tempMin(weather.getTempMin())
+                .tempMax(weather.getTempMax())
+                .pressure(weather.getPressure())
+                .matchList(new ArrayList<>())
                 .build();
     }
 }
