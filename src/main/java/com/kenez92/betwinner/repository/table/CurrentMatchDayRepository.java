@@ -14,14 +14,15 @@ import java.util.Optional;
 public interface CurrentMatchDayRepository extends CrudRepository<CurrentMatchDay, Long> {
 
     @Override
-    Optional<CurrentMatchDay> findById(Long competitionId);
+    Optional<CurrentMatchDay> findById(final Long competitionId);
 
     @Override
     List<CurrentMatchDay> findAll();
 
-    Optional<CurrentMatchDay> findByCompetitionSeasonAndMatchDay(CompetitionSeason competitionSeason, Integer matchDay);
+    Optional<CurrentMatchDay> findByCompetitionSeasonAndMatchDay(final CompetitionSeason competitionSeason,
+                                                                 final Integer matchDay);
 
-    boolean existsByCompetitionSeasonAndMatchDay(CompetitionSeason competitionSeason, Integer matchDay);
+    boolean existsByCompetitionSeasonAndMatchDay(final CompetitionSeason competitionSeason, final Integer matchDay);
 
-    List<CurrentMatchDay> findByCompetitionSeason(CompetitionSeason competitionSeason);
+    List<CurrentMatchDay> findByCompetitionSeason(final CompetitionSeason competitionSeason);
 }

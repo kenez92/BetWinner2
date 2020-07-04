@@ -21,9 +21,10 @@ public class CompetitionTableService {
     private final CompetitionTableMapper competitionTableMapper;
     private final CurrentMatchDayMapper currentMatchDayMapper;
 
-    public Boolean existsByFields(final String stage, final String type, final CurrentMatchDayDto currentMatchDayDto) {
+    public boolean existsByFields(final String stage, final String type, final CurrentMatchDayDto currentMatchDayDto) {
         CurrentMatchDay currentMatchDay = currentMatchDayMapper.mapToCurrentMatchDay(currentMatchDayDto);
-        Boolean result = competitionTableRepository.existsByStageAndTypeAndCurrentMatchDay(stage, type, currentMatchDay);
+        boolean result = competitionTableRepository.existsByStageAndTypeAndCurrentMatchDay(stage, type, currentMatchDay);
+        log.info("Competition table exists in repository: {}", result);
         return result;
     }
 

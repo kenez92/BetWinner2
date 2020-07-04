@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.sheduler.football.data.table;
 
+import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
-import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.service.competition.CurrentMatchDayService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class SaveCurrentMatchDay {
             }
         } else {
             currentMatchDayDto = currentMatchDayService.saveCurrentMatchDay(tmpCurrentMatchDayDto);
-            log.info("Creating new match day: {}", currentMatchDayDto);
+            log.info("Saved match day: {}", currentMatchDayDto);
         }
         saveCompetitionTableList.saveCompetitionTableList(currentMatchDayDto, footballTable);
     }

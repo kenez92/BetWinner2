@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface MatchScoreRepository extends CrudRepository<MatchScore, Long> {
 
-    boolean existsByMatchId(Long matchId);
+    boolean existsByMatchId(final Long matchId);
 
-    Optional<MatchScore> findByMatchId(Long matchId);
+    Optional<MatchScore> findByMatchId(final Long matchId);
 }

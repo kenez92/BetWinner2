@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.sheduler.football.data.table;
 
+import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
-import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.service.competition.CompetitionSeasonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class SaveCompetitionSeason {
             }
         } else {
             competitionSeasonDto = competitionSeasonService.saveCompetitionSeason(tmpCompetitionSeasonDto);
-            log.info("Creating new competition season: {}", competitionSeasonDto);
+            log.info("Saved competition season: {}", competitionSeasonDto);
         }
         saveCurrentMatchDay.saveCurrentMatchDay(competitionSeasonDto, footballTable);
     }

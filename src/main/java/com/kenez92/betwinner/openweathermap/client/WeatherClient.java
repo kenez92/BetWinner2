@@ -19,13 +19,12 @@ public class WeatherClient {
     private final static String ENDPOINT = "https://api.openweathermap.org/data/2.5/";
     private final static String UNITS_METRIC = "metric";
 
-    public WeatherMain getForecast(String country) {
+    public WeatherMain getForecast(final String country) {
         URI url = UriComponentsBuilder.fromHttpUrl(ENDPOINT + "forecast?")
                 .queryParam("q", country)
                 .queryParam("units", UNITS_METRIC)
                 .queryParam("APPID", apiKey)
                 .build().encode().toUri();
-        System.out.println(url);
         WeatherMain weatherMain = restTemplate.getForObject(url, WeatherMain.class);
         if (weatherMain != null) {
             return weatherMain;

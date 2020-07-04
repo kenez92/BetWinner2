@@ -54,8 +54,8 @@ public class SaveDataScheduler {
         TimeUnit.SECONDS.sleep(DELAY);
         if (footballMatchList.getCount() > 0) {
             MatchDayDto matchDayDto = saveMatchDay.saveMatchDay(footballMatchList);
-            Integer size = footballMatchList.getCount();
-            for (Integer i = 0; i < size; i++) {
+            int size = footballMatchList.getCount();
+            for (int i = 0; i < size; i++) {
                 FootballMatch footballMatch = footballMatchList.getMatches()[i];
                 if (availableCompetitions.getAvailableCompetitionList().contains(footballMatch.getCompetition().getId())) {
                     TimeUnit.SECONDS.sleep(DELAY);
@@ -67,5 +67,6 @@ public class SaveDataScheduler {
                 }
             }
         }
+        log.info("Saving matches complete");
     }
 }

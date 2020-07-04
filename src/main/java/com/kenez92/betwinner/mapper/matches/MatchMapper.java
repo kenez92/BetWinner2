@@ -64,7 +64,6 @@ public class MatchMapper {
     }
 
     private MatchScoreDto mapToMatchScoreDto(final MatchScore matchScore) {
-        System.out.println(matchScore);
         return MatchScoreDto.builder()
                 .id(matchScore.getId())
                 .matchId(matchScore.getMatchId())

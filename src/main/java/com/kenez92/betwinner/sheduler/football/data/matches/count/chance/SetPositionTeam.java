@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.logic;
+package com.kenez92.betwinner.sheduler.football.data.matches.count.chance;
 
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
@@ -17,7 +17,7 @@ public class SetPositionTeam {
     private final static String STAGE_SEASON_REGULAR = "REGULAR_SEASON";
     private final CompetitionTableElementService competitionTableElementService;
 
-    public void setPosition(MatchDto matchDto) {
+    public void setPosition(final MatchDto matchDto) {
         Integer round = matchDto.getRound();
         CompetitionTableElementDto homeTeam = getTeam(matchDto.getHomeTeam(), round);
         CompetitionTableElementDto awayTeam = getTeam(matchDto.getAwayTeam(), round);

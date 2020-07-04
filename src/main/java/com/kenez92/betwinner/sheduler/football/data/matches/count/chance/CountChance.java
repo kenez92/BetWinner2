@@ -1,9 +1,8 @@
-package com.kenez92.betwinner.logic;
+package com.kenez92.betwinner.sheduler.football.data.matches.count.chance;
 
 import com.kenez92.betwinner.domain.fotballdata.FootballTeam;
 import com.kenez92.betwinner.domain.fotballdata.match.FootballMatchById;
 import com.kenez92.betwinner.domain.matches.MatchDto;
-import com.kenez92.betwinner.exception.BetWinnerException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,8 @@ public class CountChance {
     private final SetPositionTeam setPositionTeam;
     private final SetChanceBasedOnTheTable setChanceBasedOnTheTable;
 
-    public void countChance(FootballMatchById footballMatch, MatchDto matchDto) {
+    public void countChance(final FootballMatchById footballMatch, final MatchDto matchDto) {
         setPositionTeam.setPosition(matchDto);
-//        if (footballMatch.getMatch().getScore().getWinner() != null) {
-//            throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_MATCH_IS_FINISHED);
-//        }
 
         FootballTeam homeTeam = footballMatch.getHead2head().getHomeTeam();
         FootballTeam awayTeam = footballMatch.getHead2head().getAwayTeam();

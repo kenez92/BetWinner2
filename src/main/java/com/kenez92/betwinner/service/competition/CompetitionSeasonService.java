@@ -23,6 +23,7 @@ public class CompetitionSeasonService {
 
     public boolean competitionSeasonExistByFootballId(final Long competitionSeasonId) {
         boolean result = competitionSeasonRepository.existsByFootballId(competitionSeasonId);
+        log.info("Competition season exists in repository: {}", result);
         return result;
     }
 

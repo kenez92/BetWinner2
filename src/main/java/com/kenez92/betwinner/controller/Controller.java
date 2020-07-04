@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
+/*
+TEMPORARY CONTROLLER FOR TESTS ENDPOINTS
+ */
 @RestController
 @RequiredArgsConstructor
 public class Controller {

@@ -16,12 +16,13 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final MatchMapper matchMapper;
 
-    public Boolean existsByFields(String homeTeam, String awayTeam, Integer round) {
-        Boolean result = matchRepository.existsByHomeTeamAndAwayTeamAndRound(homeTeam, awayTeam, round);
+    public boolean existsByFields(final String homeTeam, final String awayTeam, final Integer round) {
+        boolean result = matchRepository.existsByHomeTeamAndAwayTeamAndRound(homeTeam, awayTeam, round);
+        log.info("Match exists in repository: {}", result);
         return result;
     }
 
-    public MatchDto findByFields(String homeTeam, String awayTeam, Integer round) {
+    public MatchDto findByFields(final String homeTeam, final String awayTeam, final Integer round) {
         log.info("Find match by fields: {}{}{}", homeTeam, awayTeam, round);
         Match match = matchRepository.findByHomeTeamAndAwayTeamAndRound(homeTeam, awayTeam, round)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
@@ -31,7 +32,7 @@ public class MatchService {
 
     }
 
-    public MatchDto saveMatch(MatchDto matchDto) {
+    public MatchDto saveMatch(final MatchDto matchDto) {
         log.info("Saving match: {}", matchDto);
         Match match = matchRepository.save(matchMapper.mapToMatch(matchDto));
         MatchDto savedMatchDto = matchMapper.mapToMatchDto(match);

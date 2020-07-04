@@ -10,7 +10,7 @@ public class FootballScore {
     private String winner;
 
     @JsonProperty("duration")
-    private String duration; // enum Regular
+    private String duration;
 
     @JsonProperty("fullTime")
     private FootballMatchTime fullTime;

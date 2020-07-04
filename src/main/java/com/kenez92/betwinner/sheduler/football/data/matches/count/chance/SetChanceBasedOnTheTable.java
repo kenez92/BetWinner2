@@ -1,11 +1,11 @@
-package com.kenez92.betwinner.logic;
+package com.kenez92.betwinner.sheduler.football.data.matches.count.chance;
 
 import com.kenez92.betwinner.domain.fotballdata.FootballTeam;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class SetChanceBasedOnTheTable {
-    public void setChanceBasedOnTheTable(FootballTeam homeTeam, FootballTeam awayTeam) {
+    public void setChanceBasedOnTheTable(final FootballTeam homeTeam, final FootballTeam awayTeam) {
         FootballTeam higherInTableTeam;
         FootballTeam lowerInTableTeam;
 
@@ -24,7 +24,7 @@ public class SetChanceBasedOnTheTable {
         } else if (differenceInTable > 3 && differenceInTable < 8) {
             higherInTableTeam.setChanceToWin(higherInTableTeam.getChanceToWin() + 10);
             lowerInTableTeam.setChanceToWin(lowerInTableTeam.getChanceToWin() - 10);
-        } else if (differenceInTable > 8) {
+        } else if (differenceInTable >= 8) {
             higherInTableTeam.setChanceToWin(higherInTableTeam.getChanceToWin() + 20);
             lowerInTableTeam.setChanceToWin(lowerInTableTeam.getChanceToWin() - 20);
         }

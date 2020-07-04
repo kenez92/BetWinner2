@@ -16,7 +16,7 @@ public class MatchScoreService {
     private final MatchScoreRepository matchScoreRepository;
     private final MatchScoreMapper matchScoreMapper;
 
-    public MatchScoreDto saveMatchScore(MatchScoreDto matchScoreDto) {
+    public MatchScoreDto saveMatchScore(final MatchScoreDto matchScoreDto) {
         log.info("Saving match score: {}", matchScoreDto);
         MatchScore matchScore = matchScoreRepository.save(matchScoreMapper.mapToMatchScore(matchScoreDto));
         MatchScoreDto savedMatchScoreDto = matchScoreMapper.mapToMatchScoreDto(matchScore);
@@ -24,12 +24,13 @@ public class MatchScoreService {
         return savedMatchScoreDto;
     }
 
-    public boolean existByMatchId(Long matchId) {
+    public boolean existByMatchId(final Long matchId) {
         boolean result = matchScoreRepository.existsByMatchId(matchId);
+        log.info("Match score exists in repository: {}", result);
         return result;
     }
 
-    public MatchScoreDto getByMatchId(Long matchId) {
+    public MatchScoreDto getByMatchId(final Long matchId) {
         log.info("Find match score by match id: {}", matchId);
         MatchScore matchScore = matchScoreRepository.findByMatchId(matchId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_MATCH_SCORE_NOT_FOUND_EXCEPTION));

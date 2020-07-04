@@ -12,11 +12,11 @@ import java.util.Optional;
 @Transactional
 @Repository
 public interface CompetitionTableElementRepository extends CrudRepository<CompetitionTableElement, Long> {
-    List<CompetitionTableElement> findByCompetitionTable(CompetitionTable competitionTable);
+    List<CompetitionTableElement> findByCompetitionTable(final CompetitionTable competitionTable);
 
-    Boolean existsByNameAndCompetitionTable(String name, CompetitionTable competitionTable);
+    boolean existsByNameAndCompetitionTable(final String name, final CompetitionTable competitionTable);
 
-    Optional<CompetitionTableElement> findByNameAndCompetitionTable(String name, CompetitionTable competitionTable);
+    Optional<CompetitionTableElement> findByNameAndCompetitionTable(final String name, final CompetitionTable competitionTable);
 
-    List<CompetitionTableElement> findByName(String homeTeam);
+    List<CompetitionTableElement> findByName(final String homeTeam);
 }

@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FootballStandings {
-
     @JsonProperty("stage")
     private String stage;
 

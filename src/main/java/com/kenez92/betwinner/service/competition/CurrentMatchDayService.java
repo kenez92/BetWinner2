@@ -21,9 +21,11 @@ public class CurrentMatchDayService {
     private final CurrentMatchDayMapper currentMatchDayMapper;
     private final CompetitionSeasonMapper competitionSeasonMapper;
 
-    public boolean currentMatchDayExistBySeasonAndMatchDay(final CompetitionSeasonDto competitionSeasonDto, final Integer matchDay) {
+    public boolean currentMatchDayExistBySeasonAndMatchDay(final CompetitionSeasonDto competitionSeasonDto,
+                                                           final Integer matchDay) {
         CompetitionSeason competitionSeason = competitionSeasonMapper.mapToCompetitionSeason(competitionSeasonDto);
         boolean result = currentMatchDayRepository.existsByCompetitionSeasonAndMatchDay(competitionSeason, matchDay);
+        log.info("Current match day exists in repository: {}", result);
         return result;
     }
 
@@ -35,7 +37,8 @@ public class CurrentMatchDayService {
         return savedCurrentMatchDayDto;
     }
 
-    public CurrentMatchDayDto getCurrentMatchDayBySeasonAndMatchDay(final CompetitionSeasonDto competitionSeasonDto, final Integer matchDay) {
+    public CurrentMatchDayDto getCurrentMatchDayBySeasonAndMatchDay(final CompetitionSeasonDto competitionSeasonDto,
+                                                                    final Integer matchDay) {
         log.info("Getting current match day by season and matchDay: {}{}", competitionSeasonDto, matchDay);
         CompetitionSeason competitionSeason = competitionSeasonMapper.mapToCompetitionSeason(competitionSeasonDto);
         CurrentMatchDay currentMatchDay = currentMatchDayRepository.findByCompetitionSeasonAndMatchDay(competitionSeason, matchDay)

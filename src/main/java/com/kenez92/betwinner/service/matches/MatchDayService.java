@@ -22,12 +22,13 @@ public class MatchDayService {
     private final MatchRepository matchRepository;
     private final MatchDayMapper matchDayMapper;
 
-    public Boolean existByLocalDate(LocalDate localDate) {
-        Boolean result = matchDayRepository.existsByLocalDate(localDate);
+    public boolean existByLocalDate(final LocalDate localDate) {
+        boolean result = matchDayRepository.existsByLocalDate(localDate);
+        log.info("Match day exists in repository: {}", result);
         return result;
     }
 
-    public MatchDayDto getByLocalDate(LocalDate localDate) {
+    public MatchDayDto getByLocalDate(final LocalDate localDate) {
         log.info("Getting match day by local date: {}", localDate);
         MatchDay matchDay = matchDayRepository.findByLocalDate(localDate).orElseThrow(() ->
                 new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
@@ -37,7 +38,7 @@ public class MatchDayService {
         return matchDayDto;
     }
 
-    public MatchDayDto saveMatchDay(MatchDayDto matchDayDto) {
+    public MatchDayDto saveMatchDay(final MatchDayDto matchDayDto) {
         log.info("Saving match day: {}", matchDayDto);
         MatchDay matchDay = matchDayMapper.mapToMatchDay(matchDayDto);
         MatchDay savedMatchDay = matchDayRepository.save(matchDay);
@@ -46,7 +47,7 @@ public class MatchDayService {
         return savedMatchDayDto;
     }
 
-    private void fetchMatches(MatchDay matchDay) {
+    private void fetchMatches(final MatchDay matchDay) {
         List<Match> matches = matchRepository.findByMatchDay(matchDay);
         matchDay.setMatchesList(matches);
     }

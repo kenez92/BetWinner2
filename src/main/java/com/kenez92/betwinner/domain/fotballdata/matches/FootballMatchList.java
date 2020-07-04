@@ -1,14 +1,18 @@
 package com.kenez92.betwinner.domain.fotballdata.matches;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FootballMatchList {
+    @JsonProperty("count")
     private int count;
+
+    @JsonProperty("filters")
     private FootballFilters filters;
+
+    @JsonProperty("matches")
     private FootballMatch[] matches;
 }

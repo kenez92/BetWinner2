@@ -22,7 +22,7 @@ public class WeatherService {
     private final WeatherRepository weatherRepository;
     private final MatchRepository matchRepository;
 
-    public WeatherDto saveWeather(WeatherDto weatherDto) {
+    public WeatherDto saveWeather(final WeatherDto weatherDto) {
         log.info("Saving weather: {}", weatherDto);
         Weather weather = weatherRepository.save(weatherMapper.mapToWeather(weatherDto));
         WeatherDto savedWeather = weatherMapper.mapToWeatherDto(weather);
@@ -30,12 +30,13 @@ public class WeatherService {
         return savedWeather;
     }
 
-    public boolean existsByDateAndCountry(Date date, String country) {
+    public boolean existsByDateAndCountry(final Date date, final String country) {
         boolean result = weatherRepository.existsByDateAndCountry(date, country);
+        log.info("Weather exits in repository: {}", result);
         return result;
     }
 
-    public WeatherDto getByDateAndCountry(Date date, String country) {
+    public WeatherDto getByDateAndCountry(final Date date, final String country) {
         log.info("Get weather by date and country: {}{}", date, country);
         Weather weather = weatherRepository.findByDateAndCountry(date, country).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_WEATHER_NOT_FOUND_EXCEPTION));
@@ -45,7 +46,7 @@ public class WeatherService {
         return weatherDto;
     }
 
-    private void fetchMatchList(Weather weather) {
+    private void fetchMatchList(final Weather weather) {
         List<Match> matchList = matchRepository.findByWeather(weather);
         weather.setMatchList(matchList);
     }

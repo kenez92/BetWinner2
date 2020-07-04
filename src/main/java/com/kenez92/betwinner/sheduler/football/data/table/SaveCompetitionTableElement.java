@@ -1,9 +1,9 @@
 package com.kenez92.betwinner.sheduler.football.data.table;
 
-import com.kenez92.betwinner.domain.table.CompetitionTableDto;
-import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
 import com.kenez92.betwinner.domain.fotballdata.standings.FootballStandings;
 import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
+import com.kenez92.betwinner.domain.table.CompetitionTableDto;
+import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
 import com.kenez92.betwinner.service.competition.CompetitionTableElementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +18,8 @@ public class SaveCompetitionTableElement {
     public void saveCompetitionTableElement(final CompetitionTableDto competitionTableDto,
                                             final FootballTable footballTable, final Integer currentTableNumber) {
         FootballStandings footballStandings = footballTable.getFootballStandings()[currentTableNumber];
-        Integer size = footballStandings.getFootballTableElement().length;
-        for (Integer i = 0; i < size; i++) {
+        int size = footballStandings.getFootballTableElement().length;
+        for (int i = 0; i < size; i++) {
             CompetitionTableElementDto competitionTableElementDto = CompetitionTableElementDto.builder()
                     .competitionTable(competitionTableDto)
                     .name(footballStandings.getFootballTableElement()[i].getTeam().getName())
@@ -45,7 +45,7 @@ public class SaveCompetitionTableElement {
                 }
             } else {
                 competitionTableElementDto = competitionTableElementService.saveCompetitionTableElement(competitionTableElementDto);
-                log.info("Saving new competition table element: {}", competitionTableElementDto);
+                log.info("Saved competition table element: {}", competitionTableElementDto);
             }
         }
     }

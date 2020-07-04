@@ -13,11 +13,11 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface MatchRepository extends CrudRepository<Match, Long> {
-    List<Match> findByMatchDay(MatchDay matchDay);
+    List<Match> findByMatchDay(final MatchDay matchDay);
 
-    boolean existsByHomeTeamAndAwayTeamAndRound(String homeTeam, String awayTeam, Integer round);
+    boolean existsByHomeTeamAndAwayTeamAndRound(final String homeTeam, final String awayTeam, final Integer round);
 
-    Optional<Match> findByHomeTeamAndAwayTeamAndRound(String homeTeam, String awayTeam, Integer round);
+    Optional<Match> findByHomeTeamAndAwayTeamAndRound(final String homeTeam, final String awayTeam, final Integer round);
 
-    List<Match> findByWeather(Weather weather);
+    List<Match> findByWeather(final Weather weather);
 }

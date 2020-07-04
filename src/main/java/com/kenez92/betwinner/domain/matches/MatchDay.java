@@ -18,15 +18,14 @@ import java.util.List;
 public class MatchDay {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "DATE", unique = true)
     private LocalDate localDate;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
+    @OneToMany(fetch = FetchType.LAZY,
             targetEntity = Match.class,
-            mappedBy = "matchDay"
-    )
+            mappedBy = "matchDay")
     private List<Match> matchesList;
 }

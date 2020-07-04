@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class SaveMatchScore {
     private final MatchScoreService matchScoreService;
 
-    public MatchScoreDto saveMatchScore(FootballScore footballScore, Long id) {
+    public MatchScoreDto saveMatchScore(final FootballScore footballScore, final Long id) {
         MatchScoreDto tmpMatchScoreDto = MatchScoreDto.builder()
                 .matchId(id)
                 .winner(footballScore.getWinner())
@@ -38,9 +38,8 @@ public class SaveMatchScore {
                 log.info("Updating match score: {}", matchScoreDto);
             }
         } else {
-            log.info("Saving new match score: {}", tmpMatchScoreDto);
             matchScoreDto = matchScoreService.saveMatchScore(tmpMatchScoreDto);
-            log.info("Created match score: {}", matchScoreDto);
+            log.info("Saved match score: {}", matchScoreDto);
         }
         return matchScoreDto;
     }

@@ -11,7 +11,7 @@ import java.util.Optional;
 @Transactional
 @Repository
 public interface MatchDayRepository extends CrudRepository<MatchDay, Long> {
-    Boolean existsByLocalDate(LocalDate localDate);
+    Boolean existsByLocalDate(final LocalDate localDate);
 
-    Optional<MatchDay> findByLocalDate(LocalDate localDate);
+    Optional<MatchDay> findByLocalDate(final LocalDate localDate);
 }

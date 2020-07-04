@@ -20,11 +20,9 @@ public class SaveWeather {
     private final WeatherService weatherService;
     private final WeatherClient weatherClient;
 
-    public WeatherDto getWeather(DateTime dateTime, String country) {
+    public WeatherDto getWeather(DateTime dateTime, final String country) {
         int hour = 0;
-        System.out.println(dateTime);
         int matchHour = dateTime.getHourOfDay();
-        System.out.println(matchHour);
         if (matchHour >= 0 && matchHour < 3) {
             hour = 3;
         } else if (matchHour >= 3 && matchHour < 6) {
@@ -48,12 +46,13 @@ public class SaveWeather {
 
         DateTime fixedDateTime = dateTime.hourOfDay().setCopy(hour);
         Date fixedDate = fixedDateTime.toDate();
-        System.out.println(fixedDate + "przekazane date");
         WeatherDto weatherDto;
         if (weatherService.existsByDateAndCountry(fixedDate, country)) {
             weatherDto = weatherService.getByDateAndCountry(fixedDate, country);
+            log.info("This weather already exists: {}", weatherDto);
         } else {
             weatherDto = saveWeather(fixedDate, country);
+            log.info("Saved weather: {}", weatherDto);
         }
         return weatherDto;
     }
@@ -65,29 +64,32 @@ public class SaveWeather {
         int size = weatherMain.getWeatherList().length;
         for (int i = 0; i < size; i++) {
             fixedDate = new Date((weatherMain.getWeatherList()[i].getDate() + 3600) * 1000);
-            System.out.println(fixedDate + "fixed date in loop");
-            System.out.println(date.equals(fixedDate));
             if (date.equals(fixedDate)) {
                 weatherList = weatherMain.getWeatherList()[i];
                 break;
             }
         }
-        System.out.println(weatherList);
-        System.out.println(fixedDate);
-        System.out.println(date);
+        WeatherDto weatherDto;
         if (weatherList == null) {
-            throw new BetWinnerException(BetWinnerException.ERR_DATE_TIME_IS_WRONG_EXCEPTION);
+            weatherDto = WeatherDto.builder()
+                    .date(new Date(0))
+                    .country(country)
+                    .tempFelt(0.0)
+                    .tempMin(0.0)
+                    .tempMax(0.0)
+                    .pressure(0)
+                    .build();
+        } else {
+            weatherDto = WeatherDto.builder()
+                    .date(fixedDate)
+                    .country(country)
+                    .tempFelt(weatherList.getWeatherDetails().getTempFelt())
+                    .tempMin(weatherList.getWeatherDetails().getTempMin())
+                    .tempMax(weatherList.getWeatherDetails().getTempMax())
+                    .pressure(weatherList.getWeatherDetails().getPressure())
+                    .build();
         }
-        WeatherDto weatherDto = WeatherDto.builder()
-                .date(fixedDate)
-                .country(country)
-                .tempFelt(weatherList.getWeatherDetails().getTempFelt())
-                .tempMin(weatherList.getWeatherDetails().getTempMin())
-                .tempMax(weatherList.getWeatherDetails().getTempMax())
-                .pressure(weatherList.getWeatherDetails().getPressure())
-                .build();
         WeatherDto savedWeatherDto = weatherService.saveWeather(weatherDto);
-        log.info("Return saved weather: {}", savedWeatherDto);
         return savedWeatherDto;
     }
 }

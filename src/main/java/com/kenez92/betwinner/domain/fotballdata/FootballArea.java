@@ -10,7 +10,6 @@ import lombok.ToString;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FootballArea {
-
     @JsonProperty("id")
     private long id;
 

@@ -24,9 +24,10 @@ public class CompetitionTableElementService {
     private final CompetitionTableElementMapper competitionTableElementMapper;
     private final CompetitionTableMapper competitionTableMapper;
 
-    public Boolean existByNameAndCompetitionTable(final String name, final CompetitionTableDto competitionTableDto) {
+    public boolean existByNameAndCompetitionTable(final String name, final CompetitionTableDto competitionTableDto) {
         CompetitionTable competitionTable = competitionTableMapper.mapToCompetitionTable(competitionTableDto);
-        Boolean result = competitionTableElementRepository.existsByNameAndCompetitionTable(name, competitionTable);
+        boolean result = competitionTableElementRepository.existsByNameAndCompetitionTable(name, competitionTable);
+        log.info("Competition table exits in repository: {}", result);
         return result;
     }
 
@@ -66,7 +67,7 @@ public class CompetitionTableElementService {
         return competitionTableMapper.mapToCompetitionTable(competitionTableDto);
     }
 
-    public List<CompetitionTableElementDto> findByName(String name) {
+    public List<CompetitionTableElementDto> findByName(final String name) {
         List<CompetitionTableElement> competitionTableElementList = competitionTableElementRepository.findByName(name);
         List<CompetitionTableElementDto> competitionTableElementDtoList
                 = competitionTableElementMapper.mapToCompetitionTableElementDtoList(competitionTableElementList);

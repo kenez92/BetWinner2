@@ -19,12 +19,19 @@ import java.util.List;
 public class CompetitionSeason {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "FOOTBALL_ID", unique = true)
     private Long footballId;
+
+    @Column(name = "START_DATE")
     private LocalDate startDate;
+
+    @Column(name = "END_DATE")
     private LocalDate endDate;
+
+    @Column(name = "WINNER")
     private String winner;
 
     @ManyToOne

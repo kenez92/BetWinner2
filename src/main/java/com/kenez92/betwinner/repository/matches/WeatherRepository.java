@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface WeatherRepository extends CrudRepository<Weather, Long> {
 
-    boolean existsByDateAndCountry(Date date, String country);
+    boolean existsByDateAndCountry(final Date date, final String country);
 
-    Optional<Weather> findByDateAndCountry(Date date, String country);
+    Optional<Weather> findByDateAndCountry(final Date date, final String country);
 }

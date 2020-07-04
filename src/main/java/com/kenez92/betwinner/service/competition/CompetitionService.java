@@ -23,6 +23,7 @@ public class CompetitionService {
 
     public boolean competitionExistByFootballId(final Long competitionId) {
         boolean result = competitionRepository.existsByFootballId(competitionId);
+        log.info("Competition exits in repository: {}", result);
         return result;
     }
 

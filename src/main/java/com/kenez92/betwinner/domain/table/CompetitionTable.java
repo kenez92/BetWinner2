@@ -18,20 +18,22 @@ import java.util.List;
 public class CompetitionTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
 
+    @Column(name = "STAGE")
     private String stage;
+
+    @Column(name = "TYPE")
     private String type;
 
     @ManyToOne
     private CurrentMatchDay currentMatchDay;
 
     @Builder.Default
-    @OneToMany(
-            targetEntity = CompetitionTableElement.class,
+    @OneToMany(targetEntity = CompetitionTableElement.class,
             fetch = FetchType.LAZY,
-            mappedBy = "competitionTable"
-    )
+            mappedBy = "competitionTable")
     private List<CompetitionTableElement> competitionTableElements = new ArrayList<>();
 
 }

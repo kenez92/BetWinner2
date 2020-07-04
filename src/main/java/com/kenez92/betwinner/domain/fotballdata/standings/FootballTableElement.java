@@ -9,7 +9,6 @@ import lombok.ToString;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FootballTableElement {
-
     @JsonProperty("position")
     private int position;
 

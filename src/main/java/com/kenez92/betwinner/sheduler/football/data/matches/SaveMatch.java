@@ -5,9 +5,8 @@ import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.domain.matches.WeatherDto;
-import com.kenez92.betwinner.logic.CountChance;
 import com.kenez92.betwinner.service.matches.MatchService;
-import com.kenez92.betwinner.sheduler.openweathermap.SaveWeather;
+import com.kenez92.betwinner.sheduler.football.data.matches.count.chance.CountChance;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,6 @@ public class SaveMatch {
     private final MatchService matchService;
     private final CountChance countChance;
     private final SaveMatchScore saveMatchScore;
-    private final SaveWeather saveWeather;
 
 
     public void saveMatch(FootballMatchById footballMatchById, MatchDayDto matchDayDto, WeatherDto weatherDto) {

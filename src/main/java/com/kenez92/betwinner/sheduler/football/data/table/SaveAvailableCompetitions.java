@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.sheduler.football.data.table;
 
-import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
+import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.service.competition.CompetitionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class SaveAvailableCompetitions {
                     .footballId(footballTable.getFootballCompetition().getId())
                     .name(footballTable.getFootballCompetition().getName())
                     .build());
-            log.info("Saving new competition: {}", competitionDto);
+            log.info("Saved competition: {}", competitionDto);
         }
         saveCompetitionSeason.saveCompetitionSeason(competitionDto, footballTable);
     }

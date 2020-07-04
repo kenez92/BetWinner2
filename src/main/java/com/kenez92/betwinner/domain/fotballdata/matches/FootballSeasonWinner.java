@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FootballSeasonWinner {
-
     @JsonProperty("id")
     private Long id;
 

@@ -18,18 +18,18 @@ import java.util.List;
 public class Competition {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "FOOTBALL_ID", unique = true)
     private Long footballId;
 
+    @Column(name = "NAME")
     private String name;
 
     @Builder.Default
-    @OneToMany(
-            targetEntity = CompetitionSeason.class,
+    @OneToMany(targetEntity = CompetitionSeason.class,
             fetch = FetchType.LAZY,
-            mappedBy = "competition"
-    )
+            mappedBy = "competition")
     private List<CompetitionSeason> competitionSeasonList = new ArrayList<>();
 }

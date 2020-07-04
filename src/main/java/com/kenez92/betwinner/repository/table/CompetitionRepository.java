@@ -13,12 +13,12 @@ import java.util.Optional;
 public interface CompetitionRepository extends CrudRepository<Competition, Long> {
 
     @Override
-    Optional<Competition> findById(Long competitionId);
+    Optional<Competition> findById(final Long competitionId);
 
     @Override
     List<Competition> findAll();
 
-    Optional<Competition> findByFootballId(Long id);
+    Optional<Competition> findByFootballId(final Long id);
 
-    boolean existsByFootballId(Long id);
+    boolean existsByFootballId(final Long id);
 }

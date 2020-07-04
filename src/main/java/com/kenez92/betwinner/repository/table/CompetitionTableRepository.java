@@ -13,12 +13,14 @@ import java.util.Optional;
 @Repository
 public interface CompetitionTableRepository extends CrudRepository<CompetitionTable, Long> {
 
-    boolean existsByStageAndTypeAndCurrentMatchDay(String stage, String type, CurrentMatchDay currentMatchDay);
+    boolean existsByStageAndTypeAndCurrentMatchDay(final String stage, final String type,
+                                                   final CurrentMatchDay currentMatchDay);
 
-    Optional<CompetitionTable> findByStageAndTypeAndCurrentMatchDay(String stage, String type, CurrentMatchDay currentMatchDay);
+    Optional<CompetitionTable> findByStageAndTypeAndCurrentMatchDay(final String stage, final String type,
+                                                                    final CurrentMatchDay currentMatchDay);
 
-    List<CompetitionTable> findByCurrentMatchDay(CurrentMatchDay currentMatchDay);
+    List<CompetitionTable> findByCurrentMatchDay(final CurrentMatchDay currentMatchDay);
 
     @Override
-    Optional<CompetitionTable> findById(Long competitionTableId);
+    Optional<CompetitionTable> findById(final Long competitionTableId);
 }
