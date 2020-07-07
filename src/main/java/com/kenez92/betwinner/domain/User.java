@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Builder
@@ -23,10 +22,5 @@ public class User {
     private String login;
     private String password;
     private UserRole role;
-    @OneToMany(
-            targetEntity = Order.class,
-            fetch = FetchType.LAZY,
-            mappedBy = "user"
-    )
-    private List<Order> orders;
+    private String eMail;
 }

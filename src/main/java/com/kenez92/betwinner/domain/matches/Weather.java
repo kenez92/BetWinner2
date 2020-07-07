@@ -41,6 +41,7 @@ public class Weather {
     @Column(name = "PRESSURE")
     private Integer pressure;
 
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,
             targetEntity = Match.class,
             mappedBy = "weather")
