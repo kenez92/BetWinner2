@@ -4,6 +4,10 @@ import com.kenez92.betwinner.domain.matches.MatchScore;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class MatchScoreMapper {
     public MatchScore mapToMatchScore(MatchScoreDto matchScoreDto) {
@@ -40,5 +44,11 @@ public class MatchScoreMapper {
                 .penaltiesHomeTeam(matchScore.getPenaltiesHomeTeam())
                 .penaltiesAwayTeam(matchScore.getPenaltiesAwayTeam())
                 .build();
+    }
+
+    public List<MatchScoreDto> mapToMatchScoreDtoList(List<MatchScore> matchScoreList) {
+        return new ArrayList<>(matchScoreList).stream()
+                .map(this::mapToMatchScoreDto)
+                .collect(Collectors.toList());
     }
 }
