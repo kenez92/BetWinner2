@@ -72,12 +72,12 @@ public class SaveWeather {
         WeatherDto weatherDto;
         if (weatherList == null) {
             weatherDto = WeatherDto.builder()
-                    .date(new Date(0))
-                    .country(country)
-                    .tempFelt(0.0)
-                    .tempMin(0.0)
-                    .tempMax(0.0)
-                    .pressure(0)
+                    .date(null)
+                    .country(null)
+                    .tempFelt(null)
+                    .tempMin(null)
+                    .tempMax(null)
+                    .pressure(null)
                     .build();
         } else {
             weatherDto = WeatherDto.builder()

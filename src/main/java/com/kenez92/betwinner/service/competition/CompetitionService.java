@@ -21,9 +21,26 @@ public class CompetitionService {
     private final CompetitionSeasonRepository competitionSeasonRepository;
     private final CompetitionMapper competitionMapper;
 
+    public List<CompetitionDto> getCompetitions() {
+        log.debug("Get all competitions");
+        List<Competition> competitions = competitionRepository.findAll();
+        List<CompetitionDto> competitionDtoList = competitionMapper.mapToCompetitionDtoList(competitions);
+        log.debug("Return all competitions: {}", competitionDtoList);
+        return competitionDtoList;
+    }
+
+    public CompetitionDto getCompetition(Long id) {
+        log.debug("Get competition by id: {}", id);
+        Competition competition = competitionRepository.findById(id).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
+        CompetitionDto competitionDto = competitionMapper.mapToCompetitionDto(competition);
+        log.debug("Return competition found by id: {}", competitionDto);
+        return competitionDto;
+    }
+
     public boolean competitionExistByFootballId(final Long competitionId) {
         boolean result = competitionRepository.existsByFootballId(competitionId);
-        log.info("Competition exits in repository: {}", result);
+        log.debug("Competition exits in repository: {}", result);
         return result;
     }
 
@@ -36,12 +53,12 @@ public class CompetitionService {
     }
 
     public CompetitionDto getCompetitionByFootballId(final Long competitionId) {
-        log.info("Getting competition by id: {}", competitionId);
+        log.debug("Getting competition by id: {}", competitionId);
         Competition competition = competitionRepository.findByFootballId(competitionId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
         fetchCompetitionSeason(competition);
         CompetitionDto competitionDto = competitionMapper.mapToCompetitionDto(competition);
-        log.info("Return competition: {}", competitionDto);
+        log.debug("Return competition: {}", competitionDto);
         return competitionDto;
     }
 
