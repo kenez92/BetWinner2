@@ -88,4 +88,10 @@ public class CurrentMatchDayMapper {
                 .collect(Collectors.toList());
 
     }
+
+    public List<CurrentMatchDayDto> mapToCurrentMatchDayDtoList(final List<CurrentMatchDay> currentMatchDayList) {
+        return new ArrayList<>(currentMatchDayList).stream()
+                .map(this::mapToCurrentMatchDayDto)
+                .collect(Collectors.toList());
+    }
 }
