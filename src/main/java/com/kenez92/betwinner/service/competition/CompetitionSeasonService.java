@@ -51,4 +51,22 @@ public class CompetitionSeasonService {
         competitionSeason.setCurrentMatchDayList(currentMatchDayList);
 
     }
+
+    public List<CompetitionSeasonDto> getCompetitionSeasons() {
+        log.debug("Get all competition seasons");
+        List<CompetitionSeason> competitionSeasonList = competitionSeasonRepository.findAll();
+        List<CompetitionSeasonDto> competitionSeasonDtoList = competitionSeasonMapper
+                .mapToCompetitionSeasonDtoList(competitionSeasonList);
+        log.debug("Return all competition season: {}", competitionSeasonList);
+        return competitionSeasonDtoList;
+    }
+
+    public CompetitionSeasonDto getCompetitionSeason(Long competitionSeasonId) {
+        log.debug("Get competition by id: {}", competitionSeasonId);
+        CompetitionSeason competitionSeason = competitionSeasonRepository.findById(competitionSeasonId).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_SEASON_NOT_FOUND_EXCEPTION));
+        CompetitionSeasonDto competitionSeasonDto = competitionSeasonMapper.mapToCompetitionSeasonDto(competitionSeason);
+        log.debug("Return competition season found by id: {}", competitionSeasonDto);
+        return competitionSeasonDto;
+    }
 }

@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CompetitionSeasonMapper {
 
-    public CompetitionSeason mapToCompetitionSeason(CompetitionSeasonDto competitionSeasonDto) {
+    public CompetitionSeason mapToCompetitionSeason(final CompetitionSeasonDto competitionSeasonDto) {
         return CompetitionSeason.builder()
                 .id(competitionSeasonDto.getId())
                 .footballId(competitionSeasonDto.getFootballId())
@@ -21,7 +22,7 @@ public class CompetitionSeasonMapper {
                 .build();
     }
 
-    public CompetitionSeasonDto mapToCompetitionSeasonDto(CompetitionSeason competitionSeason) {
+    public CompetitionSeasonDto mapToCompetitionSeasonDto(final CompetitionSeason competitionSeason) {
         return CompetitionSeasonDto.builder()
                 .id(competitionSeason.getId())
                 .footballId(competitionSeason.getFootballId())
@@ -33,7 +34,13 @@ public class CompetitionSeasonMapper {
                 .build();
     }
 
-    private List<CurrentMatchDay> currentMatchDayList(CompetitionSeasonDto competitionSeasonDto) {
+    public List<CompetitionSeasonDto> mapToCompetitionSeasonDtoList(final List<CompetitionSeason> competitionSeasons) {
+        return new ArrayList<>(competitionSeasons).stream()
+                .map(this::mapToCompetitionSeasonDto)
+                .collect(Collectors.toList());
+    }
+
+    private List<CurrentMatchDay> currentMatchDayList(final CompetitionSeasonDto competitionSeasonDto) {
         List<CurrentMatchDay> currentMatchDayList = new ArrayList<>();
         if (competitionSeasonDto.getCurrentMatchDayList() != null) {
             for (CurrentMatchDayDto currentMatchDayDto : competitionSeasonDto.getCurrentMatchDayList()) {
@@ -53,7 +60,7 @@ public class CompetitionSeasonMapper {
         return currentMatchDayList;
     }
 
-    private List<CurrentMatchDayDto> currentMatchDayDtoList(CompetitionSeason competitionSeason) {
+    private List<CurrentMatchDayDto> currentMatchDayDtoList(final CompetitionSeason competitionSeason) {
         List<CurrentMatchDayDto> currentMatchDayDtoList = new ArrayList<>();
         for (CurrentMatchDay currentMatchDay : competitionSeason.getCurrentMatchDayList()) {
             currentMatchDayDtoList.add(CurrentMatchDayDto.builder()
@@ -72,7 +79,7 @@ public class CompetitionSeasonMapper {
         return currentMatchDayDtoList;
     }
 
-    private Competition mapToCompetition(CompetitionSeasonDto competitionSeasonDto) {
+    private Competition mapToCompetition(final CompetitionSeasonDto competitionSeasonDto) {
         return Competition.builder()
                 .id(competitionSeasonDto.getCompetition().getId())
                 .footballId(competitionSeasonDto.getCompetition().getFootballId())
@@ -81,7 +88,7 @@ public class CompetitionSeasonMapper {
                 .build();
     }
 
-    private CompetitionDto mapToCompetitionDto(CompetitionSeason competitionSeason) {
+    private CompetitionDto mapToCompetitionDto(final CompetitionSeason competitionSeason) {
         return CompetitionDto.builder()
                 .id(competitionSeason.getCompetition().getId())
                 .footballId(competitionSeason.getCompetition().getFootballId())
