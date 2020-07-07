@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.mapper.table;
+package com.kenez92.betwinner.controller.table;
 
 import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
 import com.kenez92.betwinner.service.competition.CompetitionTableElementService;
