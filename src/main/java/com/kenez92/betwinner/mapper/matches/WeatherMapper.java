@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class WeatherMapper {
@@ -33,6 +34,12 @@ public class WeatherMapper {
                 .pressure(weather.getPressure())
                 .matchList(mapToMatchDtoList(weather.getMatchList()))
                 .build();
+    }
+
+    public List<WeatherDto> mapToWeatherDtoList(List<Weather> weatherList) {
+        return new ArrayList<>(weatherList).stream()
+                .map(this::mapToWeatherDto)
+                .collect(Collectors.toList());
     }
 
     private List<Match> mapToMatchList(List<MatchDto> matchList) {
