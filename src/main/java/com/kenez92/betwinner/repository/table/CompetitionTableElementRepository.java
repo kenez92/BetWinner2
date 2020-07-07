@@ -12,6 +12,9 @@ import java.util.Optional;
 @Transactional
 @Repository
 public interface CompetitionTableElementRepository extends CrudRepository<CompetitionTableElement, Long> {
+    @Override
+    List<CompetitionTableElement> findAll();
+
     List<CompetitionTableElement> findByCompetitionTable(final CompetitionTable competitionTable);
 
     boolean existsByNameAndCompetitionTable(final String name, final CompetitionTable competitionTable);

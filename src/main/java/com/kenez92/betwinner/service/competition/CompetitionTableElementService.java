@@ -27,33 +27,33 @@ public class CompetitionTableElementService {
     public boolean existByNameAndCompetitionTable(final String name, final CompetitionTableDto competitionTableDto) {
         CompetitionTable competitionTable = competitionTableMapper.mapToCompetitionTable(competitionTableDto);
         boolean result = competitionTableElementRepository.existsByNameAndCompetitionTable(name, competitionTable);
-        log.info("Competition table exits in repository: {}", result);
+        log.debug("Competition table exits in repository: {}", result);
         return result;
     }
 
     public CompetitionTableElementDto saveCompetitionTableElement(final CompetitionTableElementDto competitionTableElementDto) {
-        log.info("Saving competition table element: {}", competitionTableElementDto);
+        log.debug("Saving competition table element: {}", competitionTableElementDto);
         CompetitionTableElement competitionTableElement
                 = competitionTableElementMapper.mapToCompetitionTableElement(competitionTableElementDto);
         CompetitionTableElement savedCompetitionTableElement =
                 competitionTableElementRepository.save(competitionTableElement);
         CompetitionTableElementDto savedCompetitionTableElementDto = competitionTableElementMapper
                 .mapToCompetitionTableElementDto(savedCompetitionTableElement);
-        log.info("Return saved competition table element: {}", savedCompetitionTableElementDto);
+        log.debug("Return saved competition table element: {}", savedCompetitionTableElementDto);
         return savedCompetitionTableElementDto;
     }
 
     public CompetitionTableElementDto getByNameAndCompetitionTable(final String name,
                                                                    final CompetitionTableDto competitionTableDto) {
         CompetitionTable competitionTable = mapToCompetitionTable(competitionTableDto);
-        log.info("Get competition table element by name and competition table: {}{}", name, competitionTable);
+        log.debug("Get competition table element by name and competition table: {}{}", name, competitionTable);
         CompetitionTableElement competitionTableElement = competitionTableElementRepository
                 .findByNameAndCompetitionTable(name, competitionTable).orElseThrow(()
                         -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_ELEMENT_NOT_FOUND_EXCEPTION));
         CompetitionTableElementDto competitionTableElementDto = competitionTableElementMapper
                 .mapToCompetitionTableElementDto(competitionTableElement);
         fetchCompetitionTable(competitionTableElement);
-        log.info("Return competition table element found by name: {}", competitionTableElementDto);
+        log.debug("Return competition table element found by name: {}", competitionTableElementDto);
         return competitionTableElementDto;
     }
 
@@ -72,5 +72,24 @@ public class CompetitionTableElementService {
         List<CompetitionTableElementDto> competitionTableElementDtoList
                 = competitionTableElementMapper.mapToCompetitionTableElementDtoList(competitionTableElementList);
         return competitionTableElementDtoList;
+    }
+
+    public List<CompetitionTableElementDto> getCompetitionTableElements() {
+        log.debug("Getting all competition table elements");
+        List<CompetitionTableElement> competitionTableElements = competitionTableElementRepository.findAll();
+        List<CompetitionTableElementDto> competitionTableElementDtoList = competitionTableElementMapper
+                .mapToCompetitionTableElementDtoList(competitionTableElements);
+        log.debug("Return all competition table elements: {}", competitionTableElementDtoList);
+        return competitionTableElementDtoList;
+    }
+
+    public CompetitionTableElementDto getCompetitionTableElement(final Long competitionTableElementId) {
+        log.debug("Getting competition table element by id: {}", competitionTableElementId);
+        CompetitionTableElement competitionTableElement = competitionTableElementRepository.findById(competitionTableElementId)
+                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_ELEMENT_NOT_FOUND_EXCEPTION));
+        CompetitionTableElementDto competitionTableElementDto = competitionTableElementMapper
+                .mapToCompetitionTableElementDto(competitionTableElement);
+        log.debug("Return competition table element: {}", competitionTableElement);
+        return competitionTableElementDto;
     }
 }
