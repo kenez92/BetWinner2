@@ -13,6 +13,9 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface MatchRepository extends CrudRepository<Match, Long> {
+    @Override
+    List<Match> findAll();
+
     List<Match> findByMatchDay(final MatchDay matchDay);
 
     boolean existsByHomeTeamAndAwayTeamAndRound(final String homeTeam, final String awayTeam, final Integer round);

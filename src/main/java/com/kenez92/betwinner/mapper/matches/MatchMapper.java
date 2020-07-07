@@ -4,6 +4,8 @@ import com.kenez92.betwinner.domain.matches.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MatchMapper {
@@ -45,6 +47,12 @@ public class MatchMapper {
                 .matchScore(mapToMatchScoreDto(match.getMatchScore()))
                 .weather(mapToWeatherDto(match.getWeather()))
                 .build();
+    }
+
+    public List<MatchDto> mapToMatchDtoList(final List<Match> matchList) {
+        return new ArrayList<>(matchList).stream()
+                .map(this::mapToMatchDto)
+                .collect(Collectors.toList());
     }
 
     private MatchDay mapToMatchDay(final MatchDayDto matchDayDto) {
