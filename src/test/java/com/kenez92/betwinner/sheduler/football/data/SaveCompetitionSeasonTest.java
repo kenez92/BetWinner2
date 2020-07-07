@@ -2,8 +2,7 @@ package com.kenez92.betwinner.sheduler.football.data;
 
 import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
-import com.kenez92.betwinner.service.competition.CurrentMatchDayService;
-import org.junit.Assert;
+import com.kenez92.betwinner.service.table.CurrentMatchDayService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

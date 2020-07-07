@@ -3,7 +3,7 @@ package com.kenez92.betwinner.sheduler.football.data.table;
 import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.domain.table.CompetitionTableDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
-import com.kenez92.betwinner.service.competition.CompetitionTableService;
+import com.kenez92.betwinner.service.table.CompetitionTableService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

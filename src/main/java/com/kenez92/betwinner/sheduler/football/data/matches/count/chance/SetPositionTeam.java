@@ -3,7 +3,7 @@ package com.kenez92.betwinner.sheduler.football.data.matches.count.chance;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.service.competition.CompetitionTableElementService;
+import com.kenez92.betwinner.service.table.CompetitionTableElementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

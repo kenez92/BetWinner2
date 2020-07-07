@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.service.competition;
+package com.kenez92.betwinner.service.table;
 
 import com.kenez92.betwinner.domain.table.*;
 import com.kenez92.betwinner.exception.BetWinnerException;

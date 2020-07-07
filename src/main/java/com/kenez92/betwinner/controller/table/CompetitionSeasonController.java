@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.controller.table;
 
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
-import com.kenez92.betwinner.service.competition.CompetitionSeasonService;
+import com.kenez92.betwinner.service.table.CompetitionSeasonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
