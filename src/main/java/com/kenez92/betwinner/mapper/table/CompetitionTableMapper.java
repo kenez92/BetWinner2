@@ -5,10 +5,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CompetitionTableMapper {
-    public CompetitionTable mapToCompetitionTable(CompetitionTableDto competitionTableDto) {
+    public CompetitionTable mapToCompetitionTable(final CompetitionTableDto competitionTableDto) {
         return CompetitionTable.builder()
                 .id(competitionTableDto.getId())
                 .stage(competitionTableDto.getStage())
@@ -18,7 +19,7 @@ public class CompetitionTableMapper {
                 .build();
     }
 
-    public CompetitionTableDto mapToCompetitionTableDto(CompetitionTable competitionTable) {
+    public CompetitionTableDto mapToCompetitionTableDto(final CompetitionTable competitionTable) {
         return CompetitionTableDto.builder()
                 .id(competitionTable.getId())
                 .stage(competitionTable.getStage())
@@ -28,7 +29,13 @@ public class CompetitionTableMapper {
                 .build();
     }
 
-    private CurrentMatchDay mapToCurrentMatchDay(CurrentMatchDayDto currentMatchDayDto) {
+    public List<CompetitionTableDto> mapToCompetitionTableDtoList(final List<CompetitionTable> competitionTableList) {
+        return new ArrayList<>(competitionTableList).stream()
+                .map(this::mapToCompetitionTableDto)
+                .collect(Collectors.toList());
+    }
+
+    private CurrentMatchDay mapToCurrentMatchDay(final CurrentMatchDayDto currentMatchDayDto) {
         return CurrentMatchDay.builder()
                 .id(currentMatchDayDto.getId())
                 .matchDay(currentMatchDayDto.getMatchDay())
@@ -44,7 +51,7 @@ public class CompetitionTableMapper {
                 .build();
     }
 
-    private CurrentMatchDayDto mapToCurrentMatchDayDto(CurrentMatchDay currentMatchDay) {
+    private CurrentMatchDayDto mapToCurrentMatchDayDto(final CurrentMatchDay currentMatchDay) {
         return CurrentMatchDayDto.builder()
                 .id(currentMatchDay.getId())
                 .matchDay(currentMatchDay.getMatchDay())
@@ -89,7 +96,7 @@ public class CompetitionTableMapper {
         return competitionTableElements;
     }
 
-    private List<CompetitionTableElementDto> mapToCompetitionTableElementsDtos(List<CompetitionTableElement> competitionTableElements) {
+    private List<CompetitionTableElementDto> mapToCompetitionTableElementsDtos(final List<CompetitionTableElement> competitionTableElements) {
         List<CompetitionTableElementDto> competitionTableElementDtos = new ArrayList<>();
         for (CompetitionTableElement competitionTableElement : competitionTableElements) {
             competitionTableElementDtos.add(CompetitionTableElementDto.builder()
@@ -115,5 +122,4 @@ public class CompetitionTableMapper {
         }
         return competitionTableElementDtos;
     }
-
 }
