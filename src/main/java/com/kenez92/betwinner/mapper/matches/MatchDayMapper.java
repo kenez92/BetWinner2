@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MatchDayMapper {
@@ -26,6 +27,12 @@ public class MatchDayMapper {
                 .localDate(matchDay.getLocalDate())
                 .matchesList(mapToMatchDtoList(matchDay.getMatchesList()))
                 .build();
+    }
+
+    public List<MatchDayDto> mapToMatchDayDtoList(List<MatchDay> matchDayList) {
+        return new ArrayList<>(matchDayList).stream()
+                .map(this::mapToMatchDayDto)
+                .collect(Collectors.toList());
     }
 
 

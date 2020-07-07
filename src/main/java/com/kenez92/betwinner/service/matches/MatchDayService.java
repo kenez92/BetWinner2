@@ -51,4 +51,21 @@ public class MatchDayService {
         List<Match> matches = matchRepository.findByMatchDay(matchDay);
         matchDay.setMatchesList(matches);
     }
+
+    public List<MatchDayDto> getMatchDays() {
+        log.debug("Getting all match days");
+        List<MatchDay> matchDayList = matchDayRepository.findAll();
+        List<MatchDayDto> matchDayDtoList = matchDayMapper.mapToMatchDayDtoList(matchDayList);
+        log.debug("Return all match days: {}", matchDayDtoList);
+        return matchDayDtoList;
+    }
+
+    public MatchDayDto getMatchDay(final Long matchDayId) {
+        log.debug("Get match day id: {}", matchDayId);
+        MatchDay matchDay = matchDayRepository.findById(matchDayId).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_CURRENT_MATCH_DAY_NOT_FOUND_EXCEPTION));
+        MatchDayDto matchDayDto = matchDayMapper.mapToMatchDayDto(matchDay);
+        log.debug("Return match day: {}", matchDayDto);
+        return matchDayDto;
+    }
 }
