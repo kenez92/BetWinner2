@@ -1,12 +1,15 @@
 package com.kenez92.betwinner.domain.matches;
 
+import com.kenez92.betwinner.domain.Coupon;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -62,4 +65,9 @@ public class Match {
 
     @ManyToOne
     private Weather weather;
+
+    @Builder.Default
+    @ManyToMany(targetEntity = Coupon.class,
+            mappedBy = "matchList")
+    private List<Coupon> couponList = new ArrayList<>();
 }
