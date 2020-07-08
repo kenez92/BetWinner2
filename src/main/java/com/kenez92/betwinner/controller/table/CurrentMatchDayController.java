@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("v1/current-match-days")
+@RequestMapping("/v1/competitions/seasons/rounds")
 public class CurrentMatchDayController {
     private final CurrentMatchDayService currentMatchDayService;
 
