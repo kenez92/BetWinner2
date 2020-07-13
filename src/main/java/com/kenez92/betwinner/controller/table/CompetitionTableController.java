@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1/tables")
+@RequestMapping("/v1/competitions/seasons/rounds/tables")
 public class CompetitionTableController {
     private final CompetitionTableService competitionTableService;
 

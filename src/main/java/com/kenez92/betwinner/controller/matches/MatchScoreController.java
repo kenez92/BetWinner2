@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("v1/match-score")
+@RequestMapping("/v1/matches/score")
 public class MatchScoreController {
     private final MatchScoreService matchScoreService;
 

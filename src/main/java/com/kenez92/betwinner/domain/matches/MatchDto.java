@@ -1,11 +1,13 @@
 package com.kenez92.betwinner.domain.matches;
 
+import com.kenez92.betwinner.domain.CouponDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +29,5 @@ public class MatchDto {
     private MatchDayDto matchDay;
     private MatchScoreDto matchScore;
     private WeatherDto weather;
+    private List<CouponDto> couponDtoList;
 }
