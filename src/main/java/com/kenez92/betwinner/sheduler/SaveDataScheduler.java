@@ -32,7 +32,7 @@ public class SaveDataScheduler {
     private final SaveMatch saveMatch;
     private final SaveWeather saveWeather;
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 0 1,23 * * *")
     private void saveData() throws InterruptedException {
         saveTables();
         saveMatches();
