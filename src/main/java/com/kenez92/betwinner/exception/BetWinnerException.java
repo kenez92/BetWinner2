@@ -5,30 +5,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BetWinnerException extends RuntimeException {
-    public static final String ERR_MATCHES_NOT_FOUND_EXCEPTION = "We dont have any matches!";
 
-    public static final String ERR_MATCH_ID_MUST_BE_NULL_OR_0_EXCEPTION = "Match ID must be null or 0!";
-    public static final String ERR_MATCH_NOT_EXIST_EXCEPTION = "This match not exist!";
-    public static final String ERR_MATCH_ID_MUST_BE_NOT_NULL_EXCEPTION = "Match ID must be not null!";
-
-    public static final String ERR_USERS_NOT_FOUND_EXCEPTION = "We dont have any user!";
+    public static final String ERR_USER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION = "User with this id already exists! ";
     public static final String ERR_USER_NOT_FOUND_EXCEPTION = "User not found!";
-    public static final String ERR_USER_ID_MUST_BE_NULL_OR_0_EXCEPTION = "User ID must be null or 0!";
-    public static final String ERR_USER_NOT_EXIST_EXCEPTION = "This user not exist!";
-    public static final String ERR_USER_ID_MUST_BE_NOT_NULL_EXCEPTION = "User ID must be not null!";
+    public static final String ERR_USER_NOT_EXIST_EXCEPTION = "User not exists";
+    public static final String ERR_USER_NOT_DELETED = "User not deleted. Cannot delete this User!";
     public static final String ERR_LOGIN_NOT_FOUND_EXCEPTION = "User with this login not found";
 
-    public static final String ERR_ORDERS_NOT_FOUND_EXCEPTION = "We dont have any order!";
+
     public static final String ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION = "Order with this id already exists! ";
     public static final String ERR_ORDER_NOT_FOUND_EXCEPTION = "Order not found!";
     public static final String ERR_ORDER_NOT_DELETED = "Order not deleted. Cannot delete this order!";
-    public static final String ERR_ORDER_ID_MUST_BE_NULL_OR_0_EXCEPTION = "Order ID must be null or 0!";
     public static final String ERR_ORDER_NOT_EXIST_EXCEPTION = "This order not exist!";
-    public static final String ERR_ORDER_ID_MUST_BE_NOT_NULL_EXCEPTION = "Order ID must be not null!";
 
-    public static final String ERR_COUPONS_NOT_FOUND_EXCEPTION = "We dont have any coupons!";
     public static final String ERR_COUPON_NOT_FOUND_EXCEPTION = "Coupon not found!";
-    public static final String ERR_COUPON_ID_MUST_BE_NOT_NULL_EXCEPTION = "Coupon ID must be null or 0!";
 
 
     //football.data
@@ -48,7 +38,6 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_WEATHER_NULL_EXCEPTION = "Weather class is equal to null!";
     public static final String ERR_WEATHER_NOT_FOUND_EXCEPTION = "Weather not found!";
     public static final String ERR_DATE_TIME_IS_WRONG_EXCEPTION = "Date time is wrong!";
-
 
     public BetWinnerException(String message) {
         super(message);

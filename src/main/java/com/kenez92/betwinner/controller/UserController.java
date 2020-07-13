@@ -16,7 +16,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDto> getUsers() {
         log.info("Getting all users");
         List<UserDto> userDtoList = userService.getUsers();
@@ -24,7 +24,7 @@ public class UserController {
         return userDtoList;
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDto getUser(@PathVariable Long userId) {
         log.info("Getting player by id: {}", userId);
         UserDto userDto = userService.getUser(userId);

@@ -27,9 +27,6 @@ public class UserService implements UserDetailsService {
     public List<UserDto> getUsers() {
         log.debug("Getting all users");
         List<User> userList = userRepository.findAll();
-        if (userList.size() == 0) {
-            throw new BetWinnerException(BetWinnerException.ERR_USERS_NOT_FOUND_EXCEPTION);
-        }
         List<UserDto> userDtoList = userMapper.mapToUserDtoList(userList);
         log.debug("Returns all users: {}", userDtoList);
         return userDtoList;
@@ -45,51 +42,47 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto createUser(UserDto userDto) {
-        if (userDto.getId() == null || userDto.getId() == 0) {
+        if (isExisting(userDto.getId())) {
+            throw new BetWinnerException(BetWinnerException.ERR_USER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+        } else {
             log.debug("Creating new user: {}", userDto);
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
             User user = userRepository.save(userMapper.mapToUser(userDto));
             UserDto createdUserDto = userMapper.mapToUserDto(user);
             log.debug("Return created user: {}", createdUserDto);
             return createdUserDto;
-        } else {
-            throw new BetWinnerException(BetWinnerException.ERR_USER_ID_MUST_BE_NULL_OR_0_EXCEPTION);
         }
     }
 
     public UserDto updateUser(UserDto userDto) {
-        if (userDto.getId() != null) {
-            isExisting(userDto.getId());
-        } else {
-            throw new BetWinnerException(BetWinnerException.ERR_USER_ID_MUST_BE_NOT_NULL_EXCEPTION);
+        if (isExisting(userDto.getId())) {
+            log.debug("Updating user id: {}", userDto.getId());
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            User updatedUser = userRepository.save(userMapper.mapToUser(userDto));
+            UserDto updatedUserDto = userMapper.mapToUserDto(updatedUser);
+            log.debug("Return updated user: {}", updatedUser);
+            return updatedUserDto;
         }
-        log.debug("Updating user id: {}", userDto.getId());
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        User updatedUser = userRepository.save(userMapper.mapToUser(userDto));
-        UserDto updatedUserDto = userMapper.mapToUserDto(updatedUser);
-        log.debug("Return updated user: {}", updatedUser);
-        return updatedUserDto;
+        throw new BetWinnerException(BetWinnerException.ERR_USER_NOT_EXIST_EXCEPTION);
     }
 
     public boolean deleteUser(Long userId) {
-        isExisting(userId);
-        log.debug("Deleting user by id: {}", userId);
-        userRepository.deleteById(userId);
-        boolean result = userRepository.existsById(userId);
-        if (result) {
-            log.debug("User still existing in repository");
-            return false;
-        } else {
-            log.debug("User deleted by id: {}", userId);
+        log.debug("Deleting user id: {}", userId);
+        if (isExisting(userId)) {
+            userRepository.deleteById(userId);
+            if (isExisting(userId)) {
+                throw new BetWinnerException(BetWinnerException.ERR_USER_NOT_DELETED);
+            }
+            log.debug("User deleted id: {}", userId);
             return true;
         }
+        return false;
     }
 
-    private void isExisting(Long userId) {
-        boolean exist = userRepository.existsById(userId);
-        if (!exist) {
-            throw new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_EXIST_EXCEPTION);
-        }
+    private boolean isExisting(Long userId) {
+        boolean result = userRepository.existsById(userId);
+        log.info("User exists: {}", result);
+        return result;
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderDto> getOrders() {
         log.info("Getting all orders");
         List<OrderDto> orderDtoList = orderService.getOrders();
@@ -25,7 +25,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public OrderDto orderDto(@PathVariable Long orderId) {
+    public OrderDto getOrder(@PathVariable Long orderId) {
         log.info("Getting order by id: {}", orderId);
         OrderDto orderDto = orderService.getOrder(orderId);
         log.info("Return order: {}", orderDto);

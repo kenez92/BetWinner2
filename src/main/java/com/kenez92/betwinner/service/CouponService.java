@@ -3,11 +3,11 @@ package com.kenez92.betwinner.service;
 import com.kenez92.betwinner.domain.Coupon;
 import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.domain.matches.Match;
-import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
 import com.kenez92.betwinner.mapper.matches.MatchMapper;
 import com.kenez92.betwinner.repository.CouponRepository;
+import com.kenez92.betwinner.repository.matches.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,8 @@ import java.util.List;
 @Service
 public class CouponService {
     private final CouponRepository couponRepository;
+    private final MatchRepository matchRepository;
     private final CouponMapper couponMapper;
-    private final MatchMapper matchMapper;
 
     public List<CouponDto> getCoupons() {
         log.debug("Getting all coupons");
@@ -47,11 +47,12 @@ public class CouponService {
         return couponDto;
     }
 
-    public CouponDto addMatch(Long couponId, MatchDto matchDto) {
-        log.debug("Add match to the coupon: {}{}", matchDto, couponId);
+    public CouponDto addMatch(Long couponId, Long matchId) {
+        log.debug("Add match to the coupon: {}{}", matchId, couponId);
         Coupon coupon = couponRepository.findById(couponId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
-        Match match = matchMapper.mapToMatch(matchDto);
+        Match match = matchRepository.findById(matchId).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
         coupon.getMatchList().add(match);
         Coupon updatedCoupon = couponRepository.save(coupon);
         CouponDto couponDto = couponMapper.mapToCouponDto(updatedCoupon);
