@@ -35,7 +35,7 @@ public class MatchMapper {
                 .matchDay(mapToMatchDay(matchDto.getMatchDay()))
                 .matchScore(mapToMatchScore(matchDto.getMatchScore()))
                 .weather(mapToWeather(matchDto.getWeather()))
-                .couponList(mapToCouponList(matchDto.getCouponDtoList()))
+                .couponList(new ArrayList<>())
                 .build();
     }
 
@@ -56,7 +56,7 @@ public class MatchMapper {
                 .matchDay(mapToMatchDayDto(match.getMatchDay()))
                 .matchScore(mapToMatchScoreDto(match.getMatchScore()))
                 .weather(mapToWeatherDto(match.getWeather()))
-                .couponDtoList(mapToCouponDtoList(match.getCouponList()))
+                .couponDtoList(new ArrayList<>())
                 .build();
     }
 
@@ -142,29 +142,5 @@ public class MatchMapper {
                 .pressure(weather.getPressure())
                 .matchList(new ArrayList<>())
                 .build();
-    }
-
-    private List<CouponDto> mapToCouponDtoList(final List<Coupon> couponList) {
-        if (couponList == null) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(couponList).stream()
-                .map(coupon -> CouponDto.builder()
-                        .id(coupon.getId())
-                        .matchList(new ArrayList<>())
-                        .build())
-                .collect(Collectors.toList());
-    }
-
-    private List<Coupon> mapToCouponList(final List<CouponDto> couponDtoList) {
-        if (couponDtoList == null) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(couponDtoList).stream()
-                .map(couponDto -> Coupon.builder()
-                        .id(couponDto.getId())
-                        .matchList(new ArrayList<>())
-                        .build())
-                .collect(Collectors.toList());
     }
 }
