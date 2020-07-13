@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
         UserDto UserDto = userMapper.mapToUserDto(user);
-        log.debug("Return match: {}", UserDto);
+        log.debug("Return user: {}", UserDto);
         return UserDto;
     }
 
