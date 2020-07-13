@@ -1,11 +1,10 @@
 package com.kenez92.betwinner.service;
 
-import com.kenez92.betwinner.domain.Coupon;
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.matches.Match;
+import com.kenez92.betwinner.entity.Coupon;
+import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
-import com.kenez92.betwinner.mapper.matches.MatchMapper;
 import com.kenez92.betwinner.repository.CouponRepository;
 import com.kenez92.betwinner.repository.matches.MatchRepository;
 import lombok.RequiredArgsConstructor;

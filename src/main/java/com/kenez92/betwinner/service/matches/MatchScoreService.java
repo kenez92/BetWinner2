@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.service.matches;
 
-import com.kenez92.betwinner.domain.matches.MatchScore;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.entity.matches.MatchScore;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.matches.MatchScoreMapper;
 import com.kenez92.betwinner.repository.matches.MatchScoreRepository;

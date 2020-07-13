@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.mapper;
 
-import com.kenez92.betwinner.domain.User;
 import com.kenez92.betwinner.domain.UserDto;
+import com.kenez92.betwinner.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

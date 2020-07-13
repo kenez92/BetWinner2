@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.domain.matches;
+package com.kenez92.betwinner.entity.matches;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

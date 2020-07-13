@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.service;
 
-import com.kenez92.betwinner.domain.User;
 import com.kenez92.betwinner.domain.UserDto;
+import com.kenez92.betwinner.entity.User;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.UserMapper;
 import com.kenez92.betwinner.repository.UserRepository;

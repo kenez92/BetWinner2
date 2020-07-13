@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.service.table;
 
-import com.kenez92.betwinner.domain.table.Competition;
 import com.kenez92.betwinner.domain.table.CompetitionDto;
-import com.kenez92.betwinner.domain.table.CompetitionSeason;
+import com.kenez92.betwinner.entity.table.Competition;
+import com.kenez92.betwinner.entity.table.CompetitionSeason;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.table.CompetitionMapper;
 import com.kenez92.betwinner.repository.table.CompetitionRepository;

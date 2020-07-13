@@ -1,5 +1,6 @@
-package com.kenez92.betwinner.domain;
+package com.kenez92.betwinner.entity;
 
+import com.kenez92.betwinner.domain.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

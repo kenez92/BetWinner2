@@ -1,6 +1,10 @@
 package com.kenez92.betwinner.service.table;
 
-import com.kenez92.betwinner.domain.table.*;
+import com.kenez92.betwinner.domain.table.CompetitionTableDto;
+import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
+import com.kenez92.betwinner.entity.table.CompetitionTable;
+import com.kenez92.betwinner.entity.table.CompetitionTableElement;
+import com.kenez92.betwinner.entity.table.CurrentMatchDay;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.table.CompetitionTableMapper;
 import com.kenez92.betwinner.mapper.table.CurrentMatchDayMapper;

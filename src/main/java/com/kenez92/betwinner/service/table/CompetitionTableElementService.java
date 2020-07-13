@@ -1,9 +1,9 @@
 package com.kenez92.betwinner.service.table;
 
-import com.kenez92.betwinner.domain.table.CompetitionTable;
 import com.kenez92.betwinner.domain.table.CompetitionTableDto;
-import com.kenez92.betwinner.domain.table.CompetitionTableElement;
 import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
+import com.kenez92.betwinner.entity.table.CompetitionTable;
+import com.kenez92.betwinner.entity.table.CompetitionTableElement;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.table.CompetitionTableElementMapper;
 import com.kenez92.betwinner.mapper.table.CompetitionTableMapper;

@@ -1,8 +1,15 @@
 package com.kenez92.betwinner.mapper.matches;
 
-import com.kenez92.betwinner.domain.Coupon;
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.matches.*;
+import com.kenez92.betwinner.domain.matches.MatchDayDto;
+import com.kenez92.betwinner.domain.matches.MatchDto;
+import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.domain.matches.WeatherDto;
+import com.kenez92.betwinner.entity.Coupon;
+import com.kenez92.betwinner.entity.matches.Match;
+import com.kenez92.betwinner.entity.matches.MatchDay;
+import com.kenez92.betwinner.entity.matches.MatchScore;
+import com.kenez92.betwinner.entity.matches.Weather;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -144,7 +151,7 @@ public class MatchMapper {
         return new ArrayList<>(couponList).stream()
                 .map(coupon -> CouponDto.builder()
                         .id(coupon.getId())
-                        .matchDtoList(new ArrayList<>())
+                        .matchList(new ArrayList<>())
                         .build())
                 .collect(Collectors.toList());
     }

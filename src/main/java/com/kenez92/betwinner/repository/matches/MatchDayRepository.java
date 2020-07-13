@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.repository.matches;
 
-import com.kenez92.betwinner.domain.matches.MatchDay;
+import com.kenez92.betwinner.entity.matches.MatchDay;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

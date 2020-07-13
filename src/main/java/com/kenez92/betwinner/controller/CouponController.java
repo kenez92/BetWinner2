@@ -41,10 +41,10 @@ public class CouponController {
         return couponDto;
     }
 
-    @PutMapping(value = "/{couponId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CouponDto addMatchToCoupon(@PathVariable Long couponId, @RequestBody MatchDto matchDto) {
-        log.info("Adding matchDto to the coupon: {}{}", matchDto, couponId);
-        CouponDto couponDto = couponService.addMatch(couponId, matchDto);
+    @PutMapping(value = "/{couponId}&{matchId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CouponDto addMatchToCoupon(@PathVariable Long couponId, @PathVariable Long matchId) {
+        log.info("Adding matchDto to the coupon: {}{}", matchId, couponId);
+        CouponDto couponDto = couponService.addMatch(couponId, matchId);
         log.info("Return coupon with added match: {}", couponDto);
         return couponDto;
     }

@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.service;
 
-import com.kenez92.betwinner.domain.Order;
 import com.kenez92.betwinner.domain.OrderDto;
+import com.kenez92.betwinner.entity.Order;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.OrderMapper;
 import com.kenez92.betwinner.repository.OrderRepository;

@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.repository;
 
-import com.kenez92.betwinner.domain.Coupon;
+import com.kenez92.betwinner.entity.Coupon;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

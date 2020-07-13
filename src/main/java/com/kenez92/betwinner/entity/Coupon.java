@@ -1,6 +1,6 @@
-package com.kenez92.betwinner.domain;
+package com.kenez92.betwinner.entity;
 
-import com.kenez92.betwinner.domain.matches.Match;
+import com.kenez92.betwinner.entity.matches.Match;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

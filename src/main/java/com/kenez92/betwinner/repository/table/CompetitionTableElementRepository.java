@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.repository.table;
 
-import com.kenez92.betwinner.domain.table.CompetitionTable;
-import com.kenez92.betwinner.domain.table.CompetitionTableElement;
+import com.kenez92.betwinner.entity.table.CompetitionTable;
+import com.kenez92.betwinner.entity.table.CompetitionTableElement;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

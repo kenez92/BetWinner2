@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.domain.table;
+package com.kenez92.betwinner.entity.table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

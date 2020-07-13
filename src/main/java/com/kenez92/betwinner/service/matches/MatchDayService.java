@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.service.matches;
 
-import com.kenez92.betwinner.domain.matches.Match;
-import com.kenez92.betwinner.domain.matches.MatchDay;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
+import com.kenez92.betwinner.entity.matches.Match;
+import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.matches.MatchDayMapper;
 import com.kenez92.betwinner.repository.matches.MatchDayRepository;

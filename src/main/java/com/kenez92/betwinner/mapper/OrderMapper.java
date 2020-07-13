@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.mapper;
 
-import com.kenez92.betwinner.domain.Order;
 import com.kenez92.betwinner.domain.OrderDto;
+import com.kenez92.betwinner.entity.Order;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
