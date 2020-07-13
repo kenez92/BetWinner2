@@ -16,4 +16,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
+
+    @ManyToOne
+    private User user;
 }

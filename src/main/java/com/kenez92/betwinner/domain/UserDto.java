@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,6 +24,7 @@ public class UserDto implements UserDetails {
     private String password;
     private String role;
     private String eMail;
+    private List<OrderDto> orders;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
