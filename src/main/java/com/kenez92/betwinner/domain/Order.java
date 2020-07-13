@@ -19,4 +19,7 @@ public class Order {
 
     @ManyToOne
     private User user;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Coupon coupon;
 }
