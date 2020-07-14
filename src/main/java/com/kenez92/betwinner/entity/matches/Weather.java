@@ -23,7 +23,7 @@ public class Weather {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "COUTRY")
+    @Column(name = "COUNTRY")
     private String country;
 
     @Column(name = "DATE")
