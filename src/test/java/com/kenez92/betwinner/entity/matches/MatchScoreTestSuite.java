@@ -21,23 +21,6 @@ class MatchScoreTestSuite {
     @Autowired
     private MatchScoreRepository matchScoreRepository;
 
-    private MatchScore createMatchScore() {
-        return MatchScore.builder()
-                .matchId(123L)
-                .winner(HOME_TEAM)
-                .status(STATUS)
-                .duration(DURATION)
-                .fullTimeHomeTeam(5)
-                .fullTimeAwayTeam(5)
-                .halfTimeHomeTeam(2)
-                .halfTimeAwayTeam(1)
-                .extraTimeHomeTeam(1)
-                .extraTimeAwayTeam(1)
-                .penaltiesHomeTeam(4)
-                .penaltiesAwayTeam(3)
-                .build();
-    }
-
     @Test
     public void testFindById() {
         //Given
@@ -155,5 +138,22 @@ class MatchScoreTestSuite {
         } finally {
             matchScoreRepository.deleteById(matchScoreId);
         }
+    }
+
+    private MatchScore createMatchScore() {
+        return MatchScore.builder()
+                .matchId(123L)
+                .winner(HOME_TEAM)
+                .status(STATUS)
+                .duration(DURATION)
+                .fullTimeHomeTeam(5)
+                .fullTimeAwayTeam(5)
+                .halfTimeHomeTeam(2)
+                .halfTimeAwayTeam(1)
+                .extraTimeHomeTeam(1)
+                .extraTimeAwayTeam(1)
+                .penaltiesHomeTeam(4)
+                .penaltiesAwayTeam(3)
+                .build();
     }
 }
