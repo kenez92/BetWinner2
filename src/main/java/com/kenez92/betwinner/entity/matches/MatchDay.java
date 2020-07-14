@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,5 +28,5 @@ public class MatchDay {
     @OneToMany(fetch = FetchType.LAZY,
             targetEntity = Match.class,
             mappedBy = "matchDay")
-    private List<Match> matchesList;
+    private List<Match> matchesList = new ArrayList<>();
 }
