@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.entity.matches;
 
 import com.kenez92.betwinner.exception.BetWinnerException;
+import com.kenez92.betwinner.repository.matches.MatchDayRepository;
 import com.kenez92.betwinner.repository.matches.MatchRepository;
 import com.kenez92.betwinner.repository.matches.MatchScoreRepository;
 import com.kenez92.betwinner.repository.matches.WeatherRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -30,28 +32,43 @@ public class MatchTestSuite {
     @Autowired
     private WeatherRepository weatherRepository;
 
+    @Autowired
+    private MatchDayRepository matchDayRepository;
+
     @Test
     public void testFindById() {
         //Given
-        Match match = createMatch();
-        MatchScore matchScore = matchScoreRepository.save(createMatchScore(match.getFootballId()));
+        MatchScore matchScore = matchScoreRepository.save(createMatchScore());
         Weather weather = weatherRepository.save(createWeather());
-        Long weatherId = weather.getId();
-        Long matchScoreId = matchScore.getId();
-        match.setMatchScore(matchScore);
-        match.setWeather(weather);
-        Match createdMatch = matchRepository.save(match);
+        MatchDay matchDay = matchDayRepository.save(createMatchDay());
+        Match match = matchRepository.save(createMatch(weather, matchScore, matchDay));
         //When
-        Match dbMatch = matchRepository.findById(createdMatch.getId()).orElseThrow(()
+        Match dbMatch = matchRepository.findById(match.getId()).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
         //Then
         try {
-            Assert.assertNotNull(dbMatch);
-            Assert.assertEquals(createdMatch.getId(), dbMatch.getId());
+            Assert.assertEquals(match.getId(), dbMatch.getId());
+            Assert.assertEquals(123456789L, dbMatch.getFootballId(), 0.001);
+            Assert.assertEquals(HOME_TEAM, dbMatch.getHomeTeam());
+            Assert.assertEquals(AWAY_TEAM, dbMatch.getAwayTeam());
+            Assert.assertEquals(30000L, dbMatch.getCompetitionId(), 0.001);
+            Assert.assertEquals(123L, dbMatch.getSeasonId(), 0.001);
+            Assert.assertTrue(match.getDate().getTime() - dbMatch.getDate().getTime() < 1000);
+            Assert.assertEquals(3, dbMatch.getHomeTeamPositionInTable(), 0.001);
+            Assert.assertEquals(12, dbMatch.getAwayTeamPositionInTable(), 0.001);
+            Assert.assertEquals(40.0, dbMatch.getHomeTeamChance(), 0.001);
+            Assert.assertEquals(60.0, dbMatch.getAwayTeamChance(), 0.001);
+            Assert.assertEquals(3, dbMatch.getRound(), 0.001);
+            Assert.assertEquals(matchScore.getId(), dbMatch.getMatchScore().getId());
+            Assert.assertEquals(HOME_TEAM, dbMatch.getMatchScore().getWinner());
+            Assert.assertEquals(weather.getId(), dbMatch.getWeather().getId());
+            Assert.assertEquals(20.1, dbMatch.getWeather().getTempFelt(), 0.001);
+            Assert.assertEquals(matchDay.getId(), dbMatch.getMatchDay().getId());
         } finally {
-            matchRepository.deleteById(createdMatch.getId());
-            matchScoreRepository.deleteById(matchScoreId);
-            weatherRepository.deleteById(weatherId);
+            matchRepository.deleteById(match.getId());
+            matchScoreRepository.deleteById(matchScore.getId());
+            weatherRepository.deleteById(weather.getId());
+            matchDayRepository.deleteById(matchDay.getId());
         }
     }
 
@@ -67,57 +84,49 @@ public class MatchTestSuite {
     @Test
     public void testSaveMatch() {
         //Given
-        Match match = createMatch();
-        MatchScore matchScore = matchScoreRepository.save(createMatchScore(match.getFootballId()));
+        MatchScore matchScore = matchScoreRepository.save(createMatchScore());
         Weather weather = weatherRepository.save(createWeather());
-        Long weatherId = weather.getId();
-        Long matchScoreId = matchScore.getId();
-        long dateInLong = match.getDate().getTime();
-        match.setMatchScore(matchScore);
-        match.setWeather(weather);
-
+        MatchDay matchDay = matchDayRepository.save(createMatchDay());
         //When
-        Match createdMatch = matchRepository.save(match);
+        Match dbMatch = matchRepository.save(createMatch(weather, matchScore, matchDay));
         //Then
         try {
-            Assert.assertEquals(123456789L, createdMatch.getFootballId(), 0.001);
-            Assert.assertEquals(HOME_TEAM, createdMatch.getHomeTeam());
-            Assert.assertEquals(AWAY_TEAM, createdMatch.getAwayTeam());
-            Assert.assertEquals(30000L, createdMatch.getCompetitionId(), 0.001);
-            Assert.assertEquals(123L, createdMatch.getSeasonId(), 0.001);
-            Assert.assertEquals(dateInLong, createdMatch.getDate().getTime(), 0.001);
-            Assert.assertEquals(3, createdMatch.getHomeTeamPositionInTable(), 0.001);
-            Assert.assertEquals(12, createdMatch.getAwayTeamPositionInTable(), 0.001);
-            Assert.assertEquals(40.0, createdMatch.getHomeTeamChance(), 0.001);
-            Assert.assertEquals(60.0, createdMatch.getAwayTeamChance(), 0.001);
-            Assert.assertEquals(3, createdMatch.getRound(), 0.001);
-            Assert.assertEquals(matchScoreId, createdMatch.getMatchScore().getId());
-            Assert.assertEquals(HOME_TEAM, createdMatch.getMatchScore().getWinner());
-            Assert.assertEquals(weatherId, createdMatch.getWeather().getId());
-            Assert.assertEquals(20.1, createdMatch.getWeather().getTempFelt(), 0.001);
+            Assert.assertNotNull(dbMatch.getId());
+            Assert.assertEquals(123456789L, dbMatch.getFootballId(), 0.001);
+            Assert.assertEquals(HOME_TEAM, dbMatch.getHomeTeam());
+            Assert.assertEquals(AWAY_TEAM, dbMatch.getAwayTeam());
+            Assert.assertEquals(30000L, dbMatch.getCompetitionId(), 0.001);
+            Assert.assertEquals(123L, dbMatch.getSeasonId(), 0.001);
+            Assert.assertNotNull(dbMatch.getDate());
+            Assert.assertEquals(3, dbMatch.getHomeTeamPositionInTable(), 0.001);
+            Assert.assertEquals(12, dbMatch.getAwayTeamPositionInTable(), 0.001);
+            Assert.assertEquals(40.0, dbMatch.getHomeTeamChance(), 0.001);
+            Assert.assertEquals(60.0, dbMatch.getAwayTeamChance(), 0.001);
+            Assert.assertEquals(3, dbMatch.getRound(), 0.001);
+            Assert.assertEquals(matchScore.getId(), dbMatch.getMatchScore().getId());
+            Assert.assertEquals(HOME_TEAM, dbMatch.getMatchScore().getWinner());
+            Assert.assertEquals(weather.getId(), dbMatch.getWeather().getId());
+            Assert.assertEquals(20.1, dbMatch.getWeather().getTempFelt(), 0.001);
+            Assert.assertEquals(matchDay.getId(), dbMatch.getMatchDay().getId());
 
         } finally {
-            matchRepository.deleteById(createdMatch.getId());
-            matchScoreRepository.deleteById(matchScoreId);
-            weatherRepository.deleteById(weatherId);
+            matchRepository.deleteById(dbMatch.getId());
+            matchScoreRepository.deleteById(matchScore.getId());
+            weatherRepository.deleteById(weather.getId());
+            matchDayRepository.deleteById(matchDay.getId());
         }
     }
 
     @Test
     public void testUpdateMatch() {
         //Given
-        Match match = createMatch();
-        MatchScore matchScore = matchScoreRepository.save(createMatchScore(match.getFootballId()));
+        MatchScore matchScore = matchScoreRepository.save(createMatchScore());
         Weather weather = weatherRepository.save(createWeather());
-        Long weatherId = weather.getId();
-        Long matchScoreId = matchScore.getId();
-        long dateInLong = match.getDate().getTime();
-        match.setMatchScore(matchScore);
-        match.setWeather(weather);
-        Match createdMatch = matchRepository.save(match);
+        MatchDay matchDay = matchDayRepository.save(createMatchDay());
+        Match match = matchRepository.save(createMatch(weather, matchScore, matchDay));
         //When
         Match dbMatch = matchRepository.save(Match.builder()
-                .id(createdMatch.getId())
+                .id(match.getId())
                 .footballId(123456789L)
                 .homeTeam(HOME_TEAM)
                 .awayTeam(AWAY_TEAM)
@@ -130,9 +139,11 @@ public class MatchTestSuite {
                 .round(4)
                 .matchScore(matchScore)
                 .weather(weather)
+                .matchDay(matchDay)
                 .build());
         //Then
         try {
+            Assert.assertNotNull(dbMatch.getId());
             Assert.assertEquals(123456789L, dbMatch.getFootballId(), 0.001);
             Assert.assertEquals(HOME_TEAM, dbMatch.getHomeTeam());
             Assert.assertEquals(AWAY_TEAM, dbMatch.getAwayTeam());
@@ -144,15 +155,17 @@ public class MatchTestSuite {
             Assert.assertEquals(30.0, dbMatch.getHomeTeamChance(), 0.001);
             Assert.assertEquals(70.0, dbMatch.getAwayTeamChance(), 0.001);
             Assert.assertEquals(4, dbMatch.getRound(), 0.001);
-            Assert.assertEquals(matchScoreId, dbMatch.getMatchScore().getId());
+            Assert.assertEquals(matchScore.getId(), dbMatch.getMatchScore().getId());
             Assert.assertEquals(HOME_TEAM, dbMatch.getMatchScore().getWinner());
-            Assert.assertEquals(weatherId, dbMatch.getWeather().getId());
+            Assert.assertEquals(weather.getId(), dbMatch.getWeather().getId());
             Assert.assertEquals(20.1, dbMatch.getWeather().getTempFelt(), 0.001);
+            Assert.assertEquals(matchDay.getId(), dbMatch.getMatchDay().getId());
 
         } finally {
             matchRepository.deleteById(dbMatch.getId());
-            matchScoreRepository.deleteById(matchScoreId);
-            weatherRepository.deleteById(weatherId);
+            matchScoreRepository.deleteById(matchScore.getId());
+            weatherRepository.deleteById(weather.getId());
+            matchDayRepository.deleteById(matchDay.getId());
         }
 
     }
@@ -164,9 +177,9 @@ public class MatchTestSuite {
                 .build();
     }
 
-    private MatchScore createMatchScore(Long matchId) {
+    private MatchScore createMatchScore() {
         return MatchScore.builder()
-                .matchId(matchId)
+                .matchId(-1223L)
                 .winner(HOME_TEAM)
                 .status(FINISHED)
                 .duration(DURATION)
@@ -175,19 +188,28 @@ public class MatchTestSuite {
                 .build();
     }
 
-    private Match createMatch() {
+    private MatchDay createMatchDay() {
+        return MatchDay.builder()
+                .localDate(LocalDate.of(1550, 3, 20))
+                .build();
+    }
+
+    private Match createMatch(Weather weather, MatchScore matchScore, MatchDay matchDay) {
         return Match.builder()
                 .footballId(123456789L)
                 .homeTeam(HOME_TEAM)
                 .awayTeam(AWAY_TEAM)
                 .competitionId(30000L)
                 .seasonId(123L)
-                .date(new Date(System.currentTimeMillis()))
+                .date(new Date())
                 .homeTeamPositionInTable(3)
                 .awayTeamPositionInTable(12)
                 .homeTeamChance(40.0)
                 .awayTeamChance(60.0)
                 .round(3)
+                .weather(weather)
+                .matchScore(matchScore)
+                .matchDay(matchDay)
                 .build();
     }
 }

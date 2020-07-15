@@ -30,8 +30,7 @@ public class CompetitionTableTestSuite {
     public void testFindById() {
         //Given
         CurrentMatchDay currentMatchDay = currentMatchDayRepository.save(createCurrentMatchDay());
-        CompetitionTable competitionTable = createCompetitionTable();
-        competitionTable.setCurrentMatchDay(currentMatchDay);
+        CompetitionTable competitionTable = createCompetitionTable(currentMatchDay);
         CompetitionTable createdCompetitionTable = competitionTableRepository.save(competitionTable);
         //When
         CompetitionTable dbCompetitionTable = competitionTableRepository.findById(createdCompetitionTable.getId())
@@ -61,8 +60,7 @@ public class CompetitionTableTestSuite {
     public void testFindAll() {
         //Given
         CurrentMatchDay currentMatchDay = currentMatchDayRepository.save(createCurrentMatchDay());
-        CompetitionTable competitionTable = createCompetitionTable();
-        competitionTable.setCurrentMatchDay(currentMatchDay);
+        CompetitionTable competitionTable = createCompetitionTable(currentMatchDay);
         CompetitionTable createdCompetitionTable = competitionTableRepository.save(competitionTable);
         //When
         List<CompetitionTable> competitionTableList = competitionTableRepository.findAll();
@@ -79,8 +77,7 @@ public class CompetitionTableTestSuite {
     public void testSave() {
         //Given
         CurrentMatchDay currentMatchDay = currentMatchDayRepository.save(createCurrentMatchDay());
-        CompetitionTable competitionTable = createCompetitionTable();
-        competitionTable.setCurrentMatchDay(currentMatchDay);
+        CompetitionTable competitionTable = createCompetitionTable(currentMatchDay);
         //When
         CompetitionTable dbCompetitionTable = competitionTableRepository.save(competitionTable);
         //Then
@@ -99,15 +96,14 @@ public class CompetitionTableTestSuite {
     public void testUpdate() {
         //Given
         CurrentMatchDay currentMatchDay = currentMatchDayRepository.save(createCurrentMatchDay());
-        CompetitionTable competitionTable = createCompetitionTable();
-        competitionTable.setCurrentMatchDay(currentMatchDay);
+        CompetitionTable competitionTable = createCompetitionTable(currentMatchDay);
         CompetitionTable createdCompetitionTable = competitionTableRepository.save(competitionTable);
         CompetitionTable updatedCompetitionTable = CompetitionTable.builder()
                 .id(createdCompetitionTable.getId())
+                .currentMatchDay(currentMatchDay)
                 .stage(STAGE)
                 .type(UPDATED_TYPE)
                 .build();
-        updatedCompetitionTable.setCurrentMatchDay(currentMatchDay);
         //When
         CompetitionTable dbCompetitionTable = competitionTableRepository.save(updatedCompetitionTable);
         //Then
@@ -128,11 +124,11 @@ public class CompetitionTableTestSuite {
                 .build();
     }
 
-    private CompetitionTable createCompetitionTable() {
+    private CompetitionTable createCompetitionTable(CurrentMatchDay currentMatchDay) {
         return CompetitionTable.builder()
+                .currentMatchDay(currentMatchDay)
                 .stage(STAGE)
                 .type(TYPE)
                 .build();
     }
-
 }

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class MatchScoreTestSuite {
+public class MatchScoreTestSuite {
     private final static String HOME_TEAM = "Home team";
     private final static String DURATION = "REGULAR";
     private final static String STATUS = "FINISHED";

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class MatchDayTestSuite {
+public class MatchDayTestSuite {
 
     @Autowired
     private MatchDayRepository matchDayRepository;

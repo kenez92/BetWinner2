@@ -30,8 +30,7 @@ public class CompetitionSeasonTestSuite {
     public void testFindById() {
         //Given
         Competition competition = competitionRepository.save(createCompetition());
-        CompetitionSeason competitionSeason = createCompetitionSeason();
-        competitionSeason.setCompetition(competition);
+        CompetitionSeason competitionSeason = createCompetitionSeason(competition);
         CompetitionSeason createdCompetitionSeason = competitionSeasonRepository.save(competitionSeason);
         Long competitionSeasonId = createdCompetitionSeason.getId();
         //When
@@ -64,8 +63,7 @@ public class CompetitionSeasonTestSuite {
     public void testFindAll() {
         //Given
         Competition competition = competitionRepository.save(createCompetition());
-        CompetitionSeason competitionSeason = createCompetitionSeason();
-        competitionSeason.setCompetition(competition);
+        CompetitionSeason competitionSeason = createCompetitionSeason(competition);
         CompetitionSeason createdCompetitionSeason = competitionSeasonRepository.save(competitionSeason);
         Long competitionSeasonId = createdCompetitionSeason.getId();
         //When
@@ -84,8 +82,7 @@ public class CompetitionSeasonTestSuite {
     public void testSave() {
         //Given
         Competition competition = competitionRepository.save(createCompetition());
-        CompetitionSeason competitionSeason = createCompetitionSeason();
-        competitionSeason.setCompetition(competition);
+        CompetitionSeason competitionSeason = createCompetitionSeason(competition);
         //When
         CompetitionSeason dbCompetitionSeason = competitionSeasonRepository.save(competitionSeason);
         //Then
@@ -106,18 +103,17 @@ public class CompetitionSeasonTestSuite {
     public void testUpdate() {
         //Given
         Competition competition = competitionRepository.save(createCompetition());
-        CompetitionSeason competitionSeason = createCompetitionSeason();
-        competitionSeason.setCompetition(competition);
+        CompetitionSeason competitionSeason = createCompetitionSeason(competition);
         CompetitionSeason createdCompetitionSeason = competitionSeasonRepository.save(competitionSeason);
         Long competitionSeasonId = createdCompetitionSeason.getId();
         CompetitionSeason updatedCompetitionSeason = CompetitionSeason.builder()
                 .id(competitionSeasonId)
                 .footballId(-5L)
+                .competition(competition)
                 .startDate(LocalDate.of(1555, 4, 4))
                 .endDate(LocalDate.of(1556, 5, 5))
                 .winner(WINNER)
                 .build();
-        updatedCompetitionSeason.setCompetition(competition);
         //When
         CompetitionSeason dbCompetitionSeason = competitionSeasonRepository.save(updatedCompetitionSeason);
         //Then
@@ -127,16 +123,17 @@ public class CompetitionSeasonTestSuite {
             Assert.assertEquals(LocalDate.of(1555, 4, 4), dbCompetitionSeason.getStartDate());
             Assert.assertEquals(LocalDate.of(1556, 5, 5), dbCompetitionSeason.getEndDate());
             Assert.assertEquals(WINNER, dbCompetitionSeason.getWinner());
-            Assert.assertEquals(competition.getId(), dbCompetitionSeason.getCompetition().getId(),0.001);
+            Assert.assertEquals(competition.getId(), dbCompetitionSeason.getCompetition().getId(), 0.001);
         } finally {
             competitionSeasonRepository.deleteById(competitionSeasonId);
             competitionRepository.deleteById(competition.getId());
         }
     }
 
-    private CompetitionSeason createCompetitionSeason() {
+    private CompetitionSeason createCompetitionSeason(Competition competition) {
         return CompetitionSeason.builder()
                 .footballId(-1L)
+                .competition(competition)
                 .startDate(LocalDate.of(1550, 3, 3))
                 .endDate(LocalDate.of(1551, 4, 4))
                 .winner(WINNER)

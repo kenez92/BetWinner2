@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class WeatherTestSuite {
+public class WeatherTestSuite {
     private final static String COUNTRY = "Poland";
     @Autowired
     private WeatherRepository weatherRepository;
