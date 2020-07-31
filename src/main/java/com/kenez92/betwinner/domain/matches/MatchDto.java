@@ -29,5 +29,5 @@ public class MatchDto {
     private MatchDayDto matchDay;
     private MatchScoreDto matchScore;
     private WeatherDto weather;
-    private List<CouponDto> couponDtoList;
+    private List<CouponDto> couponList;
 }

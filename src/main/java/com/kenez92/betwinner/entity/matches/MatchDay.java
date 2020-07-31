@@ -25,6 +25,7 @@ public class MatchDay {
     @Column(name = "DATE", unique = true)
     private LocalDate localDate;
 
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,
             targetEntity = Match.class,
             mappedBy = "matchDay")

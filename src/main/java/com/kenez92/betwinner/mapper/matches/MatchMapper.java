@@ -56,7 +56,7 @@ public class MatchMapper {
                 .matchDay(mapToMatchDayDto(match.getMatchDay()))
                 .matchScore(mapToMatchScoreDto(match.getMatchScore()))
                 .weather(mapToWeatherDto(match.getWeather()))
-                .couponDtoList(new ArrayList<>())
+                .couponList(new ArrayList<>())
                 .build();
     }
 
