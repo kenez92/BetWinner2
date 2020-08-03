@@ -1,32 +1,24 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.matches.MatchDayDto;
-import com.kenez92.betwinner.domain.matches.MatchDto;
-import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.domain.matches.WeatherDto;
 import com.kenez92.betwinner.entity.Coupon;
 import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.entity.matches.MatchScore;
 import com.kenez92.betwinner.entity.matches.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.mapper.CouponMapper;
 import com.kenez92.betwinner.repository.CouponRepository;
 import com.kenez92.betwinner.repository.matches.MatchRepository;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,16 +36,6 @@ class CouponServiceTestSuite {
     private CouponRepository couponRepository;
     @MockBean
     private MatchRepository matchRepository;
-    @SpyBean
-    private CouponMapper couponMapper;
-
-    @Test
-    public void testMapper() {
-        Coupon coupon = createCoupon();
-        CouponDto couponDto = couponMapper.mapToCouponDto(coupon);
-
-        System.out.println(couponDto);
-    }
 
     @Test
     public void testGetCoupon() {
