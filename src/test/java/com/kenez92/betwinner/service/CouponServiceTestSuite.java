@@ -10,18 +10,23 @@ import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.entity.matches.MatchScore;
 import com.kenez92.betwinner.entity.matches.Weather;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
 import com.kenez92.betwinner.repository.CouponRepository;
+import com.kenez92.betwinner.repository.matches.MatchRepository;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,15 +38,14 @@ import java.util.Optional;
 class CouponServiceTestSuite {
     private final static String HOME_TEAM = "home team";
     private final static String AWAY_TEAM = "away team";
-    @InjectMocks
+    @Autowired
     private CouponService couponService;
-    @Mock
+    @MockBean
     private CouponRepository couponRepository;
-    @Spy
-    private CouponDto couponDto;
-    @Spy
+    @MockBean
+    private MatchRepository matchRepository;
+    @SpyBean
     private CouponMapper couponMapper;
-
 
     @Test
     public void testMapper() {
@@ -50,6 +54,7 @@ class CouponServiceTestSuite {
 
         System.out.println(couponDto);
     }
+
     @Test
     public void testGetCoupon() {
         //Given
@@ -60,8 +65,71 @@ class CouponServiceTestSuite {
         CouponDto tmpCoupon = couponService.getCoupon(number);
         //Then
         Assert.assertEquals(number, tmpCoupon.getId());
+        Assert.assertEquals(3, tmpCoupon.getMatchList().size());
+    }
 
+    @Test
+    public void shouldThrowException() {
+        //Given
+        //When
+        //Then
+        Assertions.assertThrows(BetWinnerException.class, () -> couponService.getCoupon(-6L));
+    }
 
+    @Test
+    public void testGetCoupons() {
+        //Given
+        List<Coupon> couponList = new ArrayList<>();
+        couponList.add(createCoupon());
+        couponList.add(createCoupon());
+        couponList.add(createCoupon());
+        Mockito.when(couponRepository.findAll()).thenReturn(couponList);
+        //When
+        List<CouponDto> couponDtoList = couponService.getCoupons();
+        //Then
+        Assert.assertNotNull(couponDtoList);
+        Assert.assertEquals(3, couponDtoList.size());
+    }
+
+    @Test
+    public void testCreateCoupon() {
+        //Given
+        Mockito.when(couponRepository.save(ArgumentMatchers.any(Coupon.class))).thenReturn(new Coupon());
+        //When
+        CouponDto tmpCouponDto = couponService.createCoupon();
+        //Then
+        Assert.assertNotNull(tmpCouponDto);
+    }
+
+    @Test
+    public void testAddMatch() {
+        //Given
+        Match match = createMatch();
+        Coupon coupon = createCoupon();
+        Mockito.when(couponRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(coupon));
+        Mockito.when(matchRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(match));
+        Mockito.when(couponRepository.save(ArgumentMatchers.any(Coupon.class))).thenReturn(coupon);
+        //When
+        CouponDto couponDto = couponService.addMatch(5L, 232L);
+        //Then
+        Assert.assertNotNull(couponDto);
+        Assert.assertEquals(4, couponDto.getMatchList().size());
+    }
+
+    @Test
+    public void shouldThrowBetWinnerExceptionWhenMatchNotFound() {
+        //Given
+        Mockito.when(couponRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(createCoupon()));
+        //When & Then
+        Assertions.assertThrows(BetWinnerException.class, () -> couponService.addMatch(-23L, -2L));
+    }
+
+    @Test
+    public void shouldThrowBetWinnerExceptionWhenCouponNotFound() {
+        //Given
+        Mockito.when(matchRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(createMatch()));
+        //When & Then
+        Assertions.assertThrows(BetWinnerException.class, () -> couponService.addMatch(-23L, -2L));
     }
 
     private Coupon createCoupon() {
