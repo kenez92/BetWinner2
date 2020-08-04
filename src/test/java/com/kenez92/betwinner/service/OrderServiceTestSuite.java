@@ -57,7 +57,7 @@ public class OrderServiceTestSuite {
         //Given
         Order order = createOrder();
         Long orderId = order.getId();
-        Mockito.when(orderRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(order));
+        Mockito.when(orderRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.of(order));
         //When
         OrderDto orderDto = orderService.getOrder(orderId);
         //Then
@@ -67,7 +67,7 @@ public class OrderServiceTestSuite {
     }
 
     @Test
-    public void shouldThrowBetWinnerExceptionWhenOrderNotFound() {
+    public void testGetOrderShouldThrowBetWinnerExceptionWhenOrderNotFound() {
         //Given
         Mockito.when(orderRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.empty());
         //When
