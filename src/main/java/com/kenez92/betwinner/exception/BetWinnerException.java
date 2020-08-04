@@ -14,7 +14,9 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_LOGIN_NOT_FOUND_EXCEPTION = "User with this login not found";
 
 
+    public static final String ERR_ORDER_ID_MUST_BE_NULL_OR_0_EXCEPTION = "Order ID must be null or 0!";
     public static final String ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION = "Order with this id already exists! ";
+    public static final String ERR_ORDER_ID_MUST_BE_NOT_NULL_EXCEPTION = "Order ID must be not null!";
     public static final String ERR_ORDER_NOT_FOUND_EXCEPTION = "Order not found!";
     public static final String ERR_ORDER_NOT_DELETED = "Order not deleted. Cannot delete this order!";
     public static final String ERR_ORDER_NOT_EXIST_EXCEPTION = "This order not exist!";

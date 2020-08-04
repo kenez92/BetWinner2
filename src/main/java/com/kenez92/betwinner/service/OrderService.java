@@ -36,8 +36,10 @@ public class OrderService {
     }
 
     public OrderDto createOrder(OrderDto orderDto) {
-        if (isExisting(orderDto.getId())) {
-            throw new BetWinnerException(BetWinnerException.ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+        if (orderDto.getId() != null) {
+            if (orderDto.getId() != 0 && isExisting(orderDto.getId())) {
+                throw new BetWinnerException(BetWinnerException.ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+            }
         } else {
             log.debug("Creating new order: {}", orderDto);
             Order order = orderRepository.save(orderMapper.mapToOrder(orderDto));
@@ -45,6 +47,7 @@ public class OrderService {
             log.debug("Return created order: {}", createdOrder);
             return createdOrder;
         }
+        throw new BetWinnerException(BetWinnerException.ERR_ORDER_ID_MUST_BE_NULL_OR_0_EXCEPTION);
     }
 
     public OrderDto updateOrder(OrderDto orderDto) {
@@ -68,10 +71,14 @@ public class OrderService {
             log.debug("Order deleted id: {}", orderId);
             return true;
         }
+        log.debug("Order not exists id: {}", orderId);
         return false;
     }
 
-    private boolean isExisting(Long orderId) {
+    private boolean isExisting(final Long orderId) {
+        if (orderId == null) {
+            throw new BetWinnerException(BetWinnerException.ERR_ORDER_ID_MUST_BE_NOT_NULL_EXCEPTION);
+        }
         boolean result = orderRepository.existsById(orderId);
         log.info("Order exists: {}", result);
         return result;

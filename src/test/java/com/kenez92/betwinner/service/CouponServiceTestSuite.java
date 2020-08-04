@@ -27,7 +27,7 @@ import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
-class CouponServiceTestSuite {
+public class CouponServiceTestSuite {
     private final static String HOME_TEAM = "home team";
     private final static String AWAY_TEAM = "away team";
     @Autowired
