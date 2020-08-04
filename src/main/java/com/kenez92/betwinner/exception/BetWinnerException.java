@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class BetWinnerException extends RuntimeException {
 
     public static final String ERR_USER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION = "User with this id already exists! ";
+    public static final String ERR_USER_ID_MUST_BE_NULL_OR_0 = "User ID must be null or 0!";
     public static final String ERR_USER_NOT_FOUND_EXCEPTION = "User not found!";
     public static final String ERR_USER_NOT_EXIST_EXCEPTION = "User not exists";
     public static final String ERR_USER_NOT_DELETED = "User not deleted. Cannot delete this User!";

@@ -24,6 +24,13 @@ public class UserService implements UserDetailsService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    public Long getQuantityOfUsers() {
+        log.debug("Counting users");
+        Long result = userRepository.quantity();
+        log.debug("Quantity of users: {}", result);
+        return result;
+    }
+
     public List<UserDto> getUsers() {
         log.debug("Getting all users");
         List<User> userList = userRepository.findAll();
@@ -42,8 +49,10 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto createUser(UserDto userDto) {
-        if (isExisting(userDto.getId())) {
-            throw new BetWinnerException(BetWinnerException.ERR_USER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+        if (userDto.getId() != null) {
+            if (isExisting(userDto.getId())) {
+                throw new BetWinnerException(BetWinnerException.ERR_USER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+            }
         } else {
             log.debug("Creating new user: {}", userDto);
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -52,6 +61,7 @@ public class UserService implements UserDetailsService {
             log.debug("Return created user: {}", createdUserDto);
             return createdUserDto;
         }
+        throw new BetWinnerException(BetWinnerException.ERR_USER_ID_MUST_BE_NULL_OR_0);
     }
 
     public UserDto updateUser(UserDto userDto) {

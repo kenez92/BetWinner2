@@ -17,6 +17,9 @@ public class SaveCurrentMatchDay {
 
     public void saveCurrentMatchDay(final CompetitionSeasonDto competitionSeasonDto, final FootballTable footballTable) {
         Integer currentMatchDayNumber = footballTable.getSeason().getCurrentMatchday();
+        if(currentMatchDayNumber == null) {
+            currentMatchDayNumber = 0;
+        }
         CurrentMatchDayDto tmpCurrentMatchDayDto = CurrentMatchDayDto.builder()
                 .matchDay(currentMatchDayNumber)
                 .competitionSeason(competitionSeasonDto)

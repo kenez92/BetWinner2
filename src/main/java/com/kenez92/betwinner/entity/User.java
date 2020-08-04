@@ -10,6 +10,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQuery(
+        name = "User.quantity",
+        query = "SELECT COUNT(u) FROM User u"
+)
 @Data
 @Builder
 @NoArgsConstructor
@@ -37,7 +41,7 @@ public class User {
     private UserRole role;
 
     @Column(name = "E_MAIL")
-    private String eMail;
+    private String email;
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,
