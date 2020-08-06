@@ -66,7 +66,7 @@ public class MatchDayServiceTestSuite {
         MatchDay matchDay = createMatchDay();
         Mockito.when(matchDayRepository.save(ArgumentMatchers.any(MatchDay.class))).thenReturn(matchDay);
         //When
-        MatchDayDto matchDayDto = matchDayService.createMatchDay(new MatchDayDto());
+        MatchDayDto matchDayDto = matchDayService.saveMatchDay(new MatchDayDto());
         //Then
         Assert.assertEquals(matchDay.getId(), matchDayDto.getId());
         Assert.assertEquals(matchDay.getLocalDate(), matchDayDto.getLocalDate());

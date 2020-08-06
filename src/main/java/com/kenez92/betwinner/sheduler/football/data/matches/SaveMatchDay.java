@@ -22,7 +22,7 @@ public class SaveMatchDay {
             matchDayDto = matchDayService.getByLocalDate(tmpMatchDayDto.getLocalDate());
             log.info("Match day already exists: {}", matchDayDto);
         } else {
-            matchDayDto = matchDayService.createMatchDay(tmpMatchDayDto);
+            matchDayDto = matchDayService.saveMatchDay(tmpMatchDayDto);
             log.info("Saved match day: {}", matchDayDto);
         }
         return matchDayDto;
