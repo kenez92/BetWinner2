@@ -38,7 +38,7 @@ public class MatchDayService {
         return matchDayDto;
     }
 
-    public MatchDayDto saveMatchDay(final MatchDayDto matchDayDto) {
+    public MatchDayDto createMatchDay(final MatchDayDto matchDayDto) {
         log.info("Saving match day: {}", matchDayDto);
         MatchDay matchDay = matchDayMapper.mapToMatchDay(matchDayDto);
         MatchDay savedMatchDay = matchDayRepository.save(matchDay);
