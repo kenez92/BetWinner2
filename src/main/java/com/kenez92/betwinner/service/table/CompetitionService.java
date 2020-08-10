@@ -29,7 +29,7 @@ public class CompetitionService {
         return competitionDtoList;
     }
 
-    public CompetitionDto getCompetition(Long id) {
+    public CompetitionDto getCompetition(final Long id) {
         log.debug("Get competition by id: {}", id);
         Competition competition = competitionRepository.findById(id).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
