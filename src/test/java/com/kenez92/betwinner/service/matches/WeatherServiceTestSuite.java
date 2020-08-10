@@ -124,7 +124,7 @@ public class WeatherServiceTestSuite {
                 .thenReturn(Optional.empty());
         //When
         Assertions.assertThrows(BetWinnerException.class, () -> weatherService.getByDateAndCountry(new Date(),
-                new String("new string")));
+                ("new string")));
     }
 
     private Weather createWeather() {
