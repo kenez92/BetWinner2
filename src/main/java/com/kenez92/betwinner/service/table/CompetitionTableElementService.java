@@ -57,17 +57,7 @@ public class CompetitionTableElementService {
         return competitionTableElementDto;
     }
 
-    private void fetchCompetitionTable(final CompetitionTableElement competitionTableElement) {
-        CompetitionTable competitionTable = competitionTableRepository.findById(competitionTableElement.getCompetitionTable().getId())
-                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_NOT_FOUND_EXCEPTION));
-        competitionTableElement.setCompetitionTable(competitionTable);
-    }
-
-    private CompetitionTable mapToCompetitionTable(final CompetitionTableDto competitionTableDto) {
-        return competitionTableMapper.mapToCompetitionTable(competitionTableDto);
-    }
-
-    public List<CompetitionTableElementDto> findByName(final String name) {
+    public List<CompetitionTableElementDto> getByName(final String name) {
         List<CompetitionTableElement> competitionTableElementList = competitionTableElementRepository.findByName(name);
         List<CompetitionTableElementDto> competitionTableElementDtoList
                 = competitionTableElementMapper.mapToCompetitionTableElementDtoList(competitionTableElementList);
@@ -91,5 +81,15 @@ public class CompetitionTableElementService {
                 .mapToCompetitionTableElementDto(competitionTableElement);
         log.debug("Return competition table element: {}", competitionTableElement);
         return competitionTableElementDto;
+    }
+
+    private void fetchCompetitionTable(final CompetitionTableElement competitionTableElement) {
+        CompetitionTable competitionTable = competitionTableRepository.findById(competitionTableElement.getCompetitionTable().getId())
+                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_NOT_FOUND_EXCEPTION));
+        competitionTableElement.setCompetitionTable(competitionTable);
+    }
+
+    private CompetitionTable mapToCompetitionTable(final CompetitionTableDto competitionTableDto) {
+        return competitionTableMapper.mapToCompetitionTable(competitionTableDto);
     }
 }

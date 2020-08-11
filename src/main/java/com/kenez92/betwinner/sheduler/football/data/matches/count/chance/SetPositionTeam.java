@@ -26,7 +26,7 @@ public class SetPositionTeam {
     }
 
     private CompetitionTableElementDto getTeam(String teamName, Integer round) {
-        List<CompetitionTableElementDto> teamDtoList = competitionTableElementService.findByName(teamName);
+        List<CompetitionTableElementDto> teamDtoList = competitionTableElementService.getByName(teamName);
         List<CompetitionTableElementDto> filteredTeamDtoList = teamDtoList.stream()
                 .filter(element -> element.getCompetitionTable().getType().equals(TYPE_TOTAL))
                 .filter(element -> element.getCompetitionTable().getStage().equals(STAGE_SEASON_REGULAR))
