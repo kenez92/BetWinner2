@@ -31,7 +31,7 @@ public class MatchDayService {
     public MatchDayDto getByLocalDate(final LocalDate localDate) {
         log.info("Getting match day by local date: {}", localDate);
         MatchDay matchDay = matchDayRepository.findByLocalDate(localDate).orElseThrow(() ->
-                new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
+                new BetWinnerException(BetWinnerException.ERR_MATCH_DAY_NOT_FOUND_EXCEPTION));
         fetchMatches(matchDay);
         MatchDayDto matchDayDto = matchDayMapper.mapToMatchDayDto(matchDay);
         log.info("Return match found by local date: {}", matchDayDto);
@@ -63,7 +63,7 @@ public class MatchDayService {
     public MatchDayDto getMatchDay(final Long matchDayId) {
         log.debug("Get match day id: {}", matchDayId);
         MatchDay matchDay = matchDayRepository.findById(matchDayId).orElseThrow(()
-                -> new BetWinnerException(BetWinnerException.ERR_CURRENT_MATCH_DAY_NOT_FOUND_EXCEPTION));
+                -> new BetWinnerException(BetWinnerException.ERR_MATCH_DAY_NOT_FOUND_EXCEPTION));
         MatchDayDto matchDayDto = matchDayMapper.mapToMatchDayDto(matchDay);
         log.debug("Return match day: {}", matchDayDto);
         return matchDayDto;
