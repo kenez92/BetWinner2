@@ -27,7 +27,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CompetitionTableElementControllerTestSuite {
-    private static final String URL = "/v1/competitions/seasons/rounds/tables/teams";
+    private final String url = "/v1/competitions/seasons/rounds/tables/teams";
     @Autowired
     private MockMvc mockMvc;
 
@@ -40,7 +40,7 @@ public class CompetitionTableElementControllerTestSuite {
         Mockito.when(competitionTableElementService.getCompetitionTableElements()).thenReturn(new ArrayList<>());
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get(URL)
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)));
@@ -57,7 +57,7 @@ public class CompetitionTableElementControllerTestSuite {
                 .thenReturn(competitionTableElementDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get(URL)
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)))
@@ -82,7 +82,7 @@ public class CompetitionTableElementControllerTestSuite {
                 .thenReturn(createCompetitionTableElementDto());
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get(URL.concat("/45635"))
+                .get(url.concat("/45635"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(455366)))
@@ -106,7 +106,7 @@ public class CompetitionTableElementControllerTestSuite {
                 .thenThrow(new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_ELEMENT_NOT_FOUND_EXCEPTION));
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get(URL.concat("/46579954"))
+                .get(url.concat("/46579954"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(result -> Assert.assertTrue(result.getResolvedException() instanceof BetWinnerException))

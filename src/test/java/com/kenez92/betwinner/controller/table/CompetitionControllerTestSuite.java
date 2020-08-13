@@ -26,6 +26,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CompetitionControllerTestSuite {
+    private final String url = "/v1/competitions";
     @Autowired
     private MockMvc mockMvc;
 
@@ -39,7 +40,7 @@ public class CompetitionControllerTestSuite {
         Mockito.when(competitionService.getCompetitions()).thenReturn(competitionDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions")
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)));
@@ -55,7 +56,7 @@ public class CompetitionControllerTestSuite {
         Mockito.when(competitionService.getCompetitions()).thenReturn(competitionDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions")
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)))
@@ -71,7 +72,7 @@ public class CompetitionControllerTestSuite {
         Mockito.when(competitionService.getCompetition(ArgumentMatchers.anyLong())).thenReturn(createCompetitionDto());
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions/434534")
+                .get(url.concat("/434534"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(4563)))
@@ -87,7 +88,7 @@ public class CompetitionControllerTestSuite {
                 .thenThrow(new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions/434534")
+                .get(url.concat("/434534"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(result -> Assert.assertTrue(result.getResolvedException() instanceof BetWinnerException))
