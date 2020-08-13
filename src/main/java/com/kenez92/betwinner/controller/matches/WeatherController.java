@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1/matches/weather")
+@RequestMapping("/v1/matches/weathers")
 public class WeatherController {
     private final WeatherService weatherService;
 
@@ -23,7 +23,7 @@ public class WeatherController {
     public List<WeatherDto> getWeathers() {
         log.info("Getting all weathers");
         List<WeatherDto> weatherDtoList = weatherService.getWeathers();
-        log.info("Return all weaters: {}", weatherDtoList);
+        log.info("Return all weathers: {}", weatherDtoList);
         return weatherDtoList;
     }
 
