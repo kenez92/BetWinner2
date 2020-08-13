@@ -28,6 +28,8 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CompetitionSeasonControllerTestSuite {
+    private final String url = "/v1/competitions/seasons";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -40,7 +42,7 @@ public class CompetitionSeasonControllerTestSuite {
         Mockito.when(competitionSeasonService.getCompetitionSeasons()).thenReturn(new ArrayList<>());
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions/seasons")
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)));
@@ -56,7 +58,7 @@ public class CompetitionSeasonControllerTestSuite {
         Mockito.when(competitionSeasonService.getCompetitionSeasons()).thenReturn(competitionSeasonDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions/seasons")
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)))
@@ -77,7 +79,7 @@ public class CompetitionSeasonControllerTestSuite {
                 .thenReturn(createCompetitionSeasonDto());
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions/seasons/34345")
+                .get(url.concat("/34345"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(45685)))
@@ -99,7 +101,7 @@ public class CompetitionSeasonControllerTestSuite {
                 .thenThrow(new BetWinnerException(BetWinnerException.ERR_COMPETITION_SEASON_NOT_FOUND_EXCEPTION));
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/competitions/season/343")
+                .get(url.concat("/348963"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(result -> Assert.assertTrue(result.getResolvedException() instanceof BetWinnerException))
