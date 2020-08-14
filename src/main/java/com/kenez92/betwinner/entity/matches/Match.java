@@ -56,6 +56,15 @@ public class Match {
     @Column(name = "ROUND")
     private Integer round;
 
+    @Column(name = "HOME_TEAM_COURSE")
+    private Double homeTeamCourse;
+
+    @Column(name = "DRAW_COURSE")
+    private Double drawCourse;
+
+    @Column(name = "AWAY_TEAM_COURSE")
+    private Double awayTeamCourse;
+
     @ManyToOne
     private MatchDay matchDay;
 

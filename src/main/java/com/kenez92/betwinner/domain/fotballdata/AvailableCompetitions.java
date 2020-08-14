@@ -17,5 +17,6 @@ public class AvailableCompetitions {
         availableCompetitionList.add(2014L); // SPAIN - PRIMEIRA_LIGA
         availableCompetitionList.add(2017L); // PORTUGAL - PRIMEIRA_LIGA
         availableCompetitionList.add(2021L); // ENGLAND - PREMIER_LEAGUE
+        availableCompetitionList.add(2015L); // FRANCE - LIGUE 1
     }
 }

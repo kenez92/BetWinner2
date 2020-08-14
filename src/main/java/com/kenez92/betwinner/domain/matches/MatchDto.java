@@ -28,6 +28,9 @@ public class MatchDto {
     private Integer round;
     private MatchDayDto matchDay;
     private MatchScoreDto matchScore;
+    private Double homeTeamCourse;
+    private Double drawCourse;
+    private Double awayTeamCourse;
     private WeatherDto weather;
     private List<CouponDto> couponList;
 }
