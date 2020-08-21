@@ -1,5 +1,6 @@
 package com.kenez92.betwinner.entity;
 
+import com.kenez92.betwinner.domain.table.CouponStatus;
 import com.kenez92.betwinner.entity.matches.Match;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,19 @@ public class Coupon {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
+
+    @Column(name = "COURSE")
+    private Double course;
+
+    @Column(name = "RATE")
+    private Double rate;
+
+    @Column(name = "RESULT")
+    private Double result;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "STATUS")
+    private CouponStatus couponStatus;
 
     @Builder.Default
     @ManyToMany

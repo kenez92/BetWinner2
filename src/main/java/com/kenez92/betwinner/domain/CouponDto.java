@@ -14,5 +14,9 @@ import java.util.List;
 @Data
 public class CouponDto {
     private Long id;
+    private Double course;
+    private Double rate;
+    private Double result;
+    private String couponStatus;
     private List<MatchDto> matchList;
 }

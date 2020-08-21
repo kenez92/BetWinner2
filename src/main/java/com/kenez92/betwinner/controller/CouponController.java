@@ -1,7 +1,6 @@
 package com.kenez92.betwinner.controller;
 
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.service.CouponService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,20 +33,13 @@ public class CouponController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public CouponDto createEmptyCoupon() {
-        log.info("Creating coupon");
-        CouponDto couponDto = couponService.createCoupon();
-        log.info("Return created coupon: {}", couponDto);
-        return couponDto;
+    public CouponDto createEmptyCoupon(@RequestBody CouponDto couponDto) {
+        log.info("Creating coupon: {}", couponDto);
+        CouponDto createdCouponDto = couponService.createCoupon(couponDto);
+        log.info("Return created coupon: {}", createdCouponDto);
+        return createdCouponDto;
     }
 
-    @PutMapping(value = "/{couponId}&{matchId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CouponDto addMatchToCoupon(@PathVariable Long couponId, @PathVariable Long matchId) {
-        log.info("Adding matchDto to the coupon: {}{}", matchId, couponId);
-        CouponDto couponDto = couponService.addMatch(couponId, matchId);
-        log.info("Return coupon with added match: {}", couponDto);
-        return couponDto;
-    }
 
     @DeleteMapping("/{couponId}")
     public boolean deleteCoupon(@PathVariable Long couponId) {
