@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("v1/coupons/types")
-public class TypeController {
+public class CouponTypeController {
 }
