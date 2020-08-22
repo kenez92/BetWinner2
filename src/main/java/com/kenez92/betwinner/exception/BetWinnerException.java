@@ -38,6 +38,7 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_MATCH_SCORE_NOT_FOUND_EXCEPTION = "Match score not found!";
     public static final String ERR_MATCH_NOT_FOUND_EXCEPTION = "Match not found!";
     public static final String ERR_MATCH_DAY_NOT_FOUND_EXCEPTION = "Match day not found!";
+    public static final String ERR_COUPON_TYPE_NOT_FOUND_EXCEPTION = "Coupon type not found!";
     //openweathermap
     public static final String ERR_WEATHER_NULL_EXCEPTION = "Weather class is equal to null!";
     public static final String ERR_WEATHER_NOT_FOUND_EXCEPTION = "Weather not found!";
