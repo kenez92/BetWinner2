@@ -40,6 +40,14 @@ public class CouponController {
         return createdCouponDto;
     }
 
+    @PutMapping(value = "/{couponId}")
+    public boolean checkCoupon(@PathVariable Long couponId) {
+        log.info("Checking coupon id: {}", couponId);
+        boolean result = couponService.checkCoupon(couponId);
+        log.info("Result of the coupon with id : {}{}", couponId, " :" + result);
+        return result;
+    }
+
 
     @DeleteMapping("/{couponId}")
     public boolean deleteCoupon(@PathVariable Long couponId) {

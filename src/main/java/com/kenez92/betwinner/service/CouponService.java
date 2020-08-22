@@ -1,7 +1,9 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.CouponDto;
+import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.entity.Coupon;
+import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
 import com.kenez92.betwinner.repository.CouponRepository;
@@ -56,5 +58,12 @@ public class CouponService {
             log.debug("Coupon deleted id: {}", couponId);
             return true;
         }
+    }
+
+    public boolean checkCoupon(Long couponId) {
+        log.debug("Checking coupon id: {}", couponId);
+        Coupon coupon = couponRepository.findById(couponId)
+                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+        return true; // temporary return true
     }
 }

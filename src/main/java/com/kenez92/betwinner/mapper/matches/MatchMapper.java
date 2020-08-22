@@ -1,11 +1,9 @@
 package com.kenez92.betwinner.mapper.matches;
 
-import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.domain.matches.WeatherDto;
-import com.kenez92.betwinner.entity.Coupon;
 import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.entity.matches.MatchScore;
@@ -38,7 +36,7 @@ public class MatchMapper {
                 .matchDay(mapToMatchDay(matchDto.getMatchDay()))
                 .matchScore(mapToMatchScore(matchDto.getMatchScore()))
                 .weather(mapToWeather(matchDto.getWeather()))
-                .couponList(new ArrayList<>())
+                .couponTypeList(new ArrayList<>())
                 .build();
     }
 
@@ -62,7 +60,7 @@ public class MatchMapper {
                 .matchDay(mapToMatchDayDto(match.getMatchDay()))
                 .matchScore(mapToMatchScoreDto(match.getMatchScore()))
                 .weather(mapToWeatherDto(match.getWeather()))
-                .couponList(new ArrayList<>())
+                .typeList(new ArrayList<>())
                 .build();
     }
 

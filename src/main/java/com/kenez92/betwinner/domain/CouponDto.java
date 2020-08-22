@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.domain;
 
-import com.kenez92.betwinner.domain.matches.MatchDto;
+import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +18,5 @@ public class CouponDto {
     private Double rate;
     private Double result;
     private String couponStatus;
-    private List<MatchDto> matchList;
+    private List<CouponTypeDto> typeList;
 }

@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.entity.matches;
 
-import com.kenez92.betwinner.entity.Coupon;
+import com.kenez92.betwinner.entity.coupons.CouponType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -76,7 +76,8 @@ public class Match {
     private Weather weather;
 
     @Builder.Default
-    @ManyToMany(targetEntity = Coupon.class,
-            mappedBy = "matchList")
-    private List<Coupon> couponList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY,
+            targetEntity = CouponType.class,
+            mappedBy = "match")
+    private List<CouponType> couponTypeList = new ArrayList<>();
 }

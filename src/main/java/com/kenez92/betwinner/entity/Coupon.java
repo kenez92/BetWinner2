@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.entity;
 
 import com.kenez92.betwinner.domain.table.CouponStatus;
-import com.kenez92.betwinner.entity.matches.Match;
+import com.kenez92.betwinner.entity.coupons.CouponType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,10 +37,8 @@ public class Coupon {
     private CouponStatus couponStatus;
 
     @Builder.Default
-    @ManyToMany
-    @JoinTable(
-            name = "JOIN_MATCH_ID",
-            joinColumns = {@JoinColumn(name = "MATCH_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "COUPON_ID", referencedColumnName = "ID")})
-    private List<Match> matchList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY,
+            targetEntity = CouponType.class,
+            mappedBy = "coupon")
+    private List<CouponType> couponTypeList = new ArrayList<>();
 }
