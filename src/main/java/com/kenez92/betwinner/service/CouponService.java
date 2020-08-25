@@ -1,13 +1,17 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.entity.Coupon;
+import com.kenez92.betwinner.entity.coupons.CouponType;
 import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
+import com.kenez92.betwinner.mapper.coupons.CouponTypeMapper;
 import com.kenez92.betwinner.repository.CouponRepository;
-import com.kenez92.betwinner.repository.matches.MatchRepository;
+import com.kenez92.betwinner.repository.coupons.CouponTypeRepository;
+import com.kenez92.betwinner.service.coupons.CouponTypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +23,10 @@ import java.util.List;
 @Service
 public class CouponService {
     private final CouponRepository couponRepository;
-    private final MatchRepository matchRepository;
+    private final CouponTypeService couponTypeService;
     private final CouponMapper couponMapper;
+    private final CouponTypeMapper couponTypeMapper;
+    private final CouponTypeRepository couponTypeRepository;
 
     public List<CouponDto> getCoupons() {
         log.debug("Getting all coupons");
@@ -39,12 +45,11 @@ public class CouponService {
         return couponDto;
     }
 
-    public CouponDto createCoupon(CouponDto couponDto) {
-        log.debug("Creating new coupon: {}", couponDto);
-        Coupon coupon = couponMapper.mapToCoupon(couponDto);
-        CouponDto createdCouponDto = couponMapper.mapToCouponDto(coupon);
-        log.debug("Return created coupon: {}", createdCouponDto);
-        return createdCouponDto;
+    public CouponDto createEmptyCoupon() {
+        log.debug("Creating empty coupon");
+        CouponDto couponDto = couponMapper.mapToCouponDto(couponRepository.save(new Coupon()));
+        log.debug("Return created coupon: {}", couponDto);
+        return couponDto;
     }
 
 
@@ -64,6 +69,56 @@ public class CouponService {
         log.debug("Checking coupon id: {}", couponId);
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
-        return true; // temporary return true
+        int size = coupon.getCouponTypeList().size();
+        int counter = 0;
+        for (int i = 0; i < size; i++) {
+            CouponType couponType = coupon.getCouponTypeList().get(i);
+            if (couponType.getStatus().equals(Status.WIN)) {
+                counter++;
+            } else if (couponType.getStatus().equals(Status.LOST)) {
+                coupon.setCouponStatus(Status.LOST);
+                couponRepository.save(coupon);
+                throw new BetWinnerException(BetWinnerException.INFO_COUPON_IS_LOST);
+            } else if (couponType.getStatus().equals(Status.WAITING)) {
+                throw new BetWinnerException(BetWinnerException.INFO_COUPON_IS_WAITING);
+            } else {
+                throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
+            }
+        }
+        if (counter == size) {
+            coupon.setCouponStatus(Status.WIN);
+            couponRepository.save(coupon);
+        }
+        return true;
+    }
+
+    public CouponDto addMatch(Long couponId, CouponTypeDto couponTypeDto) {
+        log.debug("Adding match to coupon id: {}{}", couponId, couponTypeDto);
+        Coupon coupon = couponRepository.findById(couponId)
+                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+        CouponTypeDto savedCouponTypeDto = couponTypeService.createCouponType(couponTypeDto);
+        CouponType savedCouponType = couponTypeMapper.mapToCouponType(savedCouponTypeDto);
+        setData(coupon);
+        coupon.getCouponTypeList().add(savedCouponType);
+        Coupon savedCoupon = couponRepository.save(coupon);
+        setData(savedCoupon);
+        CouponDto couponDto = couponMapper.mapToCouponDto(savedCoupon);
+
+        log.debug("Return coupon: {}", couponDto);
+        return couponDto;
+    }
+
+    private void setData(Coupon coupon) {
+        Coupon tmpCoupon = Coupon.builder()
+                .id(coupon.getId())
+                .build();
+        List<CouponType> couponTypeList = couponTypeRepository.findByCoupon(coupon);
+        for (CouponType couponType : couponTypeList) {
+            couponType.setCoupon(tmpCoupon);
+            couponType.setMatch(Match.builder()
+                    .id(couponType.getMatch().getId())
+                    .build());
+        }
+        coupon.setCouponTypeList(couponTypeList);
     }
 }

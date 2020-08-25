@@ -23,6 +23,9 @@ public class BetWinnerException extends RuntimeException {
 
     public static final String ERR_COUPON_NOT_FOUND_EXCEPTION = "Coupon not found!";
 
+    public static final String INFO_COUPON_IS_LOST = "Coupon is lost!";
+    public static final String INFO_COUPON_IS_WAITING = "Coupon is waiting!";
+    public static final String ERR_SOMETHING_WENT_WRONG_EXCEPTION = "Something went wrong! Contact with the administrator!";
 
     //football.data
     public static final String ERR_FOOTBALL_SOMETHING_WENT_WRONG_EXCEPTION = "Something went wrong.";
@@ -43,6 +46,7 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_WEATHER_NULL_EXCEPTION = "Weather class is equal to null!";
     public static final String ERR_WEATHER_NOT_FOUND_EXCEPTION = "Weather not found!";
     public static final String ERR_DATE_TIME_IS_WRONG_EXCEPTION = "Date time is wrong!";
+
 
     public BetWinnerException(String message) {
         super(message);

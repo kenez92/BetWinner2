@@ -32,14 +32,6 @@ public class CouponTypeController {
         return couponTypeDtoList;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CouponTypeDto createCouponType(@RequestBody CouponTypeDto couponTypeDto) {
-        log.info("Creating coupon type: {}", couponTypeDto);
-        CouponTypeDto createdCouponTypeDto = couponTypeService.createCouponType(couponTypeDto);
-        log.info("Return created coupon type: {}", createdCouponTypeDto);
-        return createdCouponTypeDto;
-    }
-
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public CouponTypeDto updateCouponType(@RequestBody CouponTypeDto couponTypeDto) {
         log.info("Updating coupon type id: {}", couponTypeDto.getId());

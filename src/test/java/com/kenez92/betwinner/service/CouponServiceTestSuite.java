@@ -1,7 +1,10 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.CouponDto;
+import com.kenez92.betwinner.domain.MatchType;
+import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.entity.Coupon;
+import com.kenez92.betwinner.entity.coupons.CouponType;
 import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.entity.matches.MatchScore;
@@ -50,7 +53,7 @@ public class CouponServiceTestSuite {
         Assert.assertEquals(coupon.getCourse(), tmpCoupon.getCourse());
         Assert.assertEquals(coupon.getRate(), tmpCoupon.getRate());
         Assert.assertEquals(coupon.getResult(), tmpCoupon.getResult());
-        Assert.assertEquals(3, tmpCoupon.getMatchList().size());
+        Assert.assertEquals(3, tmpCoupon.getCouponTypeList().size());
     }
 
     @Test
@@ -78,11 +81,11 @@ public class CouponServiceTestSuite {
     }
 
     @Test
-    public void testCreateCoupon() {
+    public void testCreateEmptyCoupon() {
         //Given
         Mockito.when(couponRepository.save(ArgumentMatchers.any(Coupon.class))).thenReturn(new Coupon());
         //When
-        CouponDto tmpCouponDto = couponService.createCoupon(new CouponDto());
+        CouponDto tmpCouponDto = couponService.createEmptyCoupon();
         //Then
         Assert.assertNotNull(tmpCouponDto);
     }
@@ -94,35 +97,42 @@ public class CouponServiceTestSuite {
                 .course(20.2d)
                 .rate(10.0)
                 .result(202d)
-                .matchList(createMatchList())
+                .couponTypeList(createCouponTypeList())
                 .build();
     }
 
-    private List<Match> createMatchList() {
-        List<Match> matchList = new ArrayList<>();
-        matchList.add(createMatch());
-        matchList.add(createMatch());
-        matchList.add(createMatch());
-        return matchList;
+    private List<CouponType> createCouponTypeList() {
+        List<CouponType> couponTypeList = new ArrayList<>();
+        couponTypeList.add(createCouponType());
+        couponTypeList.add(createCouponType());
+        couponTypeList.add(createCouponType());
+        return couponTypeList;
     }
 
-    private Match createMatch() {
-        return Match.builder()
-                .footballId(-11234L)
-                .homeTeam(HOME_TEAM)
-                .awayTeam(AWAY_TEAM)
-                .competitionId(-202L)
-                .seasonId(-203L)
-                .date(new Date())
-                .homeTeamPositionInTable(2)
-                .awayTeamPositionInTable(4)
-                .homeTeamChance(60.0)
-                .awayTeamChance(40.0)
-                .round(23)
-                .matchDay(new MatchDay())
-                .matchScore(new MatchScore())
-                .weather(new Weather())
-                .couponList(new ArrayList<>())
+    private CouponType createCouponType() {
+        return CouponType.builder()
+                .matchType(MatchType.HOME_TEAM)
+                .match(Match.builder()
+                        .footballId(-11234L)
+                        .homeTeam(HOME_TEAM)
+                        .awayTeam(AWAY_TEAM)
+                        .competitionId(-202L)
+                        .seasonId(-203L)
+                        .date(new Date())
+                        .homeTeamPositionInTable(2)
+                        .awayTeamPositionInTable(4)
+                        .homeTeamChance(60.0)
+                        .awayTeamChance(40.0)
+                        .round(23)
+                        .matchDay(new MatchDay())
+                        .matchScore(new MatchScore())
+                        .weather(new Weather())
+                        .couponTypeList(new ArrayList<>())
+                        .build())
+                .coupon(Coupon.builder()
+                        .id(-5L)
+                        .build())
+                .status(Status.WAITING)
                 .build();
     }
 }

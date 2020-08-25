@@ -68,7 +68,7 @@ public class MatchServiceTestSuite {
         Assert.assertEquals(match.getAwayTeamPositionInTable(), matchDto.getAwayTeamPositionInTable());
         Assert.assertEquals(match.getHomeTeamChance(), matchDto.getHomeTeamChance());
         Assert.assertEquals(match.getAwayTeamChance(), matchDto.getAwayTeamChance());
-        Assert.assertEquals(match.getCouponList().size(), matchDto.getCouponList().size());
+        Assert.assertEquals(match.getCouponTypeList().size(), matchDto.getCouponTypeList().size());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class MatchServiceTestSuite {
         Assert.assertEquals(match.getAwayTeamPositionInTable(), matchDto.getAwayTeamPositionInTable());
         Assert.assertEquals(match.getHomeTeamChance(), matchDto.getHomeTeamChance());
         Assert.assertEquals(match.getAwayTeamChance(), matchDto.getAwayTeamChance());
-        Assert.assertEquals(match.getCouponList().size(), matchDto.getCouponList().size());
+        Assert.assertEquals(match.getCouponTypeList().size(), matchDto.getCouponTypeList().size());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class MatchServiceTestSuite {
         Assert.assertEquals(match.getAwayTeamPositionInTable(), matchDto.getAwayTeamPositionInTable());
         Assert.assertEquals(match.getHomeTeamChance(), matchDto.getHomeTeamChance());
         Assert.assertEquals(match.getAwayTeamChance(), matchDto.getAwayTeamChance());
-        Assert.assertEquals(match.getCouponList().size(), matchDto.getCouponList().size());
+        Assert.assertEquals(match.getCouponTypeList().size(), matchDto.getCouponTypeList().size());
     }
 
     private Match createMatch() {
@@ -151,7 +151,7 @@ public class MatchServiceTestSuite {
                 .matchDay(new MatchDay())
                 .matchScore(new MatchScore())
                 .weather(new Weather())
-                .couponList(new ArrayList<>())
+                .couponTypeList(new ArrayList<>())
                 .build();
     }
 }

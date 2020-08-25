@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.entity;
 
-import com.kenez92.betwinner.domain.table.CouponStatus;
+import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.entity.coupons.CouponType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,9 +32,9 @@ public class Coupon {
     @Column(name = "RESULT")
     private Double result;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
-    private CouponStatus couponStatus;
+    private Status couponStatus;
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,

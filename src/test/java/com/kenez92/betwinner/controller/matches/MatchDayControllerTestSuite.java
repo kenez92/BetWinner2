@@ -133,7 +133,7 @@ public class MatchDayControllerTestSuite {
                 .matchDay(new MatchDayDto())
                 .matchScore(new MatchScoreDto())
                 .weather(new WeatherDto())
-                .couponList(new ArrayList<>())
+                .couponTypeList(new ArrayList<>())
                 .build();
     }
 

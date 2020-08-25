@@ -60,7 +60,7 @@ public class MatchMapper {
                 .matchDay(mapToMatchDayDto(match.getMatchDay()))
                 .matchScore(mapToMatchScoreDto(match.getMatchScore()))
                 .weather(mapToWeatherDto(match.getWeather()))
-                .typeList(new ArrayList<>())
+                .couponTypeList(new ArrayList<>())
                 .build();
     }
 

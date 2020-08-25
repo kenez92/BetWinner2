@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.entity.coupons;
 
 import com.kenez92.betwinner.domain.MatchType;
+import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.entity.Coupon;
 import com.kenez92.betwinner.entity.matches.Match;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NamedNativeQuery(
+        name = "CouponType.couponsForCheck",
+        query = "SELECT * FROM coupon_type WHERE TYPE_STATUS = 'WAITING'",
+        resultClass = CouponType.class
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -22,9 +28,13 @@ public class CouponType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Enumerated(value = EnumType.ORDINAL)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "MATCH_TYPE")
     private MatchType matchType;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "TYPE_STATUS")
+    private Status status;
 
     @ManyToOne
     private Match match;

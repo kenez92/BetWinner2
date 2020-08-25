@@ -15,5 +15,6 @@ public class CouponTypeDto {
     private Long id;
     private String matchType;
     private MatchDto match;
+    private String status;
     private CouponDto coupon;
 }

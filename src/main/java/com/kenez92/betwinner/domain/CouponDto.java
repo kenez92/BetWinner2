@@ -18,5 +18,5 @@ public class CouponDto {
     private Double rate;
     private Double result;
     private String couponStatus;
-    private List<CouponTypeDto> typeList;
+    private List<CouponTypeDto> couponTypeList;
 }

@@ -153,7 +153,7 @@ public class OrderServiceTestSuite {
     private Coupon createCoupon() {
         return Coupon.builder()
                 .id(-5L)
-                .matchList(createMatchList())
+                .couponTypeList(new ArrayList<>()) // do naprawienia
                 .build();
     }
 
@@ -181,7 +181,7 @@ public class OrderServiceTestSuite {
                 .matchDay(new MatchDay())
                 .matchScore(new MatchScore())
                 .weather(new Weather())
-                .couponList(new ArrayList<>())
+                .couponTypeList(new ArrayList<>())
                 .build();
     }
 

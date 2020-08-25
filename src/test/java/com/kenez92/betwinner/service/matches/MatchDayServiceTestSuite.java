@@ -135,7 +135,7 @@ public class MatchDayServiceTestSuite {
                 .matchDay(new MatchDay())
                 .matchScore(new MatchScore())
                 .weather(new Weather())
-                .couponList(new ArrayList<>())
+                .couponTypeList(new ArrayList<>())
                 .build();
     }
 }

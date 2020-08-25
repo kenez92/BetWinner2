@@ -7,6 +7,7 @@ import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatchList;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.WeatherDto;
 import com.kenez92.betwinner.football.client.FootballClient;
+import com.kenez92.betwinner.service.coupons.CouponTypeService;
 import com.kenez92.betwinner.sheduler.football.data.matches.SaveMatch;
 import com.kenez92.betwinner.sheduler.football.data.matches.SaveMatchDay;
 import com.kenez92.betwinner.sheduler.football.data.table.SaveAvailableCompetitions;
@@ -31,11 +32,14 @@ public class SaveDataScheduler {
     private final SaveMatchDay saveMatchDay;
     private final SaveMatch saveMatch;
     private final SaveWeather saveWeather;
+    private final CouponTypeService couponTypeService;
 
-    @Scheduled(cron = "0 0 1,23 * * *")
+    //@Scheduled(cron = "0 0 1,23 * * *")
+    @Scheduled(fixedDelay = 1000)
     private void saveData() throws InterruptedException {
         saveTables();
         saveMatches();
+        couponTypeService.checkCouponTypes();
     }
 
     private void saveTables() throws InterruptedException {

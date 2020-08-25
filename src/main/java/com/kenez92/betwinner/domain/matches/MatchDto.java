@@ -32,5 +32,5 @@ public class MatchDto {
     private Double drawCourse;
     private Double awayTeamCourse;
     private WeatherDto weather;
-    private List<CouponTypeDto> typeList;
+    private List<CouponTypeDto> couponTypeList;
 }
