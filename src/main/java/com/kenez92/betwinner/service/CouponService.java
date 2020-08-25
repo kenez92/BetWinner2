@@ -40,6 +40,7 @@ public class CouponService {
         log.debug("Getting coupon by id: {}", couponId);
         Coupon coupon = couponRepository.findById(couponId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+        setData(coupon);
         CouponDto couponDto = couponMapper.mapToCouponDto(coupon);
         log.debug("Return coupon: {}", couponDto);
         return couponDto;

@@ -31,6 +31,7 @@ public class CouponTypeService {
         log.debug("Getting coupon type id: {}", couponId);
         CouponType couponType = couponTypeRepository.findById(couponId)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_TYPE_NOT_FOUND_EXCEPTION));
+        setData(couponType);
         CouponTypeDto couponTypeDto = couponTypeMapper.mapToCouponTypeDto(couponType);
         log.debug("Return coupon type: {}", couponTypeDto);
         return couponTypeDto;
