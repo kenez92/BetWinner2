@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.CouponDto;
+import com.kenez92.betwinner.domain.MatchType;
 import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.entity.Coupon;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Slf4j
@@ -23,10 +25,11 @@ import java.util.List;
 @Service
 public class CouponService {
     private final CouponRepository couponRepository;
-    private final CouponTypeService couponTypeService;
     private final CouponMapper couponMapper;
+    private final CouponTypeService couponTypeService;
     private final CouponTypeMapper couponTypeMapper;
     private final CouponTypeRepository couponTypeRepository;
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public List<CouponDto> getCoupons() {
         log.debug("Getting all coupons");
@@ -48,11 +51,30 @@ public class CouponService {
 
     public CouponDto createEmptyCoupon() {
         log.debug("Creating empty coupon");
-        CouponDto couponDto = couponMapper.mapToCouponDto(couponRepository.save(new Coupon()));
+        CouponDto couponDto = couponMapper.mapToCouponDto(couponRepository.save(Coupon.builder()
+                .course(0.0)
+                .rate(0.0)
+                .result(0.0)
+                .couponStatus(Status.WAITING)
+                .build()));
         log.debug("Return created coupon: {}", couponDto);
         return couponDto;
     }
 
+    public CouponDto setRate(Long couponId, Double rate) {
+        log.debug("Set rate for coupon id / rate: {}{}", couponId, rate);
+        if (rate > 0) {
+            Coupon coupon = couponRepository.findById(couponId)
+                    .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+            coupon.setRate(rate);
+            coupon.setResult(Double.parseDouble(decimalFormat.format(rate * coupon.getCourse())));
+            Coupon savedCoupon = couponRepository.save(coupon);
+            setData(savedCoupon);
+            return couponMapper.mapToCouponDto(savedCoupon);
+        } else {
+            throw new BetWinnerException(BetWinnerException.ERR_COUPON_RATE_IS_LOWER_THAN_0);
+        }
+    }
 
     public boolean deleteCoupon(Long couponId) {
         log.debug("Deleting coupon id: {}", couponId);
@@ -101,10 +123,10 @@ public class CouponService {
         CouponType savedCouponType = couponTypeMapper.mapToCouponType(savedCouponTypeDto);
         setData(coupon);
         coupon.getCouponTypeList().add(savedCouponType);
+        countFields(coupon);
         Coupon savedCoupon = couponRepository.save(coupon);
         setData(savedCoupon);
         CouponDto couponDto = couponMapper.mapToCouponDto(savedCoupon);
-
         log.debug("Return coupon: {}", couponDto);
         return couponDto;
     }
@@ -118,8 +140,40 @@ public class CouponService {
             couponType.setCoupon(tmpCoupon);
             couponType.setMatch(Match.builder()
                     .id(couponType.getMatch().getId())
+                    .homeTeamCourse(couponType.getMatch().getHomeTeamCourse())
+                    .awayTeamCourse(couponType.getMatch().getAwayTeamCourse())
+                    .drawCourse(couponType.getMatch().getDrawCourse())
                     .build());
         }
         coupon.setCouponTypeList(couponTypeList);
+    }
+
+    private void countFields(Coupon coupon) {
+        double course = 0.0;
+        double rate = 0.0;
+        double result = 0.0;
+
+        if (coupon.getCouponTypeList() != null && coupon.getCouponTypeList().size() != 0) {
+            for (int i = 0; i < coupon.getCouponTypeList().size(); i++) {
+                MatchType matchType = coupon.getCouponTypeList().get(i).getMatchType();
+                Match match = coupon.getCouponTypeList().get(i).getMatch();
+                switch (matchType) {
+                    case AWAY_TEAM:
+                        course = course + match.getAwayTeamCourse();
+                    case HOME_TEAM:
+                        course = course + match.getHomeTeamCourse();
+                    case DRAW:
+                        course = course + match.getDrawCourse();
+                }
+            }
+            course = (course * 0.9) / coupon.getCouponTypeList().size();
+            if (coupon.getRate() != null && coupon.getRate() > 0) {
+                rate = coupon.getRate();
+                result = Double.parseDouble(decimalFormat.format(course * rate));
+            }
+        }
+        coupon.setCourse(course);
+        coupon.setRate(rate);
+        coupon.setResult(result);
     }
 }

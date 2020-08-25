@@ -7,8 +7,6 @@ import com.kenez92.betwinner.entity.coupons.CouponType;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.coupons.CouponTypeMapper;
 import com.kenez92.betwinner.repository.coupons.CouponTypeRepository;
-import com.kenez92.betwinner.repository.matches.MatchDayRepository;
-import com.kenez92.betwinner.repository.matches.MatchRepository;
 import com.kenez92.betwinner.service.matches.MatchScoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +22,6 @@ public class CouponTypeService {
     private final MatchScoreService matchScoreService;
     private final CouponTypeRepository couponTypeRepository;
     private final CouponTypeMapper couponTypeMapper;
-    private final MatchDayRepository matchDayRepository;
-    private final MatchRepository matchRepository;
 
     public CouponTypeDto getCouponType(Long couponId) {
         log.debug("Getting coupon type id: {}", couponId);

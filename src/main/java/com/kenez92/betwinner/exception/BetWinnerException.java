@@ -22,9 +22,14 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_ORDER_NOT_EXIST_EXCEPTION = "This order not exist!";
 
     public static final String ERR_COUPON_NOT_FOUND_EXCEPTION = "Coupon not found!";
-
     public static final String INFO_COUPON_IS_LOST = "Coupon is lost!";
     public static final String INFO_COUPON_IS_WAITING = "Coupon is waiting!";
+    public static final String ERR_COUPON_RATE_IS_LOWER_THAN_0 = "Coupon rate cant be lower than 0!";
+    public static final String ERR_COUPON_TYPE_NOT_FOUND_EXCEPTION = "Coupon type not found!";
+
+    public static final String ERR_MATCH_NOT_FOUND_EXCEPTION = "Match not found!";
+    public static final String ERR_MATCH_DAY_NOT_FOUND_EXCEPTION = "Match day not found!";
+
     public static final String ERR_SOMETHING_WENT_WRONG_EXCEPTION = "Something went wrong! Contact with the administrator!";
 
     //football.data
@@ -39,9 +44,6 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_COMPETITION_TABLE_ELEMENT_NOT_FOUND_EXCEPTION = "Competition table element not found!";
     public static final String ERR_FILTERED_LIST_EXCEPTION = "Size of the filtered list is not equal to 1!";
     public static final String ERR_MATCH_SCORE_NOT_FOUND_EXCEPTION = "Match score not found!";
-    public static final String ERR_MATCH_NOT_FOUND_EXCEPTION = "Match not found!";
-    public static final String ERR_MATCH_DAY_NOT_FOUND_EXCEPTION = "Match day not found!";
-    public static final String ERR_COUPON_TYPE_NOT_FOUND_EXCEPTION = "Coupon type not found!";
     //openweathermap
     public static final String ERR_WEATHER_NULL_EXCEPTION = "Weather class is equal to null!";
     public static final String ERR_WEATHER_NOT_FOUND_EXCEPTION = "Weather not found!";

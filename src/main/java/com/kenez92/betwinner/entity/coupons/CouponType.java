@@ -4,6 +4,7 @@ import com.kenez92.betwinner.domain.MatchType;
 import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.entity.Coupon;
 import com.kenez92.betwinner.entity.matches.Match;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,13 +29,15 @@ public class CouponType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MATCH_TYPE")
     private MatchType matchType;
 
+    @Builder.Default
     @Enumerated(value = EnumType.STRING)
     @Column(name = "TYPE_STATUS")
-    private Status status;
+    private Status status = Status.WAITING;
 
     @ManyToOne
     private Match match;

@@ -57,6 +57,14 @@ public class CouponController {
         return couponDto;
     }
 
+    @PutMapping(value = "/{couponId}/{rate}")
+    public CouponDto setRate(@PathVariable Long couponId, @PathVariable Double rate) {
+        log.info("Set rate of the coupon id / rate : {}{}", couponId, rate);
+        CouponDto couponDto = couponService.setRate(couponId, rate);
+        log.info("Return coupon after setting rate: {}", couponDto);
+        return couponDto;
+    }
+
     @DeleteMapping("/{couponId}")
     public boolean deleteCoupon(@PathVariable Long couponId) {
         log.info("Deleting coupon id: {}", couponId);
