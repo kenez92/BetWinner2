@@ -11,7 +11,7 @@ import com.kenez92.betwinner.entity.matches.MatchScore;
 import com.kenez92.betwinner.entity.matches.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.repository.CouponRepository;
-import com.kenez92.betwinner.repository.matches.MatchRepository;
+import com.kenez92.betwinner.repository.coupons.CouponTypeRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,8 +37,6 @@ public class CouponServiceTestSuite {
     private CouponService couponService;
     @MockBean
     private CouponRepository couponRepository;
-    @MockBean
-    private MatchRepository matchRepository;
 
     @Test
     public void testGetCoupon() {
@@ -53,7 +51,6 @@ public class CouponServiceTestSuite {
         Assert.assertEquals(coupon.getCourse(), tmpCoupon.getCourse());
         Assert.assertEquals(coupon.getRate(), tmpCoupon.getRate());
         Assert.assertEquals(coupon.getResult(), tmpCoupon.getResult());
-        Assert.assertEquals(3, tmpCoupon.getCouponTypeList().size());
     }
 
     @Test

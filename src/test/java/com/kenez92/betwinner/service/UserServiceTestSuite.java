@@ -5,6 +5,7 @@ import com.kenez92.betwinner.domain.UserRole;
 import com.kenez92.betwinner.entity.User;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.repository.UserRepository;
+import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ public class UserServiceTestSuite {
     private UserService userService;
     @MockBean
     private UserRepository userRepository;
+    @Autowired
+    private UserStrategyFactory userStrategyFactory;
 
     @Test
     public void testQuantityOfUsers() {
@@ -54,6 +57,8 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
         Assert.assertEquals(user.getOrders().size(), userDto.getOrders().size());
+        Assert.assertTrue(user.getSubscription());
+        Assert.assertEquals(UserStrategyFactory.NORMAL_STRATEGY, userDto.getUserStrategy());
     }
 
     @Test
@@ -95,6 +100,8 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
         Assert.assertEquals(user.getOrders().size(), userDto.getOrders().size());
+        Assert.assertTrue(user.getSubscription());
+        Assert.assertEquals(UserStrategyFactory.NORMAL_STRATEGY, userDto.getUserStrategy());
     }
 
     @Test
@@ -165,6 +172,8 @@ public class UserServiceTestSuite {
                 .password("Test password")
                 .role(UserRole.ROLE_ADMIN)
                 .email("test@test.pl")
+                .userStrategy(userStrategyFactory.factory(UserStrategyFactory.NORMAL_STRATEGY))
+                .subscription(true)
                 .orders(new ArrayList<>())
                 .build();
     }
