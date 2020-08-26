@@ -109,6 +109,18 @@ public class OrderControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.user.id", Matchers.is(123)));
     }
 
+    @Test
+    public void testDeleteOrder() throws Exception {
+        //Given
+        Mockito.when(orderService.deleteOrder(ArgumentMatchers.anyLong())).thenReturn(true);
+        //When & Then
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/v1/orders/3323452")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is(true)));
+    }
+
     private OrderDto createOrderDto() {
         return OrderDto.builder()
                 .id(3L)
