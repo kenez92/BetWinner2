@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("v1/coupons/types")
+@RequestMapping("/v1/coupons/types")
 public class CouponTypeController {
     private final CouponTypeService couponTypeService;
 

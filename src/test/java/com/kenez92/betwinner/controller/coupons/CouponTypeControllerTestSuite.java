@@ -22,6 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -43,6 +44,7 @@ public class CouponTypeControllerTestSuite {
     private CouponTypeService couponTypeService;
 
     @Test
+    @WithMockUser(username = "admin")
     public void shouldFetchEmptyList() throws Exception {
         //Given
         Mockito.when(couponTypeService.getCouponTypes()).thenReturn(new ArrayList<>());
@@ -55,6 +57,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testGeCouponTypes() throws Exception {
         //Given
         List<CouponTypeDto> couponTypeDtoList = new ArrayList<>();
@@ -75,6 +78,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testGetCouponType() throws Exception {
         //Given
         Mockito.when(couponTypeService.getCouponType(ArgumentMatchers.anyLong())).thenReturn(createCouponTypeDto());
@@ -91,6 +95,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testGetCouponTypeShouldThrowBetWinnerExceptionWhenNotFound() throws Exception {
         //Given
         Mockito.when(couponTypeService.getCouponType(ArgumentMatchers.anyLong()))
@@ -106,6 +111,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testUpdateCouponType() throws Exception {
         //Given
         Mockito.when(couponTypeService.updateCouponType(ArgumentMatchers.any(CouponTypeDto.class)))
@@ -127,6 +133,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testDeleteCouponType() throws Exception {
         //Given
         Mockito.when(couponTypeService.deleteCouponType(ArgumentMatchers.anyLong())).thenReturn(true);

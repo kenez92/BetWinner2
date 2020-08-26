@@ -132,8 +132,11 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         log.debug("Trying to log in user: {}", username);
-        UserDto userDto = userRepository.findByLogin(username).map(userMapper::mapToUserDto)
+        User user = userRepository.findByLogin(username)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_LOGIN_NOT_FOUND_EXCEPTION));
+        setOrderList(user);
+        UserDto userDto = userMapper.mapToUserDto(user);
+
         log.debug("Logging in user: {}", userDto.getLogin());
         return userDto;
     }
