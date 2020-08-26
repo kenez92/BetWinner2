@@ -48,6 +48,14 @@ public class UserController {
         return updatedUserDTo;
     }
 
+    @PutMapping(value = "/{userId}/{strategy}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto changeStrategy(@PathVariable Long userId, @PathVariable String strategy) {
+        log.info("Changing strategy user : {}{}", userId, strategy);
+        UserDto userDto = userService.changeStrategy(userId, strategy);
+        log.info("Changed user strategy: {}", userDto);
+        return userDto;
+    }
+
     @DeleteMapping("/{userId}")
     public boolean deleteUser(@PathVariable Long userId) {
         log.info("Deleting user by id: {}", userId);

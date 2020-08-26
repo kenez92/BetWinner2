@@ -1,14 +1,13 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.UserDto;
-import com.kenez92.betwinner.domain.matches.MatchDto;
-import com.kenez92.betwinner.domain.scheduler.Mail;
 import com.kenez92.betwinner.entity.Order;
 import com.kenez92.betwinner.entity.User;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.UserMapper;
 import com.kenez92.betwinner.repository.OrderRepository;
 import com.kenez92.betwinner.repository.UserRepository;
+import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,12 +28,22 @@ public class UserService implements UserDetailsService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final OrderRepository orderRepository;
+    private final UserStrategyFactory userStrategyFactory;
 
     public Long getQuantityOfUsers() {
         log.debug("Counting users");
         Long result = userRepository.quantity();
         log.debug("Quantity of users: {}", result);
         return result;
+    }
+
+    public UserDto changeStrategy(Long userId, String strategy) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
+        user.setUserStrategy(userStrategyFactory.factory(strategy));
+        User updateUser = userRepository.save(user);
+        setOrderList(updateUser);
+        return userMapper.mapToUserDto(updateUser);
     }
 
     public List<UserDto> getUsers() {

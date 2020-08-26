@@ -36,6 +36,9 @@ public class CouponTypeService {
     public List<CouponTypeDto> getCouponTypes() {
         log.debug("Getting coupon types");
         List<CouponType> couponTypeList = couponTypeRepository.findAll();
+        for (CouponType couponType : couponTypeList) {
+            setData(couponType);
+        }
         List<CouponTypeDto> couponTypeDtoList = couponTypeMapper.mapToCouponTypeDtoList(couponTypeList);
         log.debug("Return coupon types: {}", couponTypeDtoList);
         return couponTypeDtoList;

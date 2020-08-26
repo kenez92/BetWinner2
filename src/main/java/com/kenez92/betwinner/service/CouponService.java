@@ -34,6 +34,9 @@ public class CouponService {
     public List<CouponDto> getCoupons() {
         log.debug("Getting all coupons");
         List<Coupon> couponList = couponRepository.findAll();
+        for (Coupon coupon : couponList) {
+            setData(coupon);
+        }
         List<CouponDto> couponDtoList = couponMapper.mapToCouponDtoList(couponList);
         log.debug("Return all coupons: {}", couponDtoList);
         return couponDtoList;
