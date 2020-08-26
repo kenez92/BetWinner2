@@ -50,7 +50,7 @@ public class OrderService {
                 log.debug("Return created order: {}", createdOrder);
                 return createdOrder;
             }
-            userService.putMoney(orderDto.getUser().getId(), orderDto.getCoupon().getRate());
+            userService.putMoney(orderDto.getUser().getId(), -(orderDto.getCoupon().getRate()));
         }
         throw new BetWinnerException(BetWinnerException.ERR_ORDER_ID_MUST_BE_NULL_OR_0_EXCEPTION);
     }
