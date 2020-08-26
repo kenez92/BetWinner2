@@ -21,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,7 +40,9 @@ public class OrderControllerTestSuite {
     @MockBean
     private OrderService orderService;
 
+
     @Test
+    @WithMockUser(username="admin")
     public void testGetOrders() throws Exception {
         //Given
         List<OrderDto> orderDtoList = new ArrayList<>();
@@ -55,13 +58,15 @@ public class OrderControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testGetOrder() throws Exception {
         //Given
         Mockito.when(orderService.getOrder(ArgumentMatchers.anyLong())).thenReturn(createOrderDto());
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/v1/orders/23214")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .secure(true))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.coupon.id", Matchers.is(302)))

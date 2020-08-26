@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,6 +40,7 @@ public class CouponControllerTestSuite {
     private CouponService couponService;
 
     @Test
+    @WithMockUser(username = "admin")
     public void testGetCoupons() throws Exception {
         //Given
         List<CouponDto> couponDtoList = new ArrayList<>();
@@ -54,6 +56,7 @@ public class CouponControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testGetCoupon() throws Exception {
         //Given
         Mockito.when(couponService.getCoupon(ArgumentMatchers.anyLong())).thenReturn(createCouponDto());
@@ -71,6 +74,7 @@ public class CouponControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testCreateEmptyCoupon() throws Exception {
         //Given
         CouponDto couponDto = CouponDto.builder()
@@ -96,6 +100,7 @@ public class CouponControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testCheckCoupon() throws Exception {
         //Given
         Mockito.when(couponService.checkCoupon(ArgumentMatchers.anyLong())).thenReturn(Status.WAITING);
@@ -108,6 +113,7 @@ public class CouponControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testAddMatch() throws Exception {
         //Given
         Mockito.when(couponService.addMatch(ArgumentMatchers.anyLong(), ArgumentMatchers.any(CouponTypeDto.class)))
@@ -124,6 +130,7 @@ public class CouponControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     public void testSetRate() throws Exception {
         //Given
         Mockito.when(couponService.setRate(ArgumentMatchers.anyLong(), ArgumentMatchers.anyDouble()))
@@ -137,6 +144,7 @@ public class CouponControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testDeleteCoupon() throws Exception {
         //Given
         Mockito.when(couponService.deleteCoupon(ArgumentMatchers.anyLong())).thenReturn(true);

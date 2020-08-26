@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -33,6 +34,7 @@ public class UserControllerTestSuite {
     private UserService userService;
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testGetUser() throws Exception {
         //Given
         Mockito.when(userService.getUser(ArgumentMatchers.anyLong())).thenReturn(createUserDto());
@@ -55,6 +57,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testGetUsers() throws Exception {
         //Given
         List<UserDto> userDtoList = new ArrayList<>();
@@ -108,6 +111,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testUpdateUser() throws Exception {
         //Given
         UserDto userDto = createUserDto();
@@ -135,6 +139,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testChangeStrategy() throws Exception {
         //Given
         UserDto userDto = createUserDto();
@@ -158,6 +163,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testPutMoney() throws Exception {
         //Given
         UserDto userDto = createUserDto();
@@ -181,6 +187,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testDeleteUser() throws Exception {
         //Given
         Mockito.when(userService.deleteUser(ArgumentMatchers.anyLong())).thenReturn(true);
