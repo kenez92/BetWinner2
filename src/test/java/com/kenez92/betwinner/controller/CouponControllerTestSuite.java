@@ -136,6 +136,17 @@ public class CouponControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
+    @Test
+    public void testDeleteCoupon() throws Exception {
+        //Given
+        Mockito.when(couponService.deleteCoupon(ArgumentMatchers.anyLong())).thenReturn(true);
+        //When & Then
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/v1/coupons/333")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
     private CouponTypeDto createCouponTypeDto() {
         return CouponTypeDto.builder()
                 .id(2303L)
