@@ -26,6 +26,7 @@ public class UserDto implements UserDetails {
     private String email;
     private String userStrategy;
     private Boolean subscription;
+    private String money;
     private List<OrderDto> orders;
 
     @Override

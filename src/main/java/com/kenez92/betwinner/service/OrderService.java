@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -17,6 +18,7 @@ import java.util.List;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final UserService userService;
 
     public List<OrderDto> getOrders() {
         log.debug("Getting all orders");
@@ -36,16 +38,19 @@ public class OrderService {
     }
 
     public OrderDto createOrder(OrderDto orderDto) {
-        if (orderDto.getId() != null) {
-            if (orderDto.getId() != 0 && isExisting(orderDto.getId())) {
-                throw new BetWinnerException(BetWinnerException.ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+        if (orderDto.getUser().getMoney().compareTo(BigDecimal.valueOf(orderDto.getCoupon().getRate())) > 0) {
+            if (orderDto.getId() != null) {
+                if (orderDto.getId() != 0 && isExisting(orderDto.getId())) {
+                    throw new BetWinnerException(BetWinnerException.ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+                }
+            } else {
+                log.debug("Creating new order: {}", orderDto);
+                Order order = orderRepository.save(orderMapper.mapToOrder(orderDto));
+                OrderDto createdOrder = orderMapper.mapToOrderDto(order);
+                log.debug("Return created order: {}", createdOrder);
+                return createdOrder;
             }
-        } else {
-            log.debug("Creating new order: {}", orderDto);
-            Order order = orderRepository.save(orderMapper.mapToOrder(orderDto));
-            OrderDto createdOrder = orderMapper.mapToOrderDto(order);
-            log.debug("Return created order: {}", createdOrder);
-            return createdOrder;
+            userService.putMoney(orderDto.getUser().getId(), orderDto.getCoupon().getRate());
         }
         throw new BetWinnerException(BetWinnerException.ERR_ORDER_ID_MUST_BE_NULL_OR_0_EXCEPTION);
     }

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,9 @@ public class User {
 
     @Column(name = "SUBSCRIPTION")
     private Boolean subscription;
+
+    @Column(name = "MONEY")
+    private BigDecimal money;
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,

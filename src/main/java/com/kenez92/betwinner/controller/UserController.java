@@ -56,6 +56,14 @@ public class UserController {
         return userDto;
     }
 
+    @PutMapping(value = "/{userId}/add/{money}")
+    public UserDto putMoney(@PathVariable Long userId, @PathVariable Double money) {
+        log.info("Adding money : {}, to user id {}", money, userId);
+        UserDto userDto = userService.putMoney(userId, money);
+        log.info("Added money successful: {}", userDto);
+        return userDto;
+    }
+
     @DeleteMapping("/{userId}")
     public boolean deleteUser(@PathVariable Long userId) {
         log.info("Deleting user by id: {}", userId);

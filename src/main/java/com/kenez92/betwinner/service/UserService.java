@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +107,21 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
+    public UserDto putMoney(Long userId, Double money) {
+        log.debug("Adding money {}, to user id: {}", money, userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
+        if (user.getMoney() == null) {
+            user.setMoney(BigDecimal.ZERO);
+        }
+        BigDecimal result = user.getMoney().add(BigDecimal.valueOf(money));
+        user.setMoney(result);
+        User savedUser = userRepository.save(user);
+        log.debug("Added money to user successful");
+        setOrderList(savedUser);
+        return userMapper.mapToUserDto(savedUser);
+    }
+
     private boolean isExisting(Long userId) {
         boolean result = userRepository.existsById(userId);
         log.info("User exists: {}", result);
@@ -129,4 +145,5 @@ public class UserService implements UserDetailsService {
         }
         user.setOrders(orderList);
     }
+
 }
