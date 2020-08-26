@@ -75,7 +75,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
-    public void testGetCoupon() throws Exception {
+    public void testGetCouponType() throws Exception {
         //Given
         Mockito.when(couponTypeService.getCouponType(ArgumentMatchers.anyLong())).thenReturn(createCouponTypeDto());
         //When & Then
@@ -91,7 +91,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
-    public void testGetCouponShouldThrowBetWinnerExceptionWhenNotFound() throws Exception {
+    public void testGetCouponTypeShouldThrowBetWinnerExceptionWhenNotFound() throws Exception {
         //Given
         Mockito.when(couponTypeService.getCouponType(ArgumentMatchers.anyLong()))
                 .thenThrow(new BetWinnerException(BetWinnerException.ERR_COUPON_TYPE_NOT_FOUND_EXCEPTION));
@@ -127,7 +127,7 @@ public class CouponTypeControllerTestSuite {
     }
 
     @Test
-    public void testDeleteMapping() throws Exception {
+    public void testDeleteCouponType() throws Exception {
         //Given
         Mockito.when(couponTypeService.deleteCouponType(ArgumentMatchers.anyLong())).thenReturn(true);
         //When & Then

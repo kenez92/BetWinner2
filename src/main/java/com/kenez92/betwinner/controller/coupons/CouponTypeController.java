@@ -17,7 +17,7 @@ public class CouponTypeController {
     private final CouponTypeService couponTypeService;
 
     @GetMapping(value = "/{couponId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CouponTypeDto getCoupon(@PathVariable Long couponId) {
+    public CouponTypeDto getCouponType(@PathVariable Long couponId) {
         log.info("Getting coupon type id :{}", couponId);
         CouponTypeDto couponTypeDto = couponTypeService.getCouponType(couponId);
         log.info("Return coupon type: {}", couponTypeDto);
