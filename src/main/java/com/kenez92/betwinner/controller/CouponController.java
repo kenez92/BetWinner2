@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.controller;
 
 import com.kenez92.betwinner.domain.CouponDto;
+import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.service.CouponService;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +43,9 @@ public class CouponController {
     }
 
     @PutMapping(value = "/check/{couponId}")
-    public boolean checkCoupon(@PathVariable Long couponId) {
+    public Status checkCoupon(@PathVariable Long couponId) {
         log.info("Checking coupon id: {}", couponId);
-        boolean result = couponService.checkCoupon(couponId);
+        Status result = couponService.checkCoupon(couponId);
         log.info("Result of the coupon with id : {}{}", couponId, " :" + result);
         return result;
     }

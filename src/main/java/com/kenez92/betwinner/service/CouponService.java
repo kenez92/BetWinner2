@@ -91,7 +91,7 @@ public class CouponService {
         }
     }
 
-    public boolean checkCoupon(Long couponId) {
+    public Status checkCoupon(Long couponId) {
         log.debug("Checking coupon id: {}", couponId);
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
@@ -104,9 +104,9 @@ public class CouponService {
             } else if (couponType.getStatus().equals(Status.LOST)) {
                 coupon.setCouponStatus(Status.LOST);
                 couponRepository.save(coupon);
-                throw new BetWinnerException(BetWinnerException.INFO_COUPON_IS_LOST);
+                return Status.LOST;
             } else if (couponType.getStatus().equals(Status.WAITING)) {
-                throw new BetWinnerException(BetWinnerException.INFO_COUPON_IS_WAITING);
+                return Status.WAITING;
             } else {
                 throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
             }
@@ -115,7 +115,7 @@ public class CouponService {
             coupon.setCouponStatus(Status.WIN);
             couponRepository.save(coupon);
         }
-        return true;
+        return Status.WIN;
     }
 
     public CouponDto addMatch(Long couponId, CouponTypeDto couponTypeDto) {
