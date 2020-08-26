@@ -1,9 +1,13 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.UserDto;
+import com.kenez92.betwinner.domain.matches.MatchDto;
+import com.kenez92.betwinner.domain.scheduler.Mail;
+import com.kenez92.betwinner.entity.Order;
 import com.kenez92.betwinner.entity.User;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.UserMapper;
+import com.kenez92.betwinner.repository.OrderRepository;
 import com.kenez92.betwinner.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,6 +28,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final OrderRepository orderRepository;
 
     public Long getQuantityOfUsers() {
         log.debug("Counting users");
@@ -43,6 +49,7 @@ public class UserService implements UserDetailsService {
         log.debug("Getting user by id: {}", userId);
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
+        setOrderList(user);
         UserDto UserDto = userMapper.mapToUserDto(user);
         log.debug("Return user: {}", UserDto);
         return UserDto;
@@ -69,6 +76,7 @@ public class UserService implements UserDetailsService {
             log.debug("Updating user id: {}", userDto.getId());
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
             User updatedUser = userRepository.save(userMapper.mapToUser(userDto));
+            setOrderList(updatedUser);
             UserDto updatedUserDto = userMapper.mapToUserDto(updatedUser);
             log.debug("Return updated user: {}", updatedUser);
             return updatedUserDto;
@@ -103,5 +111,13 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_LOGIN_NOT_FOUND_EXCEPTION));
         log.debug("Logging in user: {}", userDto.getLogin());
         return userDto;
+    }
+
+    private void setOrderList(User user) {
+        List<Order> orderList = orderRepository.findByUser(user);
+        for (int i = 0; i < orderList.size(); i++) {
+            orderList.get(i).getCoupon().setCouponTypeList(new ArrayList<>());
+        }
+        user.setOrders(orderList);
     }
 }

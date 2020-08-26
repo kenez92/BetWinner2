@@ -12,10 +12,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NamedQuery(
-        name = "User.quantity",
-        query = "SELECT COUNT(u) FROM User u"
-)
+@NamedQueries({
+        @NamedQuery(
+                name = "User.quantity",
+                query = "SELECT COUNT(u) FROM User u"
+        ),
+        @NamedQuery(
+                name = "User.usersForSubscription",
+                query = "FROM User WHERE subscription is true"
+        )
+})
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -48,6 +55,9 @@ public class User {
     @Convert(converter = UserStrategyConverter.class)
     @Column(name = "STRATEGY")
     private UserStrategy userStrategy;
+
+    @Column(name = "SUBSCRIPTION")
+    private Boolean subscription;
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,
