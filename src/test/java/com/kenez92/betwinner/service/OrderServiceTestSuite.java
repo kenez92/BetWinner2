@@ -1,16 +1,17 @@
 package com.kenez92.betwinner.service;
 
-import com.kenez92.betwinner.domain.OrderDto;
-import com.kenez92.betwinner.domain.UserRole;
+import com.kenez92.betwinner.domain.*;
 import com.kenez92.betwinner.entity.Coupon;
 import com.kenez92.betwinner.entity.Order;
 import com.kenez92.betwinner.entity.User;
+import com.kenez92.betwinner.entity.coupons.CouponType;
 import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.entity.matches.MatchScore;
 import com.kenez92.betwinner.entity.matches.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.repository.OrderRepository;
+import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,8 +37,12 @@ public class OrderServiceTestSuite {
 
     @Autowired
     private OrderService orderService;
+
     @MockBean
     private OrderRepository orderRepository;
+
+    @Autowired
+    private UserStrategyFactory userStrategyFactory;
 
     @Test
     public void testGetOrders() {
@@ -79,6 +85,13 @@ public class OrderServiceTestSuite {
     public void testCreateOrder() {
         //Given
         OrderDto orderDto = new OrderDto();
+        orderDto.setUser(UserDto.builder()
+                .id(234L)
+                .money("2000")
+                .build());
+        orderDto.setCoupon(CouponDto.builder()
+                .rate(10.0)
+                .build());
         Order order = createOrder();
         Mockito.when(orderRepository.save(ArgumentMatchers.any(Order.class))).thenReturn(order);
         //When
@@ -91,6 +104,13 @@ public class OrderServiceTestSuite {
     public void testCreateOrderShouldThrowExceptionWhenIdIsDifferentThanNullOr0() {
         //Given
         OrderDto orderDto = new OrderDto();
+        orderDto.setUser(UserDto.builder()
+                .id(234L)
+                .money("2000")
+                .build());
+        orderDto.setCoupon(CouponDto.builder()
+                .rate(10.0)
+                .build());
         orderDto.setId(2332L);
         //When
         //Given
@@ -150,26 +170,37 @@ public class OrderServiceTestSuite {
                 .build();
     }
 
-    private Coupon createCoupon() {
-        return Coupon.builder()
-                .id(-5L)
-                .couponTypeList(new ArrayList<>()) // do naprawienia
+    private User createUser() {
+        return User.builder()
+                .id(123L)
+                .firstName("Test first name")
+                .lastName("Test last name")
+                .login("Test")
+                .password("Test password")
+                .role(UserRole.ROLE_ADMIN)
+                .email("test@test.pl")
+                .userStrategy(userStrategyFactory.factory(UserStrategyFactory.NORMAL_STRATEGY))
+                .subscription(true)
+                .money(BigDecimal.valueOf(1200))
+                .orders(new ArrayList<>())
                 .build();
     }
 
-    private List<Match> createMatchList() {
-        List<Match> matchList = new ArrayList<>();
-        matchList.add(createMatch());
-        matchList.add(createMatch());
-        matchList.add(createMatch());
-        return matchList;
+    private CouponType createCouponType() {
+        return CouponType.builder()
+                .id(2303L)
+                .matchType(MatchType.HOME_TEAM)
+                .status(Status.WAITING)
+                .match(createMatch())
+                .build();
     }
 
     private Match createMatch() {
-        return Match.builder()
-                .footballId(-11234L)
-                .homeTeam(HOME_TEAM)
-                .awayTeam(AWAY_TEAM)
+        return com.kenez92.betwinner.entity.matches.Match.builder()
+                .id(832983L)
+                .footballId(11234L)
+                .homeTeam("HOME_TEAM")
+                .awayTeam("AWAY_TEAM")
                 .competitionId(-202L)
                 .seasonId(-203L)
                 .date(new Date())
@@ -185,16 +216,14 @@ public class OrderServiceTestSuite {
                 .build();
     }
 
-    private User createUser() {
-        return User.builder()
-                .id(123L)
-                .firstName("Test first name")
-                .lastName("Test last name")
-                .login("Test")
-                .password("Test password")
-                .role(UserRole.ROLE_ADMIN)
-                .email("test@test.pl")
-                .orders(new ArrayList<>())
+    private Coupon createCoupon() {
+        List<CouponType> couponTypeList = new ArrayList<>();
+        couponTypeList.add(createCouponType());
+        couponTypeList.add(createCouponType());
+        return Coupon.builder()
+                .id(302L)
+                .couponTypeList(couponTypeList)
+                .rate(20.0)
                 .build();
     }
 

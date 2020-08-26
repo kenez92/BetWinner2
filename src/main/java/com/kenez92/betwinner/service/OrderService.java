@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -32,13 +33,14 @@ public class OrderService {
         log.debug("Getting order id: {}", orderId);
         Order order = orderRepository.findById(orderId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_ORDER_NOT_FOUND_EXCEPTION));
+        setData(order);
         OrderDto orderDto = orderMapper.mapToOrderDto(order);
         log.debug("Return order: {}", orderDto);
         return orderDto;
     }
 
     public OrderDto createOrder(OrderDto orderDto) {
-        if (orderDto.getUser().getMoney().compareTo(BigDecimal.valueOf(orderDto.getCoupon().getRate())) > 0) {
+        if (new BigDecimal(orderDto.getUser().getMoney()).compareTo(BigDecimal.valueOf(orderDto.getCoupon().getRate())) > 0) {
             if (orderDto.getId() != null) {
                 if (orderDto.getId() != 0 && isExisting(orderDto.getId())) {
                     throw new BetWinnerException(BetWinnerException.ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
@@ -78,6 +80,11 @@ public class OrderService {
         }
         log.debug("Order not exists id: {}", orderId);
         return false;
+    }
+
+    private void setData(Order order) {
+        order.getUser().setOrders(new ArrayList<>());
+        //order.getCoupon().getCouponTypeList().
     }
 
     private boolean isExisting(final Long orderId) {
