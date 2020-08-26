@@ -1,6 +1,8 @@
 package com.kenez92.betwinner.entity;
 
 import com.kenez92.betwinner.domain.UserRole;
+import com.kenez92.betwinner.service.users.strategy.UserStrategy;
+import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +44,10 @@ public class User {
 
     @Column(name = "E_MAIL")
     private String email;
+
+    @Convert(converter = UserStrategyConverter.class)
+    @Column(name = "STRATEGY")
+    private UserStrategy userStrategy;
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,

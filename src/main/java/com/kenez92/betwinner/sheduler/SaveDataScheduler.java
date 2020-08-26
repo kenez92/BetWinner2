@@ -34,8 +34,8 @@ public class SaveDataScheduler {
     private final SaveWeather saveWeather;
     private final CouponTypeService couponTypeService;
 
-    //@Scheduled(cron = "0 0 1,23 * * *")
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(cron = "0 0 1,23 * * *")
+    //@Scheduled(fixedDelay = 1000)
     private void saveData() throws InterruptedException {
         saveTables();
         saveMatches();

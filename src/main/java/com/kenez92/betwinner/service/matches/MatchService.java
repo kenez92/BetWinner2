@@ -58,4 +58,12 @@ public class MatchService {
         log.debug("Return saved match: {}", savedMatchDto);
         return savedMatchDto;
     }
+
+    public List<MatchDto> predictMatches(double numberOne, double numberTwo) {
+        log.debug("Getting matches where chance is bigger and lower than : {}{}", numberOne, numberTwo);
+        List<Match> matches = matchRepository.predictMatches(numberOne, numberTwo);
+        List<MatchDto> matchDtoList = matchMapper.mapToMatchDtoList(matches);
+        log.debug("Return matches : {}", matchDtoList);
+        return matchDtoList;
+    }
 }

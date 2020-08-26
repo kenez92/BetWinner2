@@ -3,7 +3,9 @@ package com.kenez92.betwinner.repository.matches;
 import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.entity.matches.Weather;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -23,4 +25,7 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
     Optional<Match> findByHomeTeamAndAwayTeamAndRound(final String homeTeam, final String awayTeam, final Integer round);
 
     List<Match> findByWeather(final Weather weather);
+
+    @Query
+    List<Match> predictMatches(@Param("NUMBER_ONE") double numberOne, @Param("NUMBER_TWO") double numberTwo);
 }

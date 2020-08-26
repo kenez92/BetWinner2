@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@NamedQuery(
+        name = "Match.predictMatches",
+        query = "FROM Match WHERE homeTeamChance > :NUMBER_ONE AND homeTeamChance < :NUMBER_TWO "
+                + " OR awayTeamChance > :NUMBER_ONE AND awayTeamChance < :NUMBER_TWO"
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
