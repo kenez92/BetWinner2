@@ -1,8 +1,10 @@
 package com.kenez92.betwinner.service.table;
 
+import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
 import com.kenez92.betwinner.domain.table.CompetitionTableDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
+import com.kenez92.betwinner.entity.table.Competition;
 import com.kenez92.betwinner.entity.table.CompetitionSeason;
 import com.kenez92.betwinner.entity.table.CompetitionTable;
 import com.kenez92.betwinner.entity.table.CurrentMatchDay;
@@ -147,7 +149,7 @@ public class CompetitionTableServiceTestSuite {
         return CurrentMatchDay.builder()
                 .id(23444L)
                 .matchDay(2)
-                .competitionSeason(new CompetitionSeason())
+                .competitionSeason(createCompetitionSeason())
                 .competitionTableList(new ArrayList<>())
                 .build();
     }
@@ -165,7 +167,37 @@ public class CompetitionTableServiceTestSuite {
     private CurrentMatchDayDto createCurrentMatchDayDto() {
         return CurrentMatchDayDto.builder()
                 .id(234234L)
-                .competitionSeason(new CompetitionSeasonDto())
+                .competitionSeason(createCompetitionSeasonDto())
+                .build();
+    }
+
+    private CompetitionSeason createCompetitionSeason() {
+        return CompetitionSeason.builder()
+                .id(24123L)
+                .competition(createCompetition())
+                .build();
+    }
+
+    private CompetitionSeasonDto createCompetitionSeasonDto() {
+        return CompetitionSeasonDto.builder()
+                .id(2543L)
+                .competition(createCompetitionDto())
+                .build();
+    }
+
+    private CompetitionDto createCompetitionDto() {
+        return CompetitionDto.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
+                .build();
+    }
+
+    private Competition createCompetition() {
+        return Competition.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
                 .build();
     }
 }

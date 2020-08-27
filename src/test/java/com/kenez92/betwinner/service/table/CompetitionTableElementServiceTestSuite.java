@@ -1,9 +1,6 @@
 package com.kenez92.betwinner.service.table;
 
-import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
-import com.kenez92.betwinner.domain.table.CompetitionTableDto;
-import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
-import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
+import com.kenez92.betwinner.domain.table.*;
 import com.kenez92.betwinner.entity.table.CompetitionTable;
 import com.kenez92.betwinner.entity.table.CompetitionTableElement;
 import com.kenez92.betwinner.entity.table.CurrentMatchDay;
@@ -248,7 +245,22 @@ public class CompetitionTableElementServiceTestSuite {
     private CurrentMatchDayDto createCurrentMatchDayDto() {
         return CurrentMatchDayDto.builder()
                 .id(234234L)
-                .competitionSeason(new CompetitionSeasonDto())
+                .competitionSeason(createCompetitionSeasonDto())
+                .build();
+    }
+
+    private CompetitionSeasonDto createCompetitionSeasonDto() {
+        return CompetitionSeasonDto.builder()
+                .id(2543L)
+                .competition(createCompetitionDto())
+                .build();
+    }
+
+    private CompetitionDto createCompetitionDto() {
+        return CompetitionDto.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
                 .build();
     }
 }
