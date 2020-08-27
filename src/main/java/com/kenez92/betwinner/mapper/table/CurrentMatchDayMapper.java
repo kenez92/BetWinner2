@@ -42,7 +42,12 @@ public class CurrentMatchDayMapper {
                 .startDate(currentMatchDayDto.getCompetitionSeason().getStartDate())
                 .endDate(currentMatchDayDto.getCompetitionSeason().getEndDate())
                 .winner(currentMatchDayDto.getCompetitionSeason().getWinner())
-                .competition(new Competition())
+                .competition(Competition.builder()
+                        .id(currentMatchDayDto.getCompetitionSeason().getCompetition().getId())
+                        .footballId(currentMatchDayDto.getCompetitionSeason().getCompetition().getFootballId())
+                        .name(currentMatchDayDto.getCompetitionSeason().getCompetition().getName())
+                        .competitionSeasonList(new ArrayList<>())
+                        .build())
                 .currentMatchDayList(new ArrayList<>())
                 .build();
     }
@@ -54,7 +59,12 @@ public class CurrentMatchDayMapper {
                 .startDate(currentMatchDay.getCompetitionSeason().getStartDate())
                 .endDate(currentMatchDay.getCompetitionSeason().getEndDate())
                 .winner(currentMatchDay.getCompetitionSeason().getWinner())
-                .competition(new CompetitionDto())
+                .competition(CompetitionDto.builder()
+                        .id(currentMatchDay.getCompetitionSeason().getCompetition().getId())
+                        .footballId(currentMatchDay.getCompetitionSeason().getCompetition().getFootballId())
+                        .name(currentMatchDay.getCompetitionSeason().getCompetition().getName())
+                        .competitionSeasonList(new ArrayList<>())
+                        .build())
                 .currentMatchDayList(new ArrayList<>())
                 .build();
     }
