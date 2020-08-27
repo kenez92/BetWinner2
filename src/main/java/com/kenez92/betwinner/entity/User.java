@@ -3,6 +3,7 @@ package com.kenez92.betwinner.entity;
 import com.kenez92.betwinner.domain.UserRole;
 import com.kenez92.betwinner.service.users.strategy.UserStrategy;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyConverter;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,7 +42,8 @@ public class User {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column(name = "LOGIN")
+    @NotNull
+    @Column(unique = true, name = "LOGIN")
     private String login;
 
     @Column(name = "PASSWORD")
@@ -50,7 +52,8 @@ public class User {
     @Column(name = "ROLE")
     private UserRole role;
 
-    @Column(name = "E_MAIL")
+    @NotNull
+    @Column(name = "E_MAIL", unique = true)
     private String email;
 
     @Convert(converter = UserStrategyConverter.class)

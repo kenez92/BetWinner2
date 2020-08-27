@@ -10,6 +10,7 @@ import com.kenez92.betwinner.repository.UserRepository;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -66,19 +67,24 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto createUser(UserDto userDto) {
-        if (userDto.getId() != null) {
-            if (isExisting(userDto.getId())) {
-                throw new BetWinnerException(BetWinnerException.ERR_USER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+        try {
+            if (userDto.getId() != null) {
+                if (isExisting(userDto.getId())) {
+                    throw new BetWinnerException(BetWinnerException.ERR_USER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION);
+                }
+            } else {
+                log.debug("Creating new user: {}", userDto);
+                userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+                User user = userRepository.save(userMapper.mapToUser(userDto));
+                UserDto createdUserDto = userMapper.mapToUserDto(user);
+                log.debug("Return created user: {}", createdUserDto);
+                return createdUserDto;
             }
-        } else {
-            log.debug("Creating new user: {}", userDto);
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            User user = userRepository.save(userMapper.mapToUser(userDto));
-            UserDto createdUserDto = userMapper.mapToUserDto(user);
-            log.debug("Return created user: {}", createdUserDto);
-            return createdUserDto;
+            throw new BetWinnerException(BetWinnerException.ERR_USER_ID_MUST_BE_NULL_OR_0);
+        } catch (DataIntegrityViolationException e) {
+            log.info("Exception occured : {}", e + e.getMessage());
+            throw new BetWinnerException(BetWinnerException.USER_WITH_LOGIN_OR_EMAIL_ALREADY_EXIST_EXCEPTION);
         }
-        throw new BetWinnerException(BetWinnerException.ERR_USER_ID_MUST_BE_NULL_OR_0);
     }
 
     public UserDto updateUser(UserDto userDto) {
