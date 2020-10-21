@@ -119,6 +119,35 @@ public class MatchControllerTestSuite {
                         result.getResolvedException().getMessage()));
     }
 
+    @Test
+    public void testGetMatchesAtDay() throws Exception {
+        //Given
+        List<MatchDto> matchDtoList = new ArrayList<>();
+        matchDtoList.add(createMatchDto());
+        matchDtoList.add(createMatchDto());
+        Mockito.when(matchService.getMatchesAtDay(ArgumentMatchers.anyString())).thenReturn(matchDtoList);
+        //When & Then
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/v1/matches/date=2020-01-01")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(1234)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].footballId", Matchers.is(123456789)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].homeTeam", Matchers.is(matchDtoList.get(0).getHomeTeam())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeam", Matchers.is(matchDtoList.get(0).getAwayTeam())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].competitionId", Matchers.is(30000)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].seasonId", Matchers.is(123)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].homeTeamPositionInTable", Matchers.is(3)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeamPositionInTable", Matchers.is(12)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].homeTeamChance", Matchers.is(40.0)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeamChance", Matchers.is(60.0)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].round", Matchers.is(3)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].weather.id", Matchers.is(883383)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchScore.id", Matchers.is(222)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchDay.id", Matchers.is(223)));
+    }
+
     private MatchDto createMatchDto() {
         return MatchDto.builder()
                 .id(1234L)

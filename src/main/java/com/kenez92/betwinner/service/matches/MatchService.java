@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Slf4j
@@ -64,6 +65,20 @@ public class MatchService {
         List<Match> matches = matchRepository.predictMatches(numberOne, numberTwo);
         List<MatchDto> matchDtoList = matchMapper.mapToMatchDtoList(matches);
         log.debug("Return matches : {}", matchDtoList);
+        return matchDtoList;
+    }
+
+    public List<MatchDto> getMatchesAtDay(final String date) {
+        log.debug("Getting matches at: {}", date);
+        Date sqlDate;
+        try {
+            sqlDate = Date.valueOf(date);
+        } catch (IllegalArgumentException e) {
+            throw new BetWinnerException(BetWinnerException.ERR_ILLEGAL_ARGUMENT_EXCEPTION);
+        }
+        List<Match> matches = matchRepository.findMatchesAtDate(sqlDate);
+        List<MatchDto> matchDtoList = matchMapper.mapToMatchDtoList(matches);
+        log.debug("Return matches: {}", matchDtoList);
         return matchDtoList;
     }
 }

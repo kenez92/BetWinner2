@@ -35,4 +35,11 @@ public class MatchController {
         return matchDto;
     }
 
+    @GetMapping(value = "date={date}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MatchDto> getMatchesAtDay(@PathVariable String date) {
+        log.info("Getting matches at day :{}", date);
+        List<MatchDto> matchDtoList = matchService.getMatchesAtDay(date);
+        log.info("Return matches from day: {}{}", date, matchDtoList);
+        return matchDtoList;
+    }
 }

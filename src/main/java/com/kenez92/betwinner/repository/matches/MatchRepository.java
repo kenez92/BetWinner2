@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,4 +29,7 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
 
     @Query
     List<Match> predictMatches(@Param("NUMBER_ONE") double numberOne, @Param("NUMBER_TWO") double numberTwo);
+
+    @Query
+    List<Match> findMatchesAtDate(@Param("DATE") Date date);
 }

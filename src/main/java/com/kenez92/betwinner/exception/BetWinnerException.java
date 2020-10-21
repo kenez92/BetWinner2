@@ -46,6 +46,7 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_WEATHER_NULL_EXCEPTION = "Weather class is equal to null!";
     public static final String ERR_WEATHER_NOT_FOUND_EXCEPTION = "Weather not found!";
     public static final String ERR_DATE_TIME_IS_WRONG_EXCEPTION = "Date time is wrong!";
+    public static final String ERR_ILLEGAL_ARGUMENT_EXCEPTION = "Please put correct date in format \"yyyy-mm-dd\"";
 
 
     public BetWinnerException(String message) {

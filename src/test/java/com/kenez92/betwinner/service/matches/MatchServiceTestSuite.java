@@ -8,8 +8,10 @@ import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.entity.matches.MatchDay;
 import com.kenez92.betwinner.entity.matches.MatchScore;
 import com.kenez92.betwinner.entity.matches.Weather;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.repository.matches.MatchRepository;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -133,6 +135,35 @@ public class MatchServiceTestSuite {
         Assert.assertEquals(match.getAwayTeamChance(), matchDto.getAwayTeamChance());
         Assert.assertEquals(match.getCouponTypeList().size(), matchDto.getCouponTypeList().size());
     }
+
+    @Test
+    public void testGetMatchesAtDay() {
+        //Given
+        String date = "2020-01-01";
+        List<Match> matchList = new ArrayList<>();
+        matchList.add(createMatch());
+        matchList.add(createMatch());
+        Mockito.when(matchRepository.findMatchesAtDate(java.sql.Date.valueOf(date))).thenReturn(matchList);
+        //When
+        List<MatchDto> matchDtoList = matchService.getMatchesAtDay(date);
+        //Then
+        Assert.assertEquals(2, matchDtoList.size());
+    }
+
+    @Test
+    public void testGetMatchesAtDayShouldThrowException() {
+        //Given
+        String date = "2020-01-01an";
+        //When
+        Exception exception = Assertions.assertThrows(BetWinnerException.class, () -> {
+            matchService.getMatchesAtDay(date);
+        });
+        String expectedMessage = BetWinnerException.ERR_ILLEGAL_ARGUMENT_EXCEPTION;
+        String actualMessage = exception.getMessage();
+        //Then
+        Assert.assertTrue(actualMessage.contains(expectedMessage));
+    }
+
 
     private Match createMatch() {
         return Match.builder()

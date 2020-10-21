@@ -11,12 +11,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@NamedQuery(
-        name = "Match.predictMatches",
-        query = "FROM Match WHERE (homeTeamChance > :NUMBER_ONE AND homeTeamChance < :NUMBER_TWO "
-                + " OR awayTeamChance > :NUMBER_ONE AND awayTeamChance < :NUMBER_TWO) "
-                + "AND DATE_FORMAT(DATE, '%m/%d/%Y') = DATE_FORMAT(curdate(), '%m/%d/%Y')"
-)
+@NamedQueries({
+        @NamedQuery(
+                name = "Match.predictMatches",
+                query = "FROM Match WHERE (homeTeamChance > :NUMBER_ONE AND homeTeamChance < :NUMBER_TWO "
+                        + " OR awayTeamChance > :NUMBER_ONE AND awayTeamChance < :NUMBER_TWO) "
+                        + "AND DATE_FORMAT(DATE, '%m/%d/%Y') = DATE_FORMAT(curdate(), '%m/%d/%Y')"
+        ),
+        @NamedQuery(
+                name = "Match.findMatchesAtDate",
+                query = "FROM Match WHERE DATE_FORMAT(DATE, '%m/%d/%Y') = DATE_FORMAT(:DATE, '%m/%d/%Y')"
+        )
+})
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
