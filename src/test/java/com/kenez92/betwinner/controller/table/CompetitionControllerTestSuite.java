@@ -96,6 +96,37 @@ public class CompetitionControllerTestSuite {
                         result.getResolvedException().getMessage()));
     }
 
+    @Test
+    public void testGetCompetitionByName() throws Exception {
+        //Given
+        Mockito.when(competitionService.getByName(ArgumentMatchers.anyString())).thenReturn(createCompetitionDto());
+        //When & Then
+        mockMvc.perform(MockMvcRequestBuilders
+                .get(url.concat("/name/Bundesliga"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(4563)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.footballId", Matchers.is(45252)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Test competition")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.competitionSeasonList", Matchers.hasSize(0)));
+    }
+
+    @Test
+    public void testGetCompetitionByNameShouldThrowExceptionWhenNotFound() throws Exception {
+        //Given
+        Mockito.when(competitionService.getByName(ArgumentMatchers.anyString()))
+                .thenThrow(new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
+        //When & Then
+        mockMvc.perform(MockMvcRequestBuilders
+                .get(url.concat("/name/SomeLeagueName"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(result -> Assert.assertTrue(result.getResolvedException() instanceof BetWinnerException))
+                .andExpect(result -> Assert.assertEquals(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION,
+                        result.getResolvedException().getMessage()));
+    }
+
+
     private CompetitionDto createCompetitionDto() {
         return CompetitionDto.builder()
                 .id(4563L)

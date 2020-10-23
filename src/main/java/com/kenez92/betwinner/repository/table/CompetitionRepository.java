@@ -21,4 +21,6 @@ public interface CompetitionRepository extends CrudRepository<Competition, Long>
     Optional<Competition> findByFootballId(final Long id);
 
     boolean existsByFootballId(final Long id);
+
+    Optional<Competition> findByName(String name);
 }

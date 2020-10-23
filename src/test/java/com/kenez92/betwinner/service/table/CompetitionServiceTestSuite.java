@@ -116,6 +116,21 @@ public class CompetitionServiceTestSuite {
         Assertions.assertThrows(BetWinnerException.class, () -> competitionService.getCompetitionByFootballId(445L));
     }
 
+    @Test
+    public void testGetCompetitionByName() {
+        //Given
+        Competition competition = createCompetition();
+        Mockito.when(competitionRepository.findByName(ArgumentMatchers.anyString())).thenReturn(
+                Optional.ofNullable(competition));
+        //When
+        CompetitionDto competitionDto = competitionService.getByName("Bundesliga");
+        //Then
+        Assert.assertEquals(competition.getId(), competitionDto.getId());
+        Assert.assertEquals(competition.getFootballId(), competitionDto.getFootballId());
+        Assert.assertEquals(competition.getName(), competitionDto.getName());
+        Assert.assertEquals(competition.getCompetitionSeasonList().size(), competitionDto.getCompetitionSeasonList().size());
+    }
+
     private Competition createCompetition() {
         List<CompetitionSeason> competitionSeasonList = new ArrayList<>();
         competitionSeasonList.add(createCompetitionSeason());

@@ -34,4 +34,12 @@ public class CompetitionController {
         log.info("Return competition by id: {}", competitionDto);
         return competitionDto;
     }
+
+    @GetMapping(value = "/name/{competitionName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CompetitionDto getCompetitionById(@PathVariable String competitionName) {
+        log.info("Get competition by name: {}", competitionName);
+        CompetitionDto competitionDto = competitionService.getByName(competitionName);
+        log.info("Return competition : {}", competitionDto);
+        return competitionDto;
+    }
 }

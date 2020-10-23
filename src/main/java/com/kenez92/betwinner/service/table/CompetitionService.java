@@ -62,6 +62,16 @@ public class CompetitionService {
         return competitionDto;
     }
 
+    public CompetitionDto getByName(final String name) {
+        log.debug("Getting competition by name: {}", name);
+        Competition competition = competitionRepository.findByName(name).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
+        fetchCompetitionSeason(competition);
+        CompetitionDto competitionDto = competitionMapper.mapToCompetitionDto(competition);
+        log.debug("Return competition: {}", competitionDto);
+        return competitionDto;
+    }
+
     private void fetchCompetitionSeason(final Competition competition) {
         List<CompetitionSeason> competitionSeasons = competitionSeasonRepository.findByCompetition(competition);
         competition.setCompetitionSeasonList(competitionSeasons);
