@@ -2,9 +2,12 @@ package com.kenez92.betwinner.repository.table;
 
 import com.kenez92.betwinner.entity.table.CompetitionSeason;
 import com.kenez92.betwinner.entity.table.CurrentMatchDay;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NamedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +28,7 @@ public interface CurrentMatchDayRepository extends CrudRepository<CurrentMatchDa
     boolean existsByCompetitionSeasonAndMatchDay(final CompetitionSeason competitionSeason, final Integer matchDay);
 
     List<CurrentMatchDay> findByCompetitionSeason(final CompetitionSeason competitionSeason);
+
+    @Query
+    List<CurrentMatchDay> findByCompetitionSeasonId(@Param("COMPETITION_SEASON_ID") Long competitionSeasonId);
 }

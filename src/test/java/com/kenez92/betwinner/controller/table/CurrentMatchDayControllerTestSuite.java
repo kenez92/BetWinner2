@@ -99,6 +99,27 @@ public class CurrentMatchDayControllerTestSuite {
 
     }
 
+    @Test
+    public void testGetCurrentMatchDaysBySeasonId() throws Exception {
+        //Given
+        List<CurrentMatchDayDto> currentMatchDayDtoList = new ArrayList<>();
+        currentMatchDayDtoList.add(createCurrentMatchDayDto());
+        currentMatchDayDtoList.add(createCurrentMatchDayDto());
+        currentMatchDayDtoList.add(createCurrentMatchDayDto());
+        Mockito.when(currentMatchDayService.getCurrentMatchDaysByCompetitionSeasonId(ArgumentMatchers.anyLong()))
+                .thenReturn(currentMatchDayDtoList);
+        //When & Then
+        mockMvc.perform(MockMvcRequestBuilders
+                .get(url + "/season/62")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(4789878)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchDay", Matchers.is(23)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].competitionSeason.id", Matchers.is(7895)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].competitionTableList", Matchers.hasSize(0)));
+    }
+
     private CurrentMatchDayDto createCurrentMatchDayDto() {
         return CurrentMatchDayDto.builder()
                 .id(4789878L)

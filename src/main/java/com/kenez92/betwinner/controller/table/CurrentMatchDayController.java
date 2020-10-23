@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.controller.table;
 
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
+import com.kenez92.betwinner.entity.table.CurrentMatchDay;
 import com.kenez92.betwinner.service.table.CurrentMatchDayService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,5 +34,13 @@ public class CurrentMatchDayController {
         CurrentMatchDayDto currentMatchDayDto = currentMatchDayService.getCurrentMatchDay(currentMatchDayId);
         log.info("Return current match day: {}", currentMatchDayId);
         return currentMatchDayDto;
+    }
+
+    @GetMapping(value = "/season/{seasonId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CurrentMatchDayDto> getCurrentMatchDayBySeasonId(@PathVariable Long seasonId) {
+        log.info("Get current match day by season id: {}", seasonId);
+        List<CurrentMatchDayDto> currentMatchDayDtoList = currentMatchDayService.getCurrentMatchDaysByCompetitionSeasonId(seasonId);
+        log.info("Return current match days: {}", currentMatchDayDtoList);
+        return currentMatchDayDtoList;
     }
 }

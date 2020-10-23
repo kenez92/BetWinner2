@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -70,6 +71,18 @@ public class CurrentMatchDayService {
         CurrentMatchDayDto currentMatchDayDto = currentMatchDayMapper.mapToCurrentMatchDayDto(currentMatchDay);
         log.debug("Return current match day by season and matchDay: {}", currentMatchDayDto);
         return currentMatchDayDto;
+    }
+
+    public List<CurrentMatchDayDto> getCurrentMatchDaysByCompetitionSeasonId(final Long competitionSeasonId) {
+        log.debug("Getting current match days by competition season: {}", competitionSeasonId);
+        List<CurrentMatchDay> currentMatchDayList = currentMatchDayRepository.findByCompetitionSeasonId(competitionSeasonId);
+        for(CurrentMatchDay currentMatchDay : currentMatchDayList) {
+            fetchAndSetData(currentMatchDay);
+        }
+        List<CurrentMatchDayDto> currentMatchDayDtoList = currentMatchDayMapper
+                .mapToCurrentMatchDayDtoList(currentMatchDayList);
+        log.debug("Return all current match days: {}", currentMatchDayDtoList);
+        return currentMatchDayDtoList;
     }
 
     private void fetchAndSetData(final CurrentMatchDay currentMatchDay) {

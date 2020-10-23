@@ -9,6 +9,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQuery(
+        name = "CurrentMatchDay.findBySeasonId",
+        query = "FROM CurrentMatchDay WHERE CompetitionSeason.getId() = COMPETITION_SEASON_ID"
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

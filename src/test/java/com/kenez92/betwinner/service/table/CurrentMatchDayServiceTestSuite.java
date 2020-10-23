@@ -122,6 +122,20 @@ public class CurrentMatchDayServiceTestSuite {
                 .getCurrentMatchDayBySeasonAndMatchDay(createCompetitionSeasonDto(), 26));
     }
 
+    @Test
+    public void testCurrentMatchDaysBySeasonId() {
+        //Given
+        List<CurrentMatchDay> currentMatchDayList = new ArrayList<>();
+        currentMatchDayList.add(createCurrentMatchDay());
+        currentMatchDayList.add(createCurrentMatchDay());
+        Mockito.when(currentMatchDayRepository.findByCompetitionSeasonId(ArgumentMatchers.anyLong()))
+                .thenReturn(currentMatchDayList);
+        //When
+        List<CurrentMatchDayDto> currentMatchDayDtoList = currentMatchDayService.getCurrentMatchDaysByCompetitionSeasonId(62L);
+        //Then
+        Assert.assertEquals(currentMatchDayList.size(), currentMatchDayDtoList.size());
+    }
+
 
     private CurrentMatchDay createCurrentMatchDay() {
         List<CompetitionTable> competitionTableList = new ArrayList<>();
