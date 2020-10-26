@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UserStrategyFactory {
-    public static final String EVERYTHING_STRATEGY = "EVERYTHINGSTRATEGY";
-    public static final String AGGRESSIVE_STRATEGY = "AGGRESSIVESTRATEGY";
-    public static final String DEFENSIVE_STRATEGY = "DEFENSIVESTRATEGY";
-    public static final String NORMAL_STRATEGY = "NORMALSTRATEGY";
+    public static final String EVERYTHING_STRATEGY = "Everything";
+    public static final String AGGRESSIVE_STRATEGY = "Aggressive";
+    public static final String DEFENSIVE_STRATEGY = "Defensive";
+    public static final String NORMAL_STRATEGY = "Normal";
     private final AggressiveStrategy aggressiveStrategy;
     private final DefensiveStrategy defensiveStrategy;
     private final NormalStrategy normalStrategy;

@@ -9,11 +9,17 @@ import javax.persistence.AttributeConverter;
 @Service
 @RequiredArgsConstructor
 public class UserStrategyConverter implements AttributeConverter<UserStrategy, String> {
+    private final static String STRATEGY = "Strategy";
     private final UserStrategyFactory userStrategyFactory;
 
     @Override
     public String convertToDatabaseColumn(UserStrategy attribute) {
-        return attribute.getClass().getSimpleName().toUpperCase();
+        String value = attribute.getClass().getSimpleName();
+        if (value.contains(STRATEGY)) {
+            return value.replace(STRATEGY, "");
+        } else {
+            return value;
+        }
     }
 
     @Override
