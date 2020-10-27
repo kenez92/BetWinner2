@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.sheduler.football.data.matches;
+package com.kenez92.betwinner.service.scheduler.football.data.matches;
 
 import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatchList;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;

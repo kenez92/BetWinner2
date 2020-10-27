@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.sheduler.football.data.matches.count.chance;
+package com.kenez92.betwinner.service.scheduler.football.data.matches.count.chance;
 
 import com.kenez92.betwinner.domain.fotballdata.FootballTeam;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.sheduler.football.data.table;
+package com.kenez92.betwinner.service.scheduler.football.data.table;
 
 import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;

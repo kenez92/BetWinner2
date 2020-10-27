@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.sheduler.football.data.matches.count.chance;
+package com.kenez92.betwinner.service.scheduler.football.data.matches.count.chance;
 
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;

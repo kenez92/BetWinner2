@@ -75,6 +75,24 @@ public class FootballClient {
         return response.getBody();
     }
 
+    public FootballMatchList getMatchesInRound(Integer round, Long competitionId) {
+        String url = "https://api.football-data.org/v2/competitions/" + competitionId + "/matches?matchday=" + round;
+        HttpEntity entity = createEntity();
+        ResponseEntity<FootballMatchList> response = null;
+        try {
+            response = restTemplate.exchange(url, HttpMethod.GET, entity, FootballMatchList.class);
+        } catch (HttpClientErrorException e) {
+            if (e.getRawStatusCode() == 400) {
+                throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_MATCH_NOT_FOUND_EXCEPTION);
+            } else if (e.getRawStatusCode() == 403) {
+                throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_MATCH_WE_DONT_HAVE_ACCESS_EXCEPTION);
+            } else {
+                throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_SOMETHING_WENT_WRONG_EXCEPTION);
+            }
+        }
+        return response.getBody();
+    }
+
     private HttpEntity createEntity() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(tokenName, token);

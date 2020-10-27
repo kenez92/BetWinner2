@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.sheduler.football.data.matches;
+package com.kenez92.betwinner.service.scheduler.football.data.matches;
 
 import com.kenez92.betwinner.domain.fotballdata.match.FootballMatchById;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
@@ -6,8 +6,8 @@ import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.domain.matches.WeatherDto;
 import com.kenez92.betwinner.service.matches.MatchService;
-import com.kenez92.betwinner.sheduler.football.data.matches.count.chance.CountChance;
-import com.kenez92.betwinner.sheduler.football.data.matches.count.cours.CourseCounter;
+import com.kenez92.betwinner.service.scheduler.football.data.matches.count.chance.CountChance;
+import com.kenez92.betwinner.service.scheduler.football.data.matches.count.cours.CourseCounter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

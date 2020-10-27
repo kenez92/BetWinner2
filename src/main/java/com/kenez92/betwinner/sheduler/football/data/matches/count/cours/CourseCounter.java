@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.sheduler.football.data.matches.count.cours;
+package com.kenez92.betwinner.service.scheduler.football.data.matches.count.cours;
 
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import org.springframework.stereotype.Service;
