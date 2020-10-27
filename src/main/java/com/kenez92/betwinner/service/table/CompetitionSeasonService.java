@@ -46,6 +46,20 @@ public class CompetitionSeasonService {
         return competitionSeasonDto;
     }
 
+    public CompetitionSeasonDto updateCompetitionSeasonDto(final CompetitionSeasonDto competitionSeasonDto) {
+        log.info("Updating competition season id : {}", competitionSeasonDto.getId());
+        if (competitionSeasonRepository.existsById(competitionSeasonDto.getId())) {
+            CompetitionSeason competitionSeason = competitionSeasonRepository.save(
+                    competitionSeasonMapper.mapToCompetitionSeason(competitionSeasonDto));
+            CompetitionSeasonDto updatedCompetitionSeasonDto =
+                    competitionSeasonMapper.mapToCompetitionSeasonDto(competitionSeason);
+            log.info("Return updated competition season : {}", updatedCompetitionSeasonDto);
+            return updatedCompetitionSeasonDto;
+        } else {
+            throw new BetWinnerException(BetWinnerException.ERR_COMPETITION_SEASON_NOT_EXISTS_EXCEPTION);
+        }
+    }
+
     public void fetchCurrentMatchDayList(final CompetitionSeason competitionSeason) {
         List<CurrentMatchDay> currentMatchDayList = currentMatchDayRepository.findByCompetitionSeason(competitionSeason);
         competitionSeason.setCurrentMatchDayList(currentMatchDayList);
