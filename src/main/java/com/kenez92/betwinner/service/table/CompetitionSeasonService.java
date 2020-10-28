@@ -23,37 +23,38 @@ public class CompetitionSeasonService {
 
     public boolean competitionSeasonExistByFootballId(final Long competitionSeasonId) {
         boolean result = competitionSeasonRepository.existsByFootballId(competitionSeasonId);
-        log.info("Competition season exists in repository: {}", result);
+        log.debug("Competition season exists in repository: {}", result);
         return result;
     }
 
     public CompetitionSeasonDto saveCompetitionSeason(final CompetitionSeasonDto competitionSeasonDto) {
-        log.info("Saving competition season : {}", competitionSeasonDto);
+        log.debug("Saving competition season : {}", competitionSeasonDto);
         CompetitionSeason competitionSeason = competitionSeasonMapper.mapToCompetitionSeason(competitionSeasonDto);
         CompetitionSeason savedCompetitionSeason = competitionSeasonRepository.save(competitionSeason);
         CompetitionSeasonDto savedCompetitionSeasonDto = competitionSeasonMapper.mapToCompetitionSeasonDto(savedCompetitionSeason);
-        log.info("Saved competition season: {}", savedCompetitionSeasonDto);
+        log.debug("Saved competition season: {}", savedCompetitionSeasonDto);
         return savedCompetitionSeasonDto;
     }
 
     public CompetitionSeasonDto getCompetitionSeasonByFootballId(final Long competitionSeasonId) {
-        log.info("Getting competition season by id: {}", competitionSeasonId);
+        log.debug("Getting competition season by id: {}", competitionSeasonId);
         CompetitionSeason competitionSeason = competitionSeasonRepository.findByFootballId(competitionSeasonId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_SEASON_NOT_FOUND_EXCEPTION));
         fetchCurrentMatchDayList(competitionSeason);
         CompetitionSeasonDto competitionSeasonDto = competitionSeasonMapper.mapToCompetitionSeasonDto(competitionSeason);
-        log.info("Return competition season: {}", competitionSeasonDto);
+        log.debug("Return competition season: {}", competitionSeasonDto);
         return competitionSeasonDto;
     }
 
     public CompetitionSeasonDto updateCompetitionSeasonDto(final CompetitionSeasonDto competitionSeasonDto) {
-        log.info("Updating competition season id : {}", competitionSeasonDto.getId());
+        log.debug("Updating competition season id : {}", competitionSeasonDto.getId());
         if (competitionSeasonRepository.existsById(competitionSeasonDto.getId())) {
             CompetitionSeason competitionSeason = competitionSeasonRepository.save(
                     competitionSeasonMapper.mapToCompetitionSeason(competitionSeasonDto));
+            fetchCurrentMatchDayList(competitionSeason);
             CompetitionSeasonDto updatedCompetitionSeasonDto =
                     competitionSeasonMapper.mapToCompetitionSeasonDto(competitionSeason);
-            log.info("Return updated competition season : {}", updatedCompetitionSeasonDto);
+            log.debug("Return updated competition season : {}", updatedCompetitionSeasonDto);
             return updatedCompetitionSeasonDto;
         } else {
             throw new BetWinnerException(BetWinnerException.ERR_COMPETITION_SEASON_NOT_EXISTS_EXCEPTION);
