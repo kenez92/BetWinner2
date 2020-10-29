@@ -39,6 +39,7 @@ public class CompetitionSeason {
 
     @Builder.Default
     @OneToMany(targetEntity = CurrentMatchDay.class,
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "competitionSeason")
     private List<CurrentMatchDay> currentMatchDayList = new ArrayList<>();

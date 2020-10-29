@@ -33,7 +33,8 @@ public class SaveDataSchedulerService {
                         .saveCompetitionSeason(footballTable.getSeason(), competitionDto);
                 if (competitionSeasonDto != null) {
                     CurrentMatchDayDto currentMatchDayDto = saveFootballCurrentMatchDay
-                            .currentMatchDayDto(competitionSeasonDto, footballTable.getFootballStandings());
+                            .saveCurrentMatchDayDto(competitionSeasonDto, footballTable.getFootballStandings(),
+                                    footballTable.getSeason().getCurrentMatchday());
                 }
             }
         }

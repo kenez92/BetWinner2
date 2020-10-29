@@ -41,11 +41,15 @@ public class SaveFootballCompetitionSeason {
                 log.info("Updating competition season : {}", competitionSeasonDto);
             }
         } else {
+            String winner = null;
+            if (footballSeason.getWinner() != null) {
+                winner = footballSeason.getWinner().getName();
+            }
             CompetitionSeasonDto tmpCompetitionSeasonDto = CompetitionSeasonDto.builder()
                     .footballId(footballSeason.getId())
                     .startDate(footballSeason.getStartDate())
                     .endDate(footballSeason.getEndDate())
-                    .winner(footballSeason.getWinner().getName())
+                    .winner(winner)
                     .competition(competitionDto)
                     .currentMatchDayList(new ArrayList<>())
                     .build();
