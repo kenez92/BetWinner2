@@ -11,14 +11,11 @@ import com.kenez92.betwinner.service.scheduler.tables.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Service
-public class SaveDataSchedulerService {
-    private static final int DELAY = 6; // Delay in seconds !
+public class SaveTablesSchedulerService {
     private final FootballClient footballClient;
     private final SaveFootballCompetition saveFootballCompetition;
     private final SaveFootballCompetitionSeason saveFootballCompetitionSeason;
@@ -26,14 +23,13 @@ public class SaveDataSchedulerService {
     private final SaveCompetitionTable saveCompetitionTable;
     private final SaveCompetitionTableElement saveCompetitionTableElement;
 
-    public void saveCompetitionData() throws InterruptedException {
+    public void saveTables(int delay) throws InterruptedException {
         for (Long competitionId : AvailableCompetitions.availableCompetitionList) {
             CompetitionDto competitionDto = null;
             CompetitionSeasonDto competitionSeasonDto = null;
             CurrentMatchDayDto currentMatchDayDto = null;
-            List<CompetitionTableDto> competitionTableDtoList = new ArrayList<>();
 
-            TimeUnit.SECONDS.sleep(DELAY);
+            TimeUnit.SECONDS.sleep(delay);
             FootballTable footballTable = footballClient.getTable(competitionId);
             competitionDto = saveFootballCompetition.saveCompetition(footballTable);
             if (competitionDto != null) {
@@ -49,7 +45,7 @@ public class SaveDataSchedulerService {
                 for (int i = 0; i < footballTable.getFootballStandings().length; i++) {
                     CompetitionTableDto competitionTableDto = saveCompetitionTable.saveCompetitionTable(currentMatchDayDto,
                             footballTable.getFootballStandings()[i]);
-                    if (competitionDto != null) {
+                    if (competitionTableDto != null) {
                         saveCompetitionTableElement.saveCompetitionTableElements(competitionTableDto,
                                 footballTable.getFootballStandings()[i]);
                     }
