@@ -7,10 +7,7 @@ import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
 import com.kenez92.betwinner.domain.table.CompetitionTableDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
 import com.kenez92.betwinner.football.client.FootballClient;
-import com.kenez92.betwinner.service.scheduler.tables.SaveCompetitionTable;
-import com.kenez92.betwinner.service.scheduler.tables.SaveFootballCompetition;
-import com.kenez92.betwinner.service.scheduler.tables.SaveFootballCompetitionSeason;
-import com.kenez92.betwinner.service.scheduler.tables.SaveFootballCurrentMatchDay;
+import com.kenez92.betwinner.service.scheduler.tables.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +24,14 @@ public class SaveDataSchedulerService {
     private final SaveFootballCompetitionSeason saveFootballCompetitionSeason;
     private final SaveFootballCurrentMatchDay saveFootballCurrentMatchDay;
     private final SaveCompetitionTable saveCompetitionTable;
+    private final SaveCompetitionTableElement saveCompetitionTableElement;
 
     public void saveCompetitionData() throws InterruptedException {
         for (Long competitionId : AvailableCompetitions.availableCompetitionList) {
             CompetitionDto competitionDto = null;
             CompetitionSeasonDto competitionSeasonDto = null;
             CurrentMatchDayDto currentMatchDayDto = null;
+            List<CompetitionTableDto> competitionTableDtoList = new ArrayList<>();
 
             TimeUnit.SECONDS.sleep(DELAY);
             FootballTable footballTable = footballClient.getTable(competitionId);
@@ -47,10 +46,13 @@ public class SaveDataSchedulerService {
                                 footballTable.getSeason().getCurrentMatchday());
             }
             if (currentMatchDayDto != null) {
-                List<CompetitionTableDto> competitionTableDtoList = new ArrayList<>();
                 for (int i = 0; i < footballTable.getFootballStandings().length; i++) {
-                    competitionTableDtoList.add(saveCompetitionTable.saveCompetitionTable(currentMatchDayDto,
-                            footballTable.getFootballStandings()[i]));
+                    CompetitionTableDto competitionTableDto = saveCompetitionTable.saveCompetitionTable(currentMatchDayDto,
+                            footballTable.getFootballStandings()[i]);
+                    if (competitionDto != null) {
+                        saveCompetitionTableElement.saveCompetitionTableElements(competitionTableDto,
+                                footballTable.getFootballStandings()[i]);
+                    }
                 }
             }
         }
