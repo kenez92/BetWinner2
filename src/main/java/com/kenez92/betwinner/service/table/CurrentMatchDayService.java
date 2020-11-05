@@ -8,6 +8,7 @@ import com.kenez92.betwinner.entity.table.CurrentMatchDay;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.table.CompetitionSeasonMapper;
 import com.kenez92.betwinner.mapper.table.CurrentMatchDayMapper;
+import com.kenez92.betwinner.repository.table.CompetitionRepository;
 import com.kenez92.betwinner.repository.table.CompetitionTableRepository;
 import com.kenez92.betwinner.repository.table.CurrentMatchDayRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class CurrentMatchDayService {
     private final CurrentMatchDayRepository currentMatchDayRepository;
     private final CompetitionTableRepository competitionTableRepository;
+    private final CompetitionRepository competitionRepository;
     private final CurrentMatchDayMapper currentMatchDayMapper;
     private final CompetitionSeasonMapper competitionSeasonMapper;
 
@@ -76,13 +77,21 @@ public class CurrentMatchDayService {
     public List<CurrentMatchDayDto> getCurrentMatchDaysByCompetitionSeasonId(final Long competitionSeasonId) {
         log.debug("Getting current match days by competition season: {}", competitionSeasonId);
         List<CurrentMatchDay> currentMatchDayList = currentMatchDayRepository.findByCompetitionSeasonId(competitionSeasonId);
-        for(CurrentMatchDay currentMatchDay : currentMatchDayList) {
+        for (CurrentMatchDay currentMatchDay : currentMatchDayList) {
             fetchAndSetData(currentMatchDay);
         }
         List<CurrentMatchDayDto> currentMatchDayDtoList = currentMatchDayMapper
                 .mapToCurrentMatchDayDtoList(currentMatchDayList);
         log.debug("Return all current match days: {}", currentMatchDayDtoList);
         return currentMatchDayDtoList;
+    }
+
+    public Integer getActualCurrentMatchDayNumber(Long competitionFootballId) {
+        Long competitionId = competitionRepository.findByFootballId(competitionFootballId).orElseThrow(() ->
+                new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION)).getId();
+        return currentMatchDayRepository.getActualCurrentMatchDay(competitionId).stream()
+                .mapToInt(currentMatchDayNumber -> currentMatchDayNumber)
+                .max().orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_CURRENT_MATCH_DAY_NOT_FOUND_EXCEPTION));
     }
 
     private void fetchAndSetData(final CurrentMatchDay currentMatchDay) {

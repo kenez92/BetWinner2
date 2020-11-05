@@ -9,6 +9,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedNativeQuery(
+        name = "CurrentMatchDay.getActualCurrentMatchDay",
+        query = "SELECT cmd.match_day FROM current_match_day cmd JOIN competition_season cs " +
+                "ON cs.id = cmd.competition_season_id WHERE cs.competition_id = :COMPETITION_ID"
+        // resultClass = Integer.class
+)
 @NamedQuery(
         name = "CurrentMatchDay.findBySeasonId",
         query = "FROM CurrentMatchDay WHERE CompetitionSeason.getId() = COMPETITION_SEASON_ID"
@@ -25,7 +31,7 @@ public class CurrentMatchDay {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "MATCH_DAY_ID")
+    @Column(name = "MATCH_DAY")
     private Integer matchDay;
 
     @ManyToOne
