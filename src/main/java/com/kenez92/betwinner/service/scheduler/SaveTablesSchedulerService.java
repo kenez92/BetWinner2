@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.service.scheduler;
 
-import com.kenez92.betwinner.domain.fotballdata.AvailableCompetitions;
+import com.kenez92.betwinner.config.AvailableCompetitions;
 import com.kenez92.betwinner.domain.fotballdata.standings.FootballTable;
 import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @Service
 public class SaveTablesSchedulerService {
+    private final AvailableCompetitions availableCompetitions;
     private final FootballClient footballClient;
     private final SaveFootballCompetition saveFootballCompetition;
     private final SaveFootballCompetitionSeason saveFootballCompetitionSeason;
@@ -24,7 +25,7 @@ public class SaveTablesSchedulerService {
     private final SaveCompetitionTableElement saveCompetitionTableElement;
 
     public void saveTables(int delay) throws InterruptedException {
-        for (Long competitionId : AvailableCompetitions.availableCompetitionList) {
+        for (Long competitionId : availableCompetitions.getAvailableCompetitionList()) {
             CompetitionDto competitionDto = null;
             CompetitionSeasonDto competitionSeasonDto = null;
             CurrentMatchDayDto currentMatchDayDto = null;

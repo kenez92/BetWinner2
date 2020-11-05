@@ -24,7 +24,6 @@ public class SaveFootballCompetitionSeason {
             boolean update = false;
             competitionSeasonDto = competitionSeasonService.getCompetitionSeasonByFootballId(seasonId);
             if (!competitionSeasonDto.getStartDate().equals(footballSeason.getStartDate())) {
-                System.out.println(!competitionSeasonDto.getStartDate().equals(footballSeason.getStartDate()));
                 competitionSeasonDto.setStartDate(footballSeason.getStartDate());
                 update = true;
             }
