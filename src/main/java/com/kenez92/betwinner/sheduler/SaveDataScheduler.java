@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -15,8 +17,8 @@ public class SaveDataScheduler {
     private final SaveTablesSchedulerService saveDataSchedulerService;
     private final SaveMatchesSchedulerService saveMatchesSchedulerService;
 
+    @PostConstruct
     @Scheduled(cron = "0 0 1,23 * * *")
-    @Scheduled(fixedDelay = 1000)
     public void saveTables() throws InterruptedException {
         saveDataSchedulerService.saveTables(DELAY);
         saveMatchesSchedulerService.saveMatches(DELAY);

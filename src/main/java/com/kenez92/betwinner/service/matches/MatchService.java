@@ -1,5 +1,7 @@
 package com.kenez92.betwinner.service.matches;
 
+import com.kenez92.betwinner.common.enums.FootballMatchStatusEnum;
+import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatch;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.entity.matches.Match;
 import com.kenez92.betwinner.exception.BetWinnerException;
@@ -80,5 +82,17 @@ public class MatchService {
         List<MatchDto> matchDtoList = matchMapper.mapToMatchDtoList(matches);
         log.debug("Return matches: {}", matchDtoList);
         return matchDtoList;
+    }
+
+    public boolean isNotEqualOrNotExists(FootballMatch footballMatch) {
+        boolean result = true;
+        if (matchRepository.existsByFootballId(footballMatch.getId())) {
+            Match match = matchRepository.findByFootballId(footballMatch.getId()).orElseThrow(()
+                    -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
+            result = !match.getMatchScore().getStatus().equals(footballMatch.getStatus())
+                    || match.getDate().getTime() != footballMatch.getUtcDate().getTime()
+                    || !match.getMatchScore().getWinner().equals(footballMatch.getScore().getWinner());
+        }
+        return result;
     }
 }

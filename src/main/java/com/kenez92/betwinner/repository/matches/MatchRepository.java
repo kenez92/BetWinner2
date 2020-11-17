@@ -32,4 +32,8 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
 
     @Query
     List<Match> findMatchesAtDate(@Param("DATE") Date date);
+
+    boolean existsByFootballId(Long footballId);
+
+    Optional<Match> findByFootballId(Long footballId);
 }
