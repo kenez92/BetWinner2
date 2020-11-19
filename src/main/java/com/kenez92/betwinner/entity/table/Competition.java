@@ -27,6 +27,9 @@ public class Competition {
     @Column(name = "NAME")
     private String name;
 
+    @Column(name = "LAST_SAVED_ROUND")
+    private Integer lastSavedRound;
+
     @Builder.Default
     @OneToMany(targetEntity = CompetitionSeason.class,
             fetch = FetchType.LAZY,

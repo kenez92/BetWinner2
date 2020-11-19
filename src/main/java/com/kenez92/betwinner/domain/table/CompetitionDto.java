@@ -15,5 +15,6 @@ public class CompetitionDto {
     private Long id;
     private Long footballId;
     private String name;
+    private Integer lastSavedRound;
     private List<CompetitionSeasonDto> competitionSeasonList;
 }

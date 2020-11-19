@@ -18,6 +18,7 @@ public class CompetitionMapper {
                 .id(competitionDto.getId())
                 .footballId(competitionDto.getFootballId())
                 .name(competitionDto.getName())
+                .lastSavedRound(competitionDto.getLastSavedRound())
                 .competitionSeasonList(competitionSeasonList(competitionDto))
                 .build();
     }
@@ -27,6 +28,7 @@ public class CompetitionMapper {
                 .id(competition.getId())
                 .footballId(competition.getFootballId())
                 .name(competition.getName())
+                .lastSavedRound(competition.getLastSavedRound())
                 .competitionSeasonList(competitionSeasonDtoList(competition))
                 .build();
     }
