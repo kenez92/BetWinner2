@@ -2,8 +2,8 @@ package com.kenez92.betwinner.service.scheduler;
 
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.scheduler.Mail;
-import com.kenez92.betwinner.entity.User;
-import com.kenez92.betwinner.repository.UserRepository;
+import com.kenez92.betwinner.persistence.entity.User;
+import com.kenez92.betwinner.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;

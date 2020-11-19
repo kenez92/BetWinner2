@@ -1,9 +1,9 @@
 package com.kenez92.betwinner.service.matches;
 
 import com.kenez92.betwinner.domain.matches.WeatherDto;
-import com.kenez92.betwinner.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.matches.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.repository.matches.WeatherRepository;
+import com.kenez92.betwinner.persistence.repository.matches.WeatherRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.mapper.coupons;
 
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
-import com.kenez92.betwinner.entity.coupons.CouponType;
+import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 

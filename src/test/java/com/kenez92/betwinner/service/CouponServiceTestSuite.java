@@ -1,17 +1,16 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.MatchType;
+import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.domain.Status;
-import com.kenez92.betwinner.entity.Coupon;
-import com.kenez92.betwinner.entity.coupons.CouponType;
-import com.kenez92.betwinner.entity.matches.Match;
-import com.kenez92.betwinner.entity.matches.MatchDay;
-import com.kenez92.betwinner.entity.matches.MatchScore;
-import com.kenez92.betwinner.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.Coupon;
+import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
+import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
+import com.kenez92.betwinner.persistence.entity.matches.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.repository.CouponRepository;
-import com.kenez92.betwinner.repository.coupons.CouponTypeRepository;
+import com.kenez92.betwinner.persistence.repository.CouponRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -4,10 +4,10 @@ import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
 import com.kenez92.betwinner.domain.table.CompetitionTableDto;
 import com.kenez92.betwinner.domain.table.CompetitionTableElementDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
-import com.kenez92.betwinner.entity.table.CompetitionSeason;
-import com.kenez92.betwinner.entity.table.CompetitionTable;
-import com.kenez92.betwinner.entity.table.CompetitionTableElement;
-import com.kenez92.betwinner.entity.table.CurrentMatchDay;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionTable;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionTableElement;
+import com.kenez92.betwinner.persistence.entity.table.CurrentMatchDay;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

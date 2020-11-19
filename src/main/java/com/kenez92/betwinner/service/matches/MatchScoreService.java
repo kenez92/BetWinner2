@@ -1,10 +1,10 @@
 package com.kenez92.betwinner.service.matches;
 
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.entity.matches.MatchScore;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.matches.MatchScoreMapper;
-import com.kenez92.betwinner.repository.matches.MatchScoreRepository;
+import com.kenez92.betwinner.persistence.repository.matches.MatchScoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

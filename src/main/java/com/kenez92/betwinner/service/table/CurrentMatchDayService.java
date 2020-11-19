@@ -2,15 +2,15 @@ package com.kenez92.betwinner.service.table;
 
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
-import com.kenez92.betwinner.entity.table.CompetitionSeason;
-import com.kenez92.betwinner.entity.table.CompetitionTable;
-import com.kenez92.betwinner.entity.table.CurrentMatchDay;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionTable;
+import com.kenez92.betwinner.persistence.entity.table.CurrentMatchDay;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.table.CompetitionSeasonMapper;
 import com.kenez92.betwinner.mapper.table.CurrentMatchDayMapper;
-import com.kenez92.betwinner.repository.table.CompetitionRepository;
-import com.kenez92.betwinner.repository.table.CompetitionTableRepository;
-import com.kenez92.betwinner.repository.table.CurrentMatchDayRepository;
+import com.kenez92.betwinner.persistence.repository.table.CompetitionRepository;
+import com.kenez92.betwinner.persistence.repository.table.CompetitionTableRepository;
+import com.kenez92.betwinner.persistence.repository.table.CurrentMatchDayRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -89,6 +89,11 @@ public class CurrentMatchDayService {
     public Integer getActualCurrentMatchDayNumber(Long competitionFootballId) {
         Long competitionId = competitionRepository.findByFootballId(competitionFootballId).orElseThrow(() ->
                 new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION)).getId();
+//        return competitionRepository.findById(competitionId).orElseThrow(
+//                () -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION)).getCompetitionSeasonList()
+//                .stream()
+//                .mapToInt(e -> e.getStartDate().getYear())
+//                .max().orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_CURRENT_MATCH_DAY_NOT_FOUND_EXCEPTION));
         return currentMatchDayRepository.getActualCurrentMatchDay(competitionId).stream()
                 .mapToInt(currentMatchDayNumber -> currentMatchDayNumber)
                 .max().orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_CURRENT_MATCH_DAY_NOT_FOUND_EXCEPTION));

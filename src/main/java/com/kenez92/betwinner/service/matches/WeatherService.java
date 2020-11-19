@@ -1,12 +1,12 @@
 package com.kenez92.betwinner.service.matches;
 
 import com.kenez92.betwinner.domain.matches.WeatherDto;
-import com.kenez92.betwinner.entity.matches.Match;
-import com.kenez92.betwinner.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
+import com.kenez92.betwinner.persistence.entity.matches.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.matches.WeatherMapper;
-import com.kenez92.betwinner.repository.matches.MatchRepository;
-import com.kenez92.betwinner.repository.matches.WeatherRepository;
+import com.kenez92.betwinner.persistence.repository.matches.MatchRepository;
+import com.kenez92.betwinner.persistence.repository.matches.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.mapper.matches;
 
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.entity.matches.MatchScore;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

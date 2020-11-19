@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.mapper.table;
 
 import com.kenez92.betwinner.domain.table.*;
-import com.kenez92.betwinner.entity.table.*;
+import com.kenez92.betwinner.persistence.entity.table.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

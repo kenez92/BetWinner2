@@ -4,10 +4,10 @@ import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.domain.matches.WeatherDto;
-import com.kenez92.betwinner.entity.matches.Match;
-import com.kenez92.betwinner.entity.matches.MatchDay;
-import com.kenez92.betwinner.entity.matches.MatchScore;
-import com.kenez92.betwinner.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
+import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
+import com.kenez92.betwinner.persistence.entity.matches.Weather;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

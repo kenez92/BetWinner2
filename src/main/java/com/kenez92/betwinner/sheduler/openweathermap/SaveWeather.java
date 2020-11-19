@@ -4,7 +4,7 @@ import com.kenez92.betwinner.domain.matches.WeatherDto;
 import com.kenez92.betwinner.domain.openweathermap.WeatherList;
 import com.kenez92.betwinner.domain.openweathermap.WeatherMain;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.openweathermap.client.WeatherClient;
+import com.kenez92.betwinner.api.client.WeatherClient;
 import com.kenez92.betwinner.service.matches.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

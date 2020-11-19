@@ -2,9 +2,9 @@ package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.domain.UserRole;
-import com.kenez92.betwinner.entity.User;
+import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.repository.UserRepository;
+import com.kenez92.betwinner.persistence.repository.UserRepository;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;

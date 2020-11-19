@@ -1,16 +1,17 @@
 package com.kenez92.betwinner.service;
 
+import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.domain.*;
-import com.kenez92.betwinner.entity.Coupon;
-import com.kenez92.betwinner.entity.Order;
-import com.kenez92.betwinner.entity.User;
-import com.kenez92.betwinner.entity.coupons.CouponType;
-import com.kenez92.betwinner.entity.matches.Match;
-import com.kenez92.betwinner.entity.matches.MatchDay;
-import com.kenez92.betwinner.entity.matches.MatchScore;
-import com.kenez92.betwinner.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.Coupon;
+import com.kenez92.betwinner.persistence.entity.Order;
+import com.kenez92.betwinner.persistence.entity.User;
+import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
+import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
+import com.kenez92.betwinner.persistence.entity.matches.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.repository.OrderRepository;
+import com.kenez92.betwinner.persistence.repository.OrderRepository;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -196,7 +197,7 @@ public class OrderServiceTestSuite {
     }
 
     private Match createMatch() {
-        return com.kenez92.betwinner.entity.matches.Match.builder()
+        return com.kenez92.betwinner.persistence.entity.matches.Match.builder()
                 .id(832983L)
                 .footballId(11234L)
                 .homeTeam("HOME_TEAM")

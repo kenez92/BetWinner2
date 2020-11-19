@@ -1,12 +1,12 @@
 package com.kenez92.betwinner.service.table;
 
 import com.kenez92.betwinner.domain.table.*;
-import com.kenez92.betwinner.entity.table.CompetitionTable;
-import com.kenez92.betwinner.entity.table.CompetitionTableElement;
-import com.kenez92.betwinner.entity.table.CurrentMatchDay;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionTable;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionTableElement;
+import com.kenez92.betwinner.persistence.entity.table.CurrentMatchDay;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.repository.table.CompetitionTableElementRepository;
-import com.kenez92.betwinner.repository.table.CompetitionTableRepository;
+import com.kenez92.betwinner.persistence.repository.table.CompetitionTableElementRepository;
+import com.kenez92.betwinner.persistence.repository.table.CompetitionTableRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

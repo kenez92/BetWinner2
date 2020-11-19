@@ -2,8 +2,8 @@ package com.kenez92.betwinner.mapper.table;
 
 import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
-import com.kenez92.betwinner.entity.table.Competition;
-import com.kenez92.betwinner.entity.table.CompetitionSeason;
+import com.kenez92.betwinner.persistence.entity.table.Competition;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

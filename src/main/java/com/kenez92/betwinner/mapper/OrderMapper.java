@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.mapper;
 
 import com.kenez92.betwinner.domain.OrderDto;
-import com.kenez92.betwinner.entity.Order;
+import com.kenez92.betwinner.persistence.entity.Order;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyConverter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
