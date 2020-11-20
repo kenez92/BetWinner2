@@ -1,9 +1,6 @@
 package com.kenez92.betwinner.persistence.entity.table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +18,9 @@ import java.util.List;
 )
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @Entity
 @Table
@@ -42,4 +41,14 @@ public class CurrentMatchDay {
             fetch = FetchType.LAZY,
             mappedBy = "currentMatchDay")
     private List<CompetitionTable> competitionTableList = new ArrayList<>();
+
+    public boolean equals(CurrentMatchDay currentMatchDay) {
+        if (currentMatchDay == null) {
+            return false;
+        }
+        boolean result;
+        result = this.matchDay.equals(currentMatchDay.matchDay);
+        result &= this.competitionSeason.equals(competitionSeason);
+        return result;
+    }
 }

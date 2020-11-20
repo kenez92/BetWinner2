@@ -1,15 +1,14 @@
 package com.kenez92.betwinner.persistence.entity.table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @Entity
 @Table
@@ -51,4 +50,22 @@ public class CompetitionTableElement {
 
     @Column(name = "GOALS_DIFFERENCE")
     private Integer goalDifference;
+
+    public boolean equals(CompetitionTableElement competitionTableElement) {
+        if (competitionTableElement == null) {
+            return false;
+        }
+        boolean result;
+        result = this.competitionTable.equals(competitionTableElement.getCompetitionTable());
+        result &= this.name.equals(competitionTableElement.getName());
+        result &= this.position.equals(competitionTableElement.getPosition());
+        result &= this.playedGames.equals(competitionTableElement.getPlayedGames());
+        result &= this.won.equals(competitionTableElement.getWon());
+        result &= this.draw.equals(competitionTableElement.getDraw());
+        result &= this.points.equals(competitionTableElement.getPoints());
+        result &= this.goalsFor.equals(competitionTableElement.getGoalsFor());
+        result &= this.goalsAgainst.equals(competitionTableElement.getGoalsAgainst());
+        result &= this.goalDifference.equals(competitionTableElement.getGoalDifference());
+        return result;
+    }
 }

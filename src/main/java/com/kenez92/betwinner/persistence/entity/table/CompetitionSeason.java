@@ -1,9 +1,6 @@
 package com.kenez92.betwinner.persistence.entity.table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,8 +9,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@Getter
+@Setter
+@ToString
 @Entity
 @Table
 public class CompetitionSeason {
@@ -22,7 +21,7 @@ public class CompetitionSeason {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "FOOTBALL_ID", unique = true)
+    @Column(name = "FOOTBALL_ID", unique = true, nullable = false)
     private Long footballId;
 
     @Column(name = "START_DATE")
@@ -43,4 +42,16 @@ public class CompetitionSeason {
             fetch = FetchType.LAZY,
             mappedBy = "competitionSeason")
     private List<CurrentMatchDay> currentMatchDayList = new ArrayList<>();
+
+    public boolean equals(CompetitionSeason competitionSeason) {
+        if (competitionSeason == null) {
+            return false;
+        }
+        boolean result;
+        result = this.footballId.equals(competitionSeason.getFootballId());
+        result &= this.startDate.equals(competitionSeason.getStartDate());
+        result &= this.endDate.equals(competitionSeason.getEndDate());
+        result &= this.winner.equals(competitionSeason.getWinner());
+        return result;
+    }
 }
