@@ -1,9 +1,6 @@
 package com.kenez92.betwinner.persistence.entity.matches;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +9,9 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @Entity
 @Table
@@ -22,7 +21,7 @@ public class MatchDay {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "DATE", unique = true)
+    @Column(name = "DATE", unique = true, nullable = false)
     private LocalDate localDate;
 
     @Builder.Default
@@ -30,4 +29,11 @@ public class MatchDay {
             targetEntity = Match.class,
             mappedBy = "matchDay")
     private List<Match> matchesList = new ArrayList<>();
+
+    public boolean equals(MatchDay matchDay) {
+        if (matchDay == null) {
+            return false;
+        }
+        return localDate.equals(matchDay.getLocalDate());
+    }
 }
