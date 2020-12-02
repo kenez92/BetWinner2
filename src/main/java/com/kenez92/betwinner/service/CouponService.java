@@ -1,15 +1,15 @@
 package com.kenez92.betwinner.service;
 
-import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.common.enums.MatchType;
+import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
-import com.kenez92.betwinner.persistence.entity.Coupon;
-import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
-import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
 import com.kenez92.betwinner.mapper.coupons.CouponTypeMapper;
+import com.kenez92.betwinner.persistence.entity.Coupon;
+import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.repository.CouponRepository;
 import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
 import com.kenez92.betwinner.service.coupons.CouponTypeService;
@@ -143,9 +143,6 @@ public class CouponService {
             couponType.setCoupon(tmpCoupon);
             couponType.setMatch(Match.builder()
                     .id(couponType.getMatch().getId())
-                    .homeTeamCourse(couponType.getMatch().getHomeTeamCourse())
-                    .awayTeamCourse(couponType.getMatch().getAwayTeamCourse())
-                    .drawCourse(couponType.getMatch().getDrawCourse())
                     .build());
         }
         coupon.setCouponTypeList(couponTypeList);
@@ -162,11 +159,11 @@ public class CouponService {
                 Match match = coupon.getCouponTypeList().get(i).getMatch();
                 switch (matchType) {
                     case AWAY_TEAM:
-                        course = course + match.getAwayTeamCourse();
+                        course = course + match.getMatchStats().getAwayTeamCourse();
                     case HOME_TEAM:
-                        course = course + match.getHomeTeamCourse();
+                        course = course + match.getMatchStats().getHomeTeamCourse();
                     case DRAW:
-                        course = course + match.getDrawCourse();
+                        course = course + match.getMatchStats().getDrawCourse();
                 }
             }
             course = (course * 0.9) / coupon.getCouponTypeList().size();

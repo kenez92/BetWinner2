@@ -3,6 +3,7 @@ package com.kenez92.betwinner.persistence.entity.matches;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +20,8 @@ public class MatchScore {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "MATCH_ID", unique = true)
-    private Long matchId;
+    @Column(name = "FOOTBALL_MATCH_ID", unique = true)
+    private Long footballMatchId;
 
     @Column(name = "WINNER")
     private String winner;
@@ -56,44 +57,17 @@ public class MatchScore {
     private Integer penaltiesAwayTeam;
 
     public boolean equals(MatchScore matchScore) {
-        if (matchScore == null) {
-            return false;
-        }
-        boolean result;
-        result = this.matchId.equals(matchScore.getMatchId());
-        if (matchScore.getWinner() != null) {
-            result &= this.winner.equals(matchScore.getWinner());
-        }
-        if (matchScore.getStatus() != null) {
-            result &= this.status.equals(matchScore.getStatus());
-        }
-        if (matchScore.getDuration() != null) {
-            result &= this.duration.equals(matchScore.getDuration());
-        }
-        if (matchScore.getFullTimeHomeTeam() != null) {
-            result &= this.fullTimeHomeTeam.equals(matchScore.getFullTimeHomeTeam());
-        }
-        if (matchScore.getFullTimeAwayTeam() != null) {
-            result &= this.fullTimeAwayTeam.equals(matchScore.getFullTimeAwayTeam());
-        }
-        if (matchScore.getHalfTimeHomeTeam() != null) {
-            result &= this.halfTimeHomeTeam.equals(matchScore.getHalfTimeHomeTeam());
-        }
-        if (matchScore.getHalfTimeAwayTeam() != null) {
-            result &= this.halfTimeAwayTeam.equals(matchScore.getHalfTimeAwayTeam());
-        }
-        if (matchScore.getExtraTimeHomeTeam() != null) {
-            result &= this.extraTimeHomeTeam.equals(matchScore.getExtraTimeHomeTeam());
-        }
-        if (matchScore.getExtraTimeHomeTeam() != null) {
-            result &= this.extraTimeAwayTeam.equals(matchScore.getExtraTimeAwayTeam());
-        }
-        if (matchScore.getPenaltiesHomeTeam() != null) {
-            result &= this.penaltiesHomeTeam.equals(matchScore.getPenaltiesHomeTeam());
-        }
-        if (matchScore.getPenaltiesAwayTeam() != null) {
-            result &= this.penaltiesAwayTeam.equals(matchScore.getPenaltiesAwayTeam());
-        }
-        return result;
+        if (!Objects.equals(this.footballMatchId, matchScore.getFootballMatchId())) return false;
+        if (!Objects.equals(this.winner, matchScore.getWinner())) return false;
+        if (!Objects.equals(this.status, matchScore.getStatus())) return false;
+        if (!Objects.equals(this.duration, matchScore.getDuration())) return false;
+        if (!Objects.equals(this.fullTimeHomeTeam, matchScore.getFullTimeHomeTeam())) return false;
+        if (!Objects.equals(this.fullTimeAwayTeam, matchScore.getFullTimeAwayTeam())) return false;
+        if (!Objects.equals(this.halfTimeHomeTeam, matchScore.getHalfTimeHomeTeam())) return false;
+        if (!Objects.equals(this.halfTimeAwayTeam, matchScore.halfTimeAwayTeam)) return false;
+        if (!Objects.equals(this.extraTimeHomeTeam, matchScore.extraTimeHomeTeam)) return false;
+        if (!Objects.equals(this.extraTimeAwayTeam, matchScore.extraTimeAwayTeam)) return false;
+        if (!Objects.equals(this.penaltiesHomeTeam, matchScore.penaltiesHomeTeam)) return false;
+        return Objects.equals(this.penaltiesAwayTeam, matchScore.penaltiesAwayTeam);
     }
 }

@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.domain.matches;
 
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,16 +22,10 @@ public class MatchDto {
     private Long competitionId;
     private Long seasonId;
     private Date date;
-    private Integer homeTeamPositionInTable;
-    private Integer awayTeamPositionInTable;
-    private Double homeTeamChance;
-    private Double awayTeamChance;
     private Integer round;
     private MatchDayDto matchDay;
     private MatchScoreDto matchScore;
-    private Double homeTeamCourse;
-    private Double drawCourse;
-    private Double awayTeamCourse;
     private WeatherDto weather;
+    private MatchStatsDto matchStats;
     private List<CouponTypeDto> couponTypeList;
 }

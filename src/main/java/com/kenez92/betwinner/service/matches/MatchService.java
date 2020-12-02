@@ -2,9 +2,9 @@ package com.kenez92.betwinner.service.matches;
 
 import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatch;
 import com.kenez92.betwinner.domain.matches.MatchDto;
-import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.matches.MatchMapper;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.repository.matches.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

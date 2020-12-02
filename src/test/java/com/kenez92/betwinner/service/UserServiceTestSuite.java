@@ -56,7 +56,6 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getPassword(), userDto.getPassword());
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
-        Assert.assertEquals(user.getOrders().size(), userDto.getOrders().size());
         Assert.assertTrue(user.getSubscription());
         Assert.assertEquals(UserStrategyFactory.NORMAL_STRATEGY, userDto.getUserStrategy());
     }
@@ -99,8 +98,6 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getPassword(), userDto.getPassword());
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
-        Assert.assertEquals(user.getOrders().size(), userDto.getOrders().size());
-        Assert.assertTrue(user.getSubscription());
         Assert.assertEquals(UserStrategyFactory.NORMAL_STRATEGY, userDto.getUserStrategy());
     }
 
@@ -132,7 +129,6 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getPassword(), userDto.getPassword());
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
-        Assert.assertEquals(user.getOrders().size(), userDto.getOrders().size());
     }
 
     @Test

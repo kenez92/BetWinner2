@@ -24,5 +24,9 @@ public class SaveDataScheduler {
         saveTablesSchedulerService.saveTables(DELAY_USING_FOOTBALL_DATA_API);
         long end = System.currentTimeMillis();
         log.info("Finished saving data time : {}", end - start);
+
+        log.info("Start saving matches");
+        saveMatchesSchedulerService.saveMatches(DELAY_USING_FOOTBALL_DATA_API);
+        log.info("finished saving matches");
     }
 }

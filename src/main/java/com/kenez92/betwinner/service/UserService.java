@@ -1,10 +1,10 @@
 package com.kenez92.betwinner.service;
 
 import com.kenez92.betwinner.domain.UserDto;
-import com.kenez92.betwinner.persistence.entity.Order;
-import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.UserMapper;
+import com.kenez92.betwinner.persistence.entity.Order;
+import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.repository.OrderRepository;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;

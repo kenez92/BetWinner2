@@ -47,8 +47,8 @@ public class SimpleEmailService {
             String message = "";
             for (MatchDto matchDto : matchDtoList) {
                 message = message + matchDto.getHomeTeam() + " vs " + matchDto.getAwayTeam() + " courses / chance to win : "
-                        + matchDto.getHomeTeamCourse() + " - " + matchDto.getHomeTeamChance() + "% | "
-                        + matchDto.getAwayTeamCourse() + " - " + matchDto.getAwayTeamChance() + "%  date: "
+                        + matchDto.getMatchStats().getHomeTeamCourse() + " - " + matchDto.getMatchStats().getHomeTeamChance() + "% | "
+                        + matchDto.getMatchStats().getAwayTeamCourse() + " - " + matchDto.getMatchStats().getAwayTeamChance() + "%  date: "
                         + matchDto.getDate() + "\n";
             }
             mails.add(new Mail(user.getEmail(), "Your matches",

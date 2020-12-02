@@ -1,10 +1,10 @@
 package com.kenez92.betwinner.service.table;
 
 import com.kenez92.betwinner.domain.table.CompetitionDto;
-import com.kenez92.betwinner.persistence.entity.table.Competition;
-import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.table.CompetitionMapper;
+import com.kenez92.betwinner.persistence.entity.table.Competition;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
 import com.kenez92.betwinner.persistence.repository.table.CompetitionRepository;
 import com.kenez92.betwinner.persistence.repository.table.CompetitionSeasonRepository;
 import lombok.RequiredArgsConstructor;

@@ -3,11 +3,12 @@ package com.kenez92.betwinner.service.matches;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.domain.matches.WeatherDto;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
 import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
-import com.kenez92.betwinner.persistence.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.matches.MatchRepository;
 import org.junit.Assert;
@@ -66,10 +67,6 @@ public class MatchServiceTestSuite {
         Assert.assertEquals(match.getCompetitionId(), matchDto.getCompetitionId());
         Assert.assertEquals(match.getSeasonId(), matchDto.getSeasonId());
         Assert.assertEquals(match.getDate(), matchDto.getDate());
-        Assert.assertEquals(match.getHomeTeamPositionInTable(), matchDto.getHomeTeamPositionInTable());
-        Assert.assertEquals(match.getAwayTeamPositionInTable(), matchDto.getAwayTeamPositionInTable());
-        Assert.assertEquals(match.getHomeTeamChance(), matchDto.getHomeTeamChance());
-        Assert.assertEquals(match.getAwayTeamChance(), matchDto.getAwayTeamChance());
         Assert.assertEquals(match.getCouponTypeList().size(), matchDto.getCouponTypeList().size());
     }
 
@@ -102,10 +99,6 @@ public class MatchServiceTestSuite {
         Assert.assertEquals(match.getCompetitionId(), matchDto.getCompetitionId());
         Assert.assertEquals(match.getSeasonId(), matchDto.getSeasonId());
         Assert.assertEquals(match.getDate(), matchDto.getDate());
-        Assert.assertEquals(match.getHomeTeamPositionInTable(), matchDto.getHomeTeamPositionInTable());
-        Assert.assertEquals(match.getAwayTeamPositionInTable(), matchDto.getAwayTeamPositionInTable());
-        Assert.assertEquals(match.getHomeTeamChance(), matchDto.getHomeTeamChance());
-        Assert.assertEquals(match.getAwayTeamChance(), matchDto.getAwayTeamChance());
         Assert.assertEquals(match.getCouponTypeList().size(), matchDto.getCouponTypeList().size());
     }
 
@@ -129,10 +122,6 @@ public class MatchServiceTestSuite {
         Assert.assertEquals(match.getCompetitionId(), matchDto.getCompetitionId());
         Assert.assertEquals(match.getSeasonId(), matchDto.getSeasonId());
         Assert.assertEquals(match.getDate(), matchDto.getDate());
-        Assert.assertEquals(match.getHomeTeamPositionInTable(), matchDto.getHomeTeamPositionInTable());
-        Assert.assertEquals(match.getAwayTeamPositionInTable(), matchDto.getAwayTeamPositionInTable());
-        Assert.assertEquals(match.getHomeTeamChance(), matchDto.getHomeTeamChance());
-        Assert.assertEquals(match.getAwayTeamChance(), matchDto.getAwayTeamChance());
         Assert.assertEquals(match.getCouponTypeList().size(), matchDto.getCouponTypeList().size());
     }
 
@@ -174,10 +163,7 @@ public class MatchServiceTestSuite {
                 .competitionId(202L)
                 .seasonId(203L)
                 .date(new Date())
-                .homeTeamPositionInTable(2)
-                .awayTeamPositionInTable(4)
-                .homeTeamChance(60.0)
-                .awayTeamChance(40.0)
+                .matchStats(new MatchStats())
                 .round(23)
                 .matchDay(new MatchDay())
                 .matchScore(new MatchScore())

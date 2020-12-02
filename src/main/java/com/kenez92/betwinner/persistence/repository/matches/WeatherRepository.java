@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.persistence.repository.matches;
 
-import com.kenez92.betwinner.persistence.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

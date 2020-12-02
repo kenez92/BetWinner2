@@ -49,7 +49,7 @@ public class MatchScoreServiceTestSuite {
         MatchScoreDto matchScoreDto = matchScoreService.getMatchScore(234234L);
         //Then
         Assert.assertEquals(matchScore.getId(), matchScoreDto.getId());
-        Assert.assertEquals(matchScore.getMatchId(), matchScoreDto.getMatchId());
+        Assert.assertEquals(matchScore.getFootballMatchId(), matchScoreDto.getFootballMatchId());
         Assert.assertEquals(matchScore.getWinner(), matchScoreDto.getWinner());
         Assert.assertEquals(matchScore.getStatus(), matchScoreDto.getStatus());
         Assert.assertEquals(matchScore.getFullTimeHomeTeam(), matchScoreDto.getFullTimeHomeTeam());
@@ -68,7 +68,7 @@ public class MatchScoreServiceTestSuite {
         MatchScoreDto matchScoreDto = matchScoreService.saveMatchScore(new MatchScoreDto());
         //Then
         Assert.assertEquals(matchScore.getId(), matchScoreDto.getId());
-        Assert.assertEquals(matchScore.getMatchId(), matchScoreDto.getMatchId());
+        Assert.assertEquals(matchScore.getFootballMatchId(), matchScoreDto.getFootballMatchId());
         Assert.assertEquals(matchScore.getWinner(), matchScoreDto.getWinner());
         Assert.assertEquals(matchScore.getStatus(), matchScoreDto.getStatus());
         Assert.assertEquals(matchScore.getFullTimeHomeTeam(), matchScoreDto.getFullTimeHomeTeam());
@@ -81,13 +81,13 @@ public class MatchScoreServiceTestSuite {
     public void testGetMatchScoreByMatchId() {
         //Given
         MatchScore matchScore = createMatchScore();
-        Mockito.when(matchScoreRepository.findByMatchId(ArgumentMatchers.anyLong()))
+        Mockito.when(matchScoreRepository.findByFootballMatchId(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.ofNullable(matchScore));
         //When
         MatchScoreDto matchScoreDto = matchScoreService.getByMatchId(234234L);
         //Then
         Assert.assertEquals(matchScore.getId(), matchScoreDto.getId());
-        Assert.assertEquals(matchScore.getMatchId(), matchScoreDto.getMatchId());
+        Assert.assertEquals(matchScore.getFootballMatchId(), matchScoreDto.getFootballMatchId());
         Assert.assertEquals(matchScore.getWinner(), matchScoreDto.getWinner());
         Assert.assertEquals(matchScore.getStatus(), matchScoreDto.getStatus());
         Assert.assertEquals(matchScore.getFullTimeHomeTeam(), matchScoreDto.getFullTimeHomeTeam());
@@ -99,7 +99,7 @@ public class MatchScoreServiceTestSuite {
     private MatchScore createMatchScore() {
         return MatchScore.builder()
                 .id(324L)
-                .matchId(234234L)
+                .footballMatchId(234234L)
                 .winner("test winner")
                 .status("test status")
                 .duration("test duration")

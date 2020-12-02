@@ -9,7 +9,8 @@ import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
 import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
-import com.kenez92.betwinner.persistence.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
 import com.kenez92.betwinner.service.matches.MatchScoreService;
@@ -52,8 +53,6 @@ public class CouponTypeServiceTestSuite {
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
         Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType());
         Assert.assertEquals("WAITING", couponTypeDto.getStatus());
-        Assert.assertEquals(832983L, couponTypeDto.getMatch().getId(), 0.01);
-        Assert.assertEquals(302L, couponTypeDto.getCoupon().getId(), 0.01);
     }
 
     @Test
@@ -91,8 +90,6 @@ public class CouponTypeServiceTestSuite {
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
         Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType());
         Assert.assertEquals("WAITING", couponTypeDto.getStatus());
-        Assert.assertEquals(832983L, couponTypeDto.getMatch().getId(), 0.01);
-        Assert.assertEquals(302L, couponTypeDto.getCoupon().getId(), 0.01);
     }
 
     @Test
@@ -125,8 +122,6 @@ public class CouponTypeServiceTestSuite {
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
         Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType());
         Assert.assertEquals("WAITING", couponTypeDto.getStatus());
-        Assert.assertEquals(832983L, couponTypeDto.getMatch().getId(), 0.01);
-        Assert.assertEquals(302L, couponTypeDto.getCoupon().getId(), 0.01);
 
     }
 
@@ -167,10 +162,7 @@ public class CouponTypeServiceTestSuite {
                 .competitionId(-202L)
                 .seasonId(-203L)
                 .date(new Date())
-                .homeTeamPositionInTable(2)
-                .awayTeamPositionInTable(4)
-                .homeTeamChance(60.0)
-                .awayTeamChance(40.0)
+                .matchStats(new MatchStats())
                 .round(23)
                 .matchDay(new MatchDay())
                 .matchScore(new MatchScore())
@@ -189,7 +181,7 @@ public class CouponTypeServiceTestSuite {
     private MatchScoreDto createMatchScoreDto() {
         return MatchScoreDto.builder()
                 .id(1234L)
-                .matchId(122L)
+                .footballMatchId(122L)
                 .winner("HOME_TEAM")
                 .status("FINISHED")
                 .duration("REGULAR")

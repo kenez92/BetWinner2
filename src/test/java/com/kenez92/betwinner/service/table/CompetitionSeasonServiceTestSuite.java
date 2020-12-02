@@ -59,8 +59,6 @@ public class CompetitionSeasonServiceTestSuite {
         Assert.assertEquals(competitionSeason.getStartDate(), competitionSeasonDto.getStartDate());
         Assert.assertEquals(competitionSeason.getEndDate(), competitionSeasonDto.getEndDate());
         Assert.assertEquals(competitionSeason.getWinner(), competitionSeasonDto.getWinner());
-        Assert.assertEquals(competitionSeason.getCompetition().getId(), competitionSeasonDto.getCompetition().getId());
-        Assert.assertEquals(competitionSeason.getCurrentMatchDayList().size(), competitionSeasonDto.getCurrentMatchDayList().size());
     }
 
     @Test
@@ -77,8 +75,6 @@ public class CompetitionSeasonServiceTestSuite {
         Assert.assertEquals(competitionSeason.getStartDate(), competitionSeasonDto.getStartDate());
         Assert.assertEquals(competitionSeason.getEndDate(), competitionSeasonDto.getEndDate());
         Assert.assertEquals(competitionSeason.getWinner(), competitionSeasonDto.getWinner());
-        Assert.assertEquals(competitionSeason.getCompetition().getId(), competitionSeasonDto.getCompetition().getId());
-        Assert.assertEquals(competitionSeason.getCurrentMatchDayList().size(), competitionSeasonDto.getCurrentMatchDayList().size());
     }
 
     @Test
@@ -119,8 +115,6 @@ public class CompetitionSeasonServiceTestSuite {
         Assert.assertEquals(competitionSeason.getStartDate(), competitionSeasonDto.getStartDate());
         Assert.assertEquals(competitionSeason.getEndDate(), competitionSeasonDto.getEndDate());
         Assert.assertEquals(competitionSeason.getWinner(), competitionSeasonDto.getWinner());
-        Assert.assertEquals(competitionSeason.getCompetition().getId(), competitionSeasonDto.getCompetition().getId());
-        Assert.assertEquals(competitionSeason.getCurrentMatchDayList().size(), competitionSeasonDto.getCurrentMatchDayList().size());
     }
 
     @Test
@@ -134,29 +128,14 @@ public class CompetitionSeasonServiceTestSuite {
 
     public CompetitionSeason createCompetitionSeason() {
         List<CurrentMatchDay> currentMatchDayList = new ArrayList<>();
-        currentMatchDayList.add(createCurrentMatchDay());
-        currentMatchDayList.add(createCurrentMatchDay());
-        currentMatchDayList.add(createCurrentMatchDay());
         return CompetitionSeason.builder()
                 .id(23423L)
                 .footballId(252323L)
                 .startDate(LocalDate.now().minusYears(1))
                 .endDate(LocalDate.now())
                 .winner("WINNER")
-                .competition(createCompetition())
+                .competition(new Competition())
                 .currentMatchDayList(currentMatchDayList)
-                .build();
-    }
-
-    public Competition createCompetition() {
-        return Competition.builder()
-                .id(2342L)
-                .build();
-    }
-
-    public CurrentMatchDay createCurrentMatchDay() {
-        return CurrentMatchDay.builder()
-                .id(2342111L)
                 .build();
     }
 }

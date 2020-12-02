@@ -17,7 +17,7 @@ public interface OrderMapper {
 
     Order mapToOrder(OrderDto orderDto);
 
-    @Mapping(target = "user.authorities", ignore = true)
+    @Mapping(target = "user", ignore = true)
     OrderDto mapToOrderDto(Order order);
 
     default List<OrderDto> mapToOrderDtoList(List<Order> orders) {

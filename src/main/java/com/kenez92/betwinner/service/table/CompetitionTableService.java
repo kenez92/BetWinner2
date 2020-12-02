@@ -2,12 +2,12 @@ package com.kenez92.betwinner.service.table;
 
 import com.kenez92.betwinner.domain.table.CompetitionTableDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
-import com.kenez92.betwinner.persistence.entity.table.CompetitionTable;
-import com.kenez92.betwinner.persistence.entity.table.CompetitionTableElement;
-import com.kenez92.betwinner.persistence.entity.table.CurrentMatchDay;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.table.CompetitionTableMapper;
 import com.kenez92.betwinner.mapper.table.CurrentMatchDayMapper;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionTable;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionTableElement;
+import com.kenez92.betwinner.persistence.entity.table.CurrentMatchDay;
 import com.kenez92.betwinner.persistence.repository.table.CompetitionTableElementRepository;
 import com.kenez92.betwinner.persistence.repository.table.CompetitionTableRepository;
 import lombok.RequiredArgsConstructor;

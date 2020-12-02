@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MatchScoreDto {
     private Long id;
-    private Long matchId;
+    private Long footballMatchId;
     private String winner;
     private String status;
     private String duration;

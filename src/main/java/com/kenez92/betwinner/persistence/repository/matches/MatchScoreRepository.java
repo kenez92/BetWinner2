@@ -14,7 +14,7 @@ public interface MatchScoreRepository extends CrudRepository<MatchScore, Long> {
     @Override
     List<MatchScore> findAll();
 
-    boolean existsByMatchId(final Long matchId);
+    boolean existsByFootballMatchId(final Long matchId);
 
-    Optional<MatchScore> findByMatchId(final Long matchId);
+    Optional<MatchScore> findByFootballMatchId(final Long matchId);
 }

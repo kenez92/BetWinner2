@@ -1,9 +1,7 @@
 package com.kenez92.betwinner.controller.matches;
 
-import com.kenez92.betwinner.domain.matches.MatchDayDto;
-import com.kenez92.betwinner.domain.matches.MatchDto;
-import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.domain.matches.WeatherDto;
+import com.kenez92.betwinner.domain.matches.*;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.service.matches.MatchDayService;
 import org.hamcrest.Matchers;
@@ -83,10 +81,6 @@ public class MatchDayControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].awayTeam", Matchers.is("Away team")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].competitionId", Matchers.is(-202)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].seasonId", Matchers.is(-203)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].homeTeamPositionInTable", Matchers.is(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].awayTeamPositionInTable", Matchers.is(4)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].homeTeamChance", Matchers.is(60.0)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].awayTeamChance", Matchers.is(40.0)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchesList[0].round", Matchers.is(23)));
     }
 
@@ -125,10 +119,7 @@ public class MatchDayControllerTestSuite {
                 .competitionId(-202L)
                 .seasonId(-203L)
                 .date(new Date())
-                .homeTeamPositionInTable(2)
-                .awayTeamPositionInTable(4)
-                .homeTeamChance(60.0)
-                .awayTeamChance(40.0)
+                .matchStats(new MatchStatsDto())
                 .round(23)
                 .matchDay(new MatchDayDto())
                 .matchScore(new MatchScoreDto())

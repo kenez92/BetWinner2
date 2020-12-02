@@ -8,7 +8,8 @@ import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
 import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
-import com.kenez92.betwinner.persistence.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.CouponRepository;
 import org.junit.Assert;
@@ -115,10 +116,7 @@ public class CouponServiceTestSuite {
                         .competitionId(-202L)
                         .seasonId(-203L)
                         .date(new Date())
-                        .homeTeamPositionInTable(2)
-                        .awayTeamPositionInTable(4)
-                        .homeTeamChance(60.0)
-                        .awayTeamChance(40.0)
+                        .matchStats(new MatchStats())
                         .round(23)
                         .matchDay(new MatchDay())
                         .matchScore(new MatchScore())

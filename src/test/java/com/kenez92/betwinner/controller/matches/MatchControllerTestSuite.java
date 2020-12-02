@@ -1,9 +1,7 @@
 package com.kenez92.betwinner.controller.matches;
 
-import com.kenez92.betwinner.domain.matches.MatchDayDto;
-import com.kenez92.betwinner.domain.matches.MatchDto;
-import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.domain.matches.WeatherDto;
+import com.kenez92.betwinner.domain.matches.*;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.service.matches.MatchService;
 import org.hamcrest.Matchers;
@@ -68,10 +66,7 @@ public class MatchControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeam", Matchers.is(matchDtoList.get(0).getAwayTeam())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].competitionId", Matchers.is(30000)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].seasonId", Matchers.is(123)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].homeTeamPositionInTable", Matchers.is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeamPositionInTable", Matchers.is(12)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].homeTeamChance", Matchers.is(40.0)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeamChance", Matchers.is(60.0)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchStats.id", Matchers.is(123234)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].round", Matchers.is(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].weather.id", Matchers.is(883383)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchScore.id", Matchers.is(222)))
@@ -94,10 +89,7 @@ public class MatchControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.awayTeam", Matchers.is(matchDto.getAwayTeam())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.competitionId", Matchers.is(30000)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.seasonId", Matchers.is(123)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.homeTeamPositionInTable", Matchers.is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.awayTeamPositionInTable", Matchers.is(12)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.homeTeamChance", Matchers.is(40.0)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.awayTeamChance", Matchers.is(60.0)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.matchStats.id", Matchers.is(123234)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.round", Matchers.is(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.weather.id", Matchers.is(883383)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchScore.id", Matchers.is(222)))
@@ -138,10 +130,7 @@ public class MatchControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeam", Matchers.is(matchDtoList.get(0).getAwayTeam())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].competitionId", Matchers.is(30000)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].seasonId", Matchers.is(123)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].homeTeamPositionInTable", Matchers.is(3)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeamPositionInTable", Matchers.is(12)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].homeTeamChance", Matchers.is(40.0)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].awayTeamChance", Matchers.is(60.0)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchStats.id", Matchers.is(123234)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].round", Matchers.is(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].weather.id", Matchers.is(883383)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchScore.id", Matchers.is(222)))
@@ -156,10 +145,9 @@ public class MatchControllerTestSuite {
                 .awayTeam("AWAY_TEAM")
                 .competitionId(30000L)
                 .seasonId(123L)
-                .homeTeamPositionInTable(3)
-                .awayTeamPositionInTable(12)
-                .homeTeamChance(40.0)
-                .awayTeamChance(60.0)
+                .matchStats(MatchStatsDto.builder()
+                        .id(123234L)
+                        .build())
                 .round(3)
                 .weather(WeatherDto.builder()
                         .id(883383L)

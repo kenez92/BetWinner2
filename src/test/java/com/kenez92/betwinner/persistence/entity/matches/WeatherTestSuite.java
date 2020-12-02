@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.persistence.entity.matches;
 
 import com.kenez92.betwinner.exception.BetWinnerException;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import com.kenez92.betwinner.persistence.repository.matches.WeatherRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

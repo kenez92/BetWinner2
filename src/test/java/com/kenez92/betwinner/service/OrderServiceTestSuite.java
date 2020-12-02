@@ -9,7 +9,8 @@ import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
 import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
-import com.kenez92.betwinner.persistence.entity.matches.Weather;
+import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.OrderRepository;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
@@ -69,8 +70,6 @@ public class OrderServiceTestSuite {
         OrderDto orderDto = orderService.getOrder(orderId);
         //Then
         Assert.assertEquals(orderId, orderDto.getId());
-        Assert.assertEquals(order.getCoupon().getId(), orderDto.getCoupon().getId());
-        Assert.assertEquals(order.getUser().getId(), orderDto.getUser().getId());
     }
 
     @Test
@@ -87,7 +86,6 @@ public class OrderServiceTestSuite {
         //Given
         OrderDto orderDto = new OrderDto();
         orderDto.setUser(UserDto.builder()
-                .id(234L)
                 .money("2000")
                 .build());
         orderDto.setCoupon(CouponDto.builder()
@@ -166,66 +164,8 @@ public class OrderServiceTestSuite {
     private Order createOrder() {
         return Order.builder()
                 .id(3L)
-                .coupon(createCoupon())
-                .user(createUser())
+                .coupon(new Coupon())
+                .user(new User())
                 .build();
     }
-
-    private User createUser() {
-        return User.builder()
-                .id(123L)
-                .firstName("Test first name")
-                .lastName("Test last name")
-                .login("Test")
-                .password("Test password")
-                .role(UserRole.ROLE_ADMIN)
-                .email("test@test.pl")
-                .userStrategy(userStrategyFactory.factory(UserStrategyFactory.NORMAL_STRATEGY))
-                .subscription(true)
-                .money(BigDecimal.valueOf(1200))
-                .orders(new ArrayList<>())
-                .build();
-    }
-
-    private CouponType createCouponType() {
-        return CouponType.builder()
-                .id(2303L)
-                .matchType(MatchType.HOME_TEAM)
-                .status(Status.WAITING)
-                .match(createMatch())
-                .build();
-    }
-
-    private Match createMatch() {
-        return com.kenez92.betwinner.persistence.entity.matches.Match.builder()
-                .id(832983L)
-                .footballId(11234L)
-                .homeTeam("HOME_TEAM")
-                .awayTeam("AWAY_TEAM")
-                .competitionId(-202L)
-                .seasonId(-203L)
-                .date(new Date())
-                .homeTeamPositionInTable(2)
-                .awayTeamPositionInTable(4)
-                .homeTeamChance(60.0)
-                .awayTeamChance(40.0)
-                .round(23)
-                .matchDay(new MatchDay())
-                .matchScore(new MatchScore())
-                .weather(new Weather())
-                .couponTypeList(new ArrayList<>())
-                .build();
-    }
-
-    private Coupon createCoupon() {
-        List<CouponType> couponTypeList = new ArrayList<>();
-        couponTypeList.add(createCouponType());
-        couponTypeList.add(createCouponType());
-        return Coupon.builder()
-                .id(302L)
-                .couponTypeList(couponTypeList)
-                .rate(20.0)
-                .build();
-    }
-
 }

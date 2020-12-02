@@ -1,9 +1,9 @@
 package com.kenez92.betwinner.service.matches;
 
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.matches.MatchScoreMapper;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import com.kenez92.betwinner.persistence.repository.matches.MatchScoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,14 +44,14 @@ public class MatchScoreService {
     }
 
     public boolean existByMatchId(final Long matchId) {
-        boolean result = matchScoreRepository.existsByMatchId(matchId);
+        boolean result = matchScoreRepository.existsByFootballMatchId(matchId);
         log.debug("Match score exists in repository: {}", result);
         return result;
     }
 
     public MatchScoreDto getByMatchId(final Long matchId) {
         log.debug("Find match score by match id: {}", matchId);
-        MatchScore matchScore = matchScoreRepository.findByMatchId(matchId).orElseThrow(()
+        MatchScore matchScore = matchScoreRepository.findByFootballMatchId(matchId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_MATCH_SCORE_NOT_FOUND_EXCEPTION));
         MatchScoreDto matchScoreDto = matchScoreMapper.mapToMatchScoreDto(matchScore);
         log.debug("Found match score by match id: {}", matchScoreDto);

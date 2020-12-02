@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.controller.rest.weather;
 
-import com.kenez92.betwinner.domain.matches.WeatherDto;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.service.matches.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.persistence.entity.matches;
 
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import lombok.*;
 
 import javax.persistence.*;
@@ -53,34 +54,17 @@ public class Match {
     @Column(name = "DATE", nullable = false)
     private Date date;
 
-    @Column(name = "HOME_TEAM_POSITION_IN_TABLE")
-    private Integer homeTeamPositionInTable;
-
-    @Column(name = "AWAY_TEAM_POSITION_IN_TABLE")
-    private Integer awayTeamPositionInTable;
-
-    @Column(name = "HOME_TEAM_CHANCE")
-    private Double homeTeamChance;
-
-    @Column(name = "AWAY_TEAM_CHANCE")
-    private Double awayTeamChance;
-
     @Column(name = "ROUND")
     private Integer round;
 
-    @Column(name = "HOME_TEAM_COURSE")
-    private Double homeTeamCourse;
-
-    @Column(name = "DRAW_COURSE")
-    private Double drawCourse;
-
-    @Column(name = "AWAY_TEAM_COURSE")
-    private Double awayTeamCourse;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MATCH_STATS_ID")
+    private MatchStats matchStats;
 
     @ManyToOne
     private MatchDay matchDay;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "MATCH_SCORE_ID")
     private MatchScore matchScore;
 
@@ -97,46 +81,17 @@ public class Match {
         if (match == null) {
             return false;
         }
-        boolean result = true;
-        result &= footballId.equals(match.getFootballId());
-        result &= homeTeam.equals(match.getHomeTeam());
-        result &= awayTeam.equals(match.getAwayTeam());
-        result &= competitionId.equals(match.getCompetitionId());
-        result &= seasonId.equals(match.getSeasonId());
-        result &= date.getTime() == match.getDate().getTime();
-        if (match.getHomeTeamPositionInTable() != null) {
-            result &= homeTeamPositionInTable.equals(match.getHomeTeamPositionInTable());
-        }
-        if (match.getAwayTeamPositionInTable() != null) {
-            result &= awayTeamPositionInTable.equals(match.getAwayTeamPositionInTable());
-        }
-        if (match.getHomeTeamChance() != null) {
-            result &= homeTeamChance.equals(match.getHomeTeamChance());
-        }
-        if (match.getAwayTeamChance() != null) {
-            result &= awayTeamChance.equals(match.getAwayTeamChance());
-        }
-        if (match.getRound() != null) {
-            result &= round.equals(match.getRound());
-        }
-        if (match.getHomeTeamCourse() != null) {
-            result &= homeTeamCourse.equals(match.getHomeTeamCourse());
-        }
-        if (match.getDrawCourse() != null) {
-            result &= drawCourse.equals(match.getDrawCourse());
-        }
-        if (match.getAwayTeamCourse() != null) {
-            result &= awayTeamCourse.equals(match.getAwayTeamCourse());
-        }
-        if (match.getMatchDay() != null) {
-            result &= matchDay.equals(match.getMatchDay());
-        }
-        if (match.getMatchScore() != null) {
-            result &= matchScore.equals(match.getMatchScore());
-        }
-        if (match.getWeather() != null) {
-            result &= weather.equals(match.getWeather());
-        }
-        return result;
+        if (!Objects.equals(footballId, match.getFootballId())) return false;
+        if (!Objects.equals(homeTeam, match.getHomeTeam())) return false;
+        if (!Objects.equals(awayTeam, match.getAwayTeam())) return false;
+        if (!Objects.equals(competitionId, match.getCompetitionId())) return false;
+        if (!Objects.equals(seasonId, match.getSeasonId())) return false;
+        if (!Objects.equals(date.getTime(), match.getDate().getTime())) return false;
+        if (!Objects.equals(matchStats, match.getMatchStats())) return false;
+        if (!Objects.equals(round, match.getRound())) return false;
+        if (!Objects.equals(matchDay, match.getMatchDay())) return false;
+        if (!Objects.equals(matchScore, match.getMatchScore())) return false;
+        if (!Objects.equals(weather, match.getWeather())) return false;
+        return Objects.equals(couponTypeList, match.getCouponTypeList());
     }
 }

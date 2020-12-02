@@ -1,18 +1,19 @@
-package com.kenez92.betwinner.persistence.entity.matches;
+package com.kenez92.betwinner.persistence.entity.weather;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @Entity
 @Table
@@ -47,4 +48,13 @@ public class Weather {
             mappedBy = "weather")
     private List<Match> matchList = new ArrayList<>();
 
+    public boolean equals(Weather weather) {
+        if (weather == null) return false;
+        if (!Objects.equals(this.country, weather.getCountry())) return false;
+        if (!Objects.equals(this.date.getTime(), weather.getDate().getTime())) return false;
+        if (!Objects.equals(this.tempFelt, weather.getTempFelt())) return false;
+        if (!Objects.equals(this.tempMin, weather.getTempMin())) return false;
+        if (!Objects.equals(this.tempMax, weather.getTempMax())) return false;
+        return Objects.equals(this.pressure, weather.getPressure());
+    }
 }

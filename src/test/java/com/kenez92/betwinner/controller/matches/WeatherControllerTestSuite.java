@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.controller.matches;
 
-import com.kenez92.betwinner.domain.matches.WeatherDto;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.service.matches.WeatherService;
 import org.hamcrest.Matchers;

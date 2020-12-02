@@ -31,7 +31,7 @@ public class MatchScoreTestSuite {
         //Then
         try {
             Assert.assertEquals(matchScore.getId(), dbMatchScore.getId());
-            Assert.assertEquals(123L, dbMatchScore.getMatchId(), 0.001);
+            Assert.assertEquals(123L, dbMatchScore.getFootballMatchId(), 0.001);
             Assert.assertEquals(HOME_TEAM, dbMatchScore.getWinner());
             Assert.assertEquals(DURATION, dbMatchScore.getDuration());
             Assert.assertEquals(STATUS, dbMatchScore.getStatus());
@@ -81,7 +81,7 @@ public class MatchScoreTestSuite {
         //Then
         try {
             Assert.assertNotNull(dbMatchScore.getId());
-            Assert.assertEquals(123L, dbMatchScore.getMatchId(), 0.001);
+            Assert.assertEquals(123L, dbMatchScore.getFootballMatchId(), 0.001);
             Assert.assertEquals(HOME_TEAM, dbMatchScore.getWinner());
             Assert.assertEquals(DURATION, dbMatchScore.getDuration());
             Assert.assertEquals(STATUS, dbMatchScore.getStatus());
@@ -105,7 +105,7 @@ public class MatchScoreTestSuite {
         Long matchScoreId = matchScore.getId();
         MatchScore updatedMatchScore = MatchScore.builder()
                 .id(matchScoreId)
-                .matchId(122L)
+                .footballMatchId(122L)
                 .winner(HOME_TEAM)
                 .status(STATUS)
                 .duration(DURATION)
@@ -123,7 +123,7 @@ public class MatchScoreTestSuite {
         //Then
         try {
             Assert.assertEquals(matchScoreId, dbMatchScore.getId());
-            Assert.assertEquals(122L, dbMatchScore.getMatchId(), 0.001);
+            Assert.assertEquals(122L, dbMatchScore.getFootballMatchId(), 0.001);
             Assert.assertEquals(HOME_TEAM, dbMatchScore.getWinner());
             Assert.assertEquals(DURATION, dbMatchScore.getDuration());
             Assert.assertEquals(STATUS, dbMatchScore.getStatus());
@@ -142,7 +142,7 @@ public class MatchScoreTestSuite {
 
     private MatchScore createMatchScore() {
         return MatchScore.builder()
-                .matchId(123L)
+                .footballMatchId(123L)
                 .winner(HOME_TEAM)
                 .status(STATUS)
                 .duration(DURATION)

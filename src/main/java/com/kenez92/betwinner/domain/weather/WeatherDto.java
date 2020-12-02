@@ -1,5 +1,6 @@
-package com.kenez92.betwinner.domain.matches;
+package com.kenez92.betwinner.domain.weather;
 
+import com.kenez92.betwinner.domain.matches.MatchDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

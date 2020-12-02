@@ -25,8 +25,4 @@ public class FootballTeam {
 
     @JsonProperty("losses")
     private int losses;
-
-    private double chanceToWin = 50;
-
-    private int positionInTable;
 }

@@ -5,10 +5,8 @@ import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.domain.OrderDto;
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
-import com.kenez92.betwinner.domain.matches.MatchDayDto;
-import com.kenez92.betwinner.domain.matches.MatchDto;
-import com.kenez92.betwinner.domain.matches.MatchScoreDto;
-import com.kenez92.betwinner.domain.matches.WeatherDto;
+import com.kenez92.betwinner.domain.matches.*;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.service.OrderService;
 import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.hamcrest.Matchers;
@@ -167,10 +165,7 @@ public class OrderControllerTestSuite {
                 .awayTeam("AWAY_TEAM")
                 .competitionId(-202L)
                 .seasonId(-203L)
-                .homeTeamPositionInTable(2)
-                .awayTeamPositionInTable(4)
-                .homeTeamChance(60.0)
-                .awayTeamChance(40.0)
+                .matchStats(new MatchStatsDto())
                 .round(23)
                 .matchDay(new MatchDayDto())
                 .matchScore(new MatchScoreDto())

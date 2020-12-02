@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.service.matches;
 
-import com.kenez92.betwinner.domain.matches.WeatherDto;
-import com.kenez92.betwinner.persistence.entity.matches.Weather;
+import com.kenez92.betwinner.domain.weather.WeatherDto;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.matches.WeatherRepository;
 import org.junit.Assert;
@@ -57,7 +57,6 @@ public class WeatherServiceTestSuite {
         Assert.assertEquals(weather.getTempMax(), weatherDto.getTempMax());
         Assert.assertEquals(weather.getTempMin(), weatherDto.getTempMin());
         Assert.assertEquals(weather.getPressure(), weatherDto.getPressure());
-        Assert.assertEquals(weather.getMatchList().size(), weatherDto.getMatchList().size());
     }
 
     @Test
@@ -84,7 +83,6 @@ public class WeatherServiceTestSuite {
         Assert.assertEquals(weather.getTempMax(), weatherDto.getTempMax());
         Assert.assertEquals(weather.getTempMin(), weatherDto.getTempMin());
         Assert.assertEquals(weather.getPressure(), weatherDto.getPressure());
-        Assert.assertEquals(weather.getMatchList().size(), weatherDto.getMatchList().size());
     }
 
     @Test
@@ -114,7 +112,6 @@ public class WeatherServiceTestSuite {
         Assert.assertEquals(weather.getTempMax(), weatherDto.getTempMax());
         Assert.assertEquals(weather.getTempMin(), weatherDto.getTempMin());
         Assert.assertEquals(weather.getPressure(), weatherDto.getPressure());
-        Assert.assertEquals(weather.getMatchList().size(), weatherDto.getMatchList().size());
     }
 
     @Test

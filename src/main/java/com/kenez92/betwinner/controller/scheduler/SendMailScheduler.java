@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.sheduler;
+package com.kenez92.betwinner.controller.scheduler;
 
 import com.kenez92.betwinner.domain.scheduler.Mail;
 import com.kenez92.betwinner.service.scheduler.SimpleEmailService;
