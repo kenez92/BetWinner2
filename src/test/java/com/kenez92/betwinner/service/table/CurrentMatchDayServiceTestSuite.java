@@ -1,11 +1,13 @@
 package com.kenez92.betwinner.service.table;
 
+import com.kenez92.betwinner.domain.table.CompetitionDto;
 import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
 import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
-import com.kenez92.betwinner.exception.BetWinnerException;
+import com.kenez92.betwinner.persistence.entity.table.Competition;
 import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
 import com.kenez92.betwinner.persistence.entity.table.CompetitionTable;
 import com.kenez92.betwinner.persistence.entity.table.CurrentMatchDay;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.table.CurrentMatchDayRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -56,6 +58,8 @@ public class CurrentMatchDayServiceTestSuite {
         //Then
         Assert.assertEquals(currentMatchDay.getId(), currentMatchDayDto.getId());
         Assert.assertEquals(currentMatchDay.getMatchDay(), currentMatchDayDto.getMatchDay());
+        Assert.assertEquals(currentMatchDay.getCompetitionSeason().getId(), currentMatchDayDto.getCompetitionSeason().getId());
+        Assert.assertEquals(currentMatchDay.getCompetitionTableList().size(), currentMatchDayDto.getCompetitionTableList().size());
     }
 
     @Test
@@ -73,7 +77,7 @@ public class CurrentMatchDayServiceTestSuite {
         Mockito.when(currentMatchDayRepository.existsByCompetitionSeasonAndMatchDay(ArgumentMatchers.any(CompetitionSeason.class),
                 ArgumentMatchers.anyInt())).thenReturn(true);
         //When
-        boolean result = currentMatchDayService.currentMatchDayExistBySeasonAndMatchDay(new CompetitionSeasonDto(), 22);
+        boolean result = currentMatchDayService.currentMatchDayExistBySeasonAndMatchDay(createCompetitionSeasonDto(), 22);
         //Then
         Assert.assertTrue(result);
     }
@@ -84,10 +88,12 @@ public class CurrentMatchDayServiceTestSuite {
         CurrentMatchDay currentMatchDay = createCurrentMatchDay();
         Mockito.when(currentMatchDayRepository.save(ArgumentMatchers.any(CurrentMatchDay.class))).thenReturn(currentMatchDay);
         //When
-        CurrentMatchDayDto currentMatchDayDto = currentMatchDayService.saveCurrentMatchDay(new CurrentMatchDayDto());
+        CurrentMatchDayDto currentMatchDayDto = currentMatchDayService.saveCurrentMatchDay(createCurrentMatchDayDto());
         //Then
         Assert.assertEquals(currentMatchDay.getId(), currentMatchDayDto.getId());
         Assert.assertEquals(currentMatchDay.getMatchDay(), currentMatchDayDto.getMatchDay());
+        Assert.assertEquals(currentMatchDay.getCompetitionSeason().getId(), currentMatchDayDto.getCompetitionSeason().getId());
+        Assert.assertEquals(currentMatchDay.getCompetitionTableList().size(), currentMatchDayDto.getCompetitionTableList().size());
     }
 
     @Test
@@ -97,10 +103,12 @@ public class CurrentMatchDayServiceTestSuite {
         Mockito.when(currentMatchDayRepository.findByCompetitionSeasonAndMatchDay(ArgumentMatchers.any(CompetitionSeason.class),
                 ArgumentMatchers.anyInt())).thenReturn(Optional.ofNullable(currentMatchDay));
         //When
-        CurrentMatchDayDto currentMatchDayDto = currentMatchDayService.getCurrentMatchDayBySeasonAndMatchDay(new CompetitionSeasonDto(), 22);
+        CurrentMatchDayDto currentMatchDayDto = currentMatchDayService.getCurrentMatchDayBySeasonAndMatchDay(createCompetitionSeasonDto(), 22);
         //Then
         Assert.assertEquals(currentMatchDay.getId(), currentMatchDayDto.getId());
         Assert.assertEquals(currentMatchDay.getMatchDay(), currentMatchDayDto.getMatchDay());
+        Assert.assertEquals(currentMatchDay.getCompetitionSeason().getId(), currentMatchDayDto.getCompetitionSeason().getId());
+        Assert.assertEquals(currentMatchDay.getCompetitionTableList().size(), currentMatchDayDto.getCompetitionTableList().size());
     }
 
     @Test
@@ -111,7 +119,7 @@ public class CurrentMatchDayServiceTestSuite {
         //When
         //Then
         Assertions.assertThrows(BetWinnerException.class, () -> currentMatchDayService
-                .getCurrentMatchDayBySeasonAndMatchDay(new CompetitionSeasonDto(), 26));
+                .getCurrentMatchDayBySeasonAndMatchDay(createCompetitionSeasonDto(), 26));
     }
 
     @Test
@@ -130,11 +138,63 @@ public class CurrentMatchDayServiceTestSuite {
 
 
     private CurrentMatchDay createCurrentMatchDay() {
+        List<CompetitionTable> competitionTableList = new ArrayList<>();
+        competitionTableList.add(createCompetitionTable());
+        competitionTableList.add(createCompetitionTable());
+        competitionTableList.add(createCompetitionTable());
         return CurrentMatchDay.builder()
                 .id(23484L)
                 .matchDay(21)
-                .competitionSeason(new CompetitionSeason())
-                .competitionTableList(new ArrayList<>())
+                .competitionSeason(createCompetitionSeason())
+                .competitionTableList(competitionTableList)
                 .build();
     }
+
+    private CurrentMatchDayDto createCurrentMatchDayDto() {
+        return CurrentMatchDayDto.builder()
+                .id(234234L)
+                .competitionSeason(createCompetitionSeasonDto())
+                .build();
+    }
+
+    private CompetitionTable createCompetitionTable() {
+        return CompetitionTable.builder()
+                .id(234L)
+                .stage("Test stage")
+                .type("Test type")
+                .currentMatchDay(new CurrentMatchDay())
+                .competitionTableElements(new ArrayList<>())
+                .build();
+    }
+
+    private CompetitionSeason createCompetitionSeason() {
+        return CompetitionSeason.builder()
+                .id(24123L)
+                .competition(createCompetition())
+                .build();
+    }
+
+    private CompetitionSeasonDto createCompetitionSeasonDto() {
+        return CompetitionSeasonDto.builder()
+                .id(2543L)
+                .competition(createCompetitionDto())
+                .build();
+    }
+
+    private CompetitionDto createCompetitionDto() {
+        return CompetitionDto.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
+                .build();
+    }
+
+    private Competition createCompetition() {
+        return Competition.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
+                .build();
+    }
+
 }

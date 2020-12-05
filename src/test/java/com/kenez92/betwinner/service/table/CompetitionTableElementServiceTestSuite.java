@@ -39,7 +39,7 @@ public class CompetitionTableElementServiceTestSuite {
                 ArgumentMatchers.any(CompetitionTable.class))).thenReturn(true);
         //When
         boolean result = competitionTableElementService.existByNameAndCompetitionTable("Test",
-                new CompetitionTableDto());
+                createCompetitionTableDto());
         //Then
         Assert.assertTrue(result);
     }
@@ -55,6 +55,8 @@ public class CompetitionTableElementServiceTestSuite {
                 .saveCompetitionTableElement(createCompetitionTableElementDto());
         //Then
         Assert.assertEquals(competitionTableElement.getId(), competitionTableElementDto.getId());
+        Assert.assertEquals(competitionTableElement.getCompetitionTable().getId(),
+                competitionTableElementDto.getCompetitionTable().getId());
         Assert.assertEquals(competitionTableElement.getName(), competitionTableElementDto.getName());
         Assert.assertEquals(competitionTableElement.getPosition(), competitionTableElementDto.getPosition());
         Assert.assertEquals(competitionTableElement.getPlayedGames(), competitionTableElementDto.getPlayedGames());
@@ -71,16 +73,17 @@ public class CompetitionTableElementServiceTestSuite {
     public void testGetByNameAndCompetitionTable() {
         //Given
         CompetitionTableElement competitionTableElement = createCompetitionTableElement();
-       // Mockito.when(competitionTableRepository.
-        Mockito.when(competitionTableRepository.findById(null))
-                .thenReturn(Optional.of(new CompetitionTable()));
+        Mockito.when(competitionTableRepository.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(createCompetitionTable()));
         Mockito.when(competitionTableElementRepository.findByNameAndCompetitionTable(ArgumentMatchers.anyString(),
                 ArgumentMatchers.any(CompetitionTable.class))).thenReturn(Optional.ofNullable(competitionTableElement));
         //When
         CompetitionTableElementDto competitionTableElementDto = competitionTableElementService
-                .getByNameAndCompetitionTable("Test", new CompetitionTableDto());
+                .getByNameAndCompetitionTable("Test", createCompetitionTableDto());
         //Then
         Assert.assertEquals(competitionTableElement.getId(), competitionTableElementDto.getId());
+        Assert.assertEquals(competitionTableElement.getCompetitionTable().getId(),
+                competitionTableElementDto.getCompetitionTable().getId());
         Assert.assertEquals(competitionTableElement.getName(), competitionTableElementDto.getName());
         Assert.assertEquals(competitionTableElement.getPosition(), competitionTableElementDto.getPosition());
         Assert.assertEquals(competitionTableElement.getPlayedGames(), competitionTableElementDto.getPlayedGames());
@@ -103,7 +106,7 @@ public class CompetitionTableElementServiceTestSuite {
         //When
         //Then
         Assertions.assertThrows(BetWinnerException.class, () -> competitionTableElementService
-                .getByNameAndCompetitionTable("Test", new CompetitionTableDto()));
+                .getByNameAndCompetitionTable("Test", createCompetitionTableDto()));
     }
 
     @Test
@@ -120,6 +123,8 @@ public class CompetitionTableElementServiceTestSuite {
         //Then
         Assert.assertEquals(1, competitionTableElementDtoList.size());
         Assert.assertEquals(competitionTableElement.getId(), competitionTableElementDto.getId());
+        Assert.assertEquals(competitionTableElement.getCompetitionTable().getId(),
+                competitionTableElementDto.getCompetitionTable().getId());
         Assert.assertEquals(competitionTableElement.getName(), competitionTableElementDto.getName());
         Assert.assertEquals(competitionTableElement.getPosition(), competitionTableElementDto.getPosition());
         Assert.assertEquals(competitionTableElement.getPlayedGames(), competitionTableElementDto.getPlayedGames());
@@ -158,6 +163,8 @@ public class CompetitionTableElementServiceTestSuite {
                 .getCompetitionTableElement(234L);
         //Then
         Assert.assertEquals(competitionTableElement.getId(), competitionTableElementDto.getId());
+        Assert.assertEquals(competitionTableElement.getCompetitionTable().getId(),
+                competitionTableElementDto.getCompetitionTable().getId());
         Assert.assertEquals(competitionTableElement.getName(), competitionTableElementDto.getName());
         Assert.assertEquals(competitionTableElement.getPosition(), competitionTableElementDto.getPosition());
         Assert.assertEquals(competitionTableElement.getPlayedGames(), competitionTableElementDto.getPlayedGames());
@@ -184,7 +191,7 @@ public class CompetitionTableElementServiceTestSuite {
     private CompetitionTableElement createCompetitionTableElement() {
         return CompetitionTableElement.builder()
                 .id(23554L)
-                .competitionTable(new CompetitionTable())
+                .competitionTable(createCompetitionTable())
                 .name("Test Name")
                 .position(234)
                 .playedGames(22)
@@ -198,10 +205,20 @@ public class CompetitionTableElementServiceTestSuite {
                 .build();
     }
 
+    private CompetitionTable createCompetitionTable() {
+        return CompetitionTable.builder()
+                .id(9974L)
+                .stage("Test Stage")
+                .type("Test Type")
+                .currentMatchDay(new CurrentMatchDay())
+                .competitionTableElements(new ArrayList<>())
+                .build();
+    }
+
     private CompetitionTableElementDto createCompetitionTableElementDto() {
         return CompetitionTableElementDto.builder()
                 .id(23554L)
-                .competitionTable(new CompetitionTableDto())
+                .competitionTable(createCompetitionTableDto())
                 .name("Test Name")
                 .position(234)
                 .playedGames(22)
@@ -212,6 +229,38 @@ public class CompetitionTableElementServiceTestSuite {
                 .goalsFor(81)
                 .goalsAgainst(49)
                 .goalDifference(22)
+                .build();
+    }
+
+    private CompetitionTableDto createCompetitionTableDto() {
+        return CompetitionTableDto.builder()
+                .id(9974L)
+                .stage("Test Stage")
+                .type("Test Type")
+                .currentMatchDay(createCurrentMatchDayDto())
+                .competitionTableElements(new ArrayList<>())
+                .build();
+    }
+
+    private CurrentMatchDayDto createCurrentMatchDayDto() {
+        return CurrentMatchDayDto.builder()
+                .id(234234L)
+                .competitionSeason(createCompetitionSeasonDto())
+                .build();
+    }
+
+    private CompetitionSeasonDto createCompetitionSeasonDto() {
+        return CompetitionSeasonDto.builder()
+                .id(2543L)
+                .competition(createCompetitionDto())
+                .build();
+    }
+
+    private CompetitionDto createCompetitionDto() {
+        return CompetitionDto.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
                 .build();
     }
 }

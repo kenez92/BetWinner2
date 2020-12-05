@@ -17,7 +17,7 @@ public class SaveDataScheduler {
     private static final int DELAY_USING_FOOTBALL_DATA_API = 6;
 
     @Scheduled(cron = "0 0 1,23 * * *")
-    @Scheduled(fixedDelay = 1000)
+//    @Scheduled(fixedDelay = 1000)
     public void saveData() throws InterruptedException {
         log.info("Start saving data");
         long start = System.currentTimeMillis();

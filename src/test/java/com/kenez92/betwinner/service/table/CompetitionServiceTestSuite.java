@@ -1,8 +1,9 @@
 package com.kenez92.betwinner.service.table;
 
 import com.kenez92.betwinner.domain.table.CompetitionDto;
-import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.entity.table.Competition;
+import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.table.CompetitionRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +55,7 @@ public class CompetitionServiceTestSuite {
         Assert.assertEquals(competition.getId(), competitionDto.getId());
         Assert.assertEquals(competition.getFootballId(), competitionDto.getFootballId());
         Assert.assertEquals(competition.getName(), competitionDto.getName());
+        Assert.assertEquals(competition.getCompetitionSeasonList().size(), competitionDto.getCompetitionSeasonList().size());
     }
 
     @Test
@@ -86,6 +89,7 @@ public class CompetitionServiceTestSuite {
         Assert.assertEquals(competition.getId(), competitionDto.getId());
         Assert.assertEquals(competition.getFootballId(), competitionDto.getFootballId());
         Assert.assertEquals(competition.getName(), competitionDto.getName());
+        Assert.assertEquals(competition.getCompetitionSeasonList().size(), competitionDto.getCompetitionSeasonList().size());
     }
 
     @Test
@@ -100,6 +104,7 @@ public class CompetitionServiceTestSuite {
         Assert.assertEquals(competition.getId(), competitionDto.getId());
         Assert.assertEquals(competition.getFootballId(), competitionDto.getFootballId());
         Assert.assertEquals(competition.getName(), competitionDto.getName());
+        Assert.assertEquals(competition.getCompetitionSeasonList().size(), competitionDto.getCompetitionSeasonList().size());
     }
 
     @Test
@@ -123,14 +128,32 @@ public class CompetitionServiceTestSuite {
         Assert.assertEquals(competition.getId(), competitionDto.getId());
         Assert.assertEquals(competition.getFootballId(), competitionDto.getFootballId());
         Assert.assertEquals(competition.getName(), competitionDto.getName());
+        Assert.assertEquals(competition.getCompetitionSeasonList().size(), competitionDto.getCompetitionSeasonList().size());
     }
 
     private Competition createCompetition() {
+        List<CompetitionSeason> competitionSeasonList = new ArrayList<>();
+        competitionSeasonList.add(createCompetitionSeason());
+        competitionSeasonList.add(createCompetitionSeason());
+
         return Competition.builder()
                 .id(2409689L)
                 .footballId(95937L)
                 .name("Test Competition")
-                .competitionSeasonList(new ArrayList<>())
+                .competitionSeasonList(competitionSeasonList)
                 .build();
     }
+
+    private CompetitionSeason createCompetitionSeason() {
+        return CompetitionSeason.builder()
+                .id(23423L)
+                .footballId(252323L)
+                .startDate(LocalDate.now().minusYears(1))
+                .endDate(LocalDate.now())
+                .winner("WINNER")
+                .competition(new Competition())
+                .currentMatchDayList(new ArrayList<>())
+                .build();
+    }
+
 }

@@ -16,5 +16,4 @@ public class CurrentMatchDayDto {
     private Integer matchDay;
     private CompetitionSeasonDto competitionSeason;
     private List<CompetitionTableDto> competitionTableList;
-
 }

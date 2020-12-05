@@ -60,6 +60,9 @@ public class CompetitionTableServiceTestSuite {
         Assert.assertEquals(competitionTable.getId(), competitionTableDto.getId());
         Assert.assertEquals(competitionTable.getStage(), competitionTableDto.getStage());
         Assert.assertEquals(competitionTable.getType(), competitionTableDto.getType());
+        Assert.assertEquals(competitionTable.getCurrentMatchDay().getId(), competitionTableDto.getCurrentMatchDay().getId());
+        Assert.assertEquals(competitionTable.getCompetitionTableElements().size(),
+                competitionTableDto.getCompetitionTableElements().size());
     }
 
     @Test
@@ -79,7 +82,7 @@ public class CompetitionTableServiceTestSuite {
                 ArgumentMatchers.anyString(), ArgumentMatchers.any(CurrentMatchDay.class))).thenReturn(true);
         //When
         boolean result = competitionTableService
-                .existsByFields("Test stage", "Test type", new CurrentMatchDayDto());
+                .existsByFields("Test stage", "Test type", createCurrentMatchDayDto());
         //Then
         Assert.assertTrue(result);
     }
@@ -96,6 +99,9 @@ public class CompetitionTableServiceTestSuite {
         Assert.assertEquals(competitionTable.getId(), competitionTableDto.getId());
         Assert.assertEquals(competitionTable.getStage(), competitionTableDto.getStage());
         Assert.assertEquals(competitionTable.getType(), competitionTableDto.getType());
+        Assert.assertEquals(competitionTable.getCurrentMatchDay().getId(), competitionTableDto.getCurrentMatchDay().getId());
+        Assert.assertEquals(competitionTable.getCompetitionTableElements().size(),
+                competitionTableDto.getCompetitionTableElements().size());
     }
 
     @Test
@@ -107,11 +113,14 @@ public class CompetitionTableServiceTestSuite {
                 .thenReturn(Optional.ofNullable(competitionTable));
         //When
         CompetitionTableDto competitionTableDto = competitionTableService.getByFields("Test Stage",
-                "Test Type", new CurrentMatchDayDto());
+                "Test Type", createCurrentMatchDayDto());
         //Then
         Assert.assertEquals(competitionTable.getId(), competitionTableDto.getId());
         Assert.assertEquals(competitionTable.getStage(), competitionTableDto.getStage());
         Assert.assertEquals(competitionTable.getType(), competitionTableDto.getType());
+        Assert.assertEquals(competitionTable.getCurrentMatchDay().getId(), competitionTableDto.getCurrentMatchDay().getId());
+        Assert.assertEquals(competitionTable.getCompetitionTableElements().size(),
+                competitionTableDto.getCompetitionTableElements().size());
     }
 
     @Test
@@ -122,7 +131,7 @@ public class CompetitionTableServiceTestSuite {
         //When
         //Then
         Assertions.assertThrows(BetWinnerException.class, () -> competitionTableService.getByFields("Test",
-                "Test", new CurrentMatchDayDto()));
+                "Test", createCurrentMatchDayDto()));
     }
 
 
@@ -131,17 +140,64 @@ public class CompetitionTableServiceTestSuite {
                 .id(234L)
                 .stage("Test stage")
                 .type("Test type")
-                .currentMatchDay(new CurrentMatchDay())
+                .currentMatchDay(createCurrentMatchDay())
                 .competitionTableElements(new ArrayList<>())
                 .build();
     }
+
+    private CurrentMatchDay createCurrentMatchDay() {
+        return CurrentMatchDay.builder()
+                .id(23444L)
+                .matchDay(2)
+                .competitionSeason(createCompetitionSeason())
+                .competitionTableList(new ArrayList<>())
+                .build();
+    }
+
     private CompetitionTableDto createCompetitionTableDto() {
         return CompetitionTableDto.builder()
                 .id(234L)
                 .stage("Test stage")
                 .type("Test type")
-                .currentMatchDay(new CurrentMatchDayDto())
+                .currentMatchDay(createCurrentMatchDayDto())
                 .competitionTableElements(new ArrayList<>())
+                .build();
+    }
+
+    private CurrentMatchDayDto createCurrentMatchDayDto() {
+        return CurrentMatchDayDto.builder()
+                .id(234234L)
+                .competitionSeason(createCompetitionSeasonDto())
+                .build();
+    }
+
+    private CompetitionSeason createCompetitionSeason() {
+        return CompetitionSeason.builder()
+                .id(24123L)
+                .competition(createCompetition())
+                .build();
+    }
+
+    private CompetitionSeasonDto createCompetitionSeasonDto() {
+        return CompetitionSeasonDto.builder()
+                .id(2543L)
+                .competition(createCompetitionDto())
+                .build();
+    }
+
+    private CompetitionDto createCompetitionDto() {
+        return CompetitionDto.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
+                .build();
+    }
+
+    private Competition createCompetition() {
+        return Competition.builder()
+                .id(234L)
+                .footballId(253L)
+                .name("Test Competition")
                 .build();
     }
 }
