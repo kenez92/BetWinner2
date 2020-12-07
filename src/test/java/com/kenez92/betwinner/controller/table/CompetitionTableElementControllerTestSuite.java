@@ -27,7 +27,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CompetitionTableElementControllerTestSuite {
-    private final String url = "/v1/competitions/seasons/rounds/tables/teams";
+    private final String url = "/v1/competitions/seasons/rounds/tables/elements";
     @Autowired
     private MockMvc mockMvc;
 

@@ -27,6 +27,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class WeatherControllerTestSuite {
+    private final String url = "/v1/weathers/";
     @Autowired
     private MockMvc mockMvc;
 
@@ -40,7 +41,7 @@ public class WeatherControllerTestSuite {
         Mockito.when(weatherService.getWeathers()).thenReturn(weatherDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/matches/weathers")
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)));
@@ -56,7 +57,7 @@ public class WeatherControllerTestSuite {
         Mockito.when(weatherService.getWeathers()).thenReturn(weatherDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/matches/weathers")
+                .get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)))
@@ -76,7 +77,7 @@ public class WeatherControllerTestSuite {
         Mockito.when(weatherService.getWeather(ArgumentMatchers.anyLong())).thenReturn(weatherDto);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/matches/weathers/2")
+                .get(url + "2")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(387)))
@@ -95,7 +96,7 @@ public class WeatherControllerTestSuite {
                 .thenThrow(new BetWinnerException(BetWinnerException.ERR_WEATHER_NOT_FOUND_EXCEPTION));
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/matches/weathers/1454")
+                .get(url + "1454")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(result -> Assert.assertTrue(result.getResolvedException() instanceof BetWinnerException))

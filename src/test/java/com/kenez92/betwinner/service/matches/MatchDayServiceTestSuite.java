@@ -1,8 +1,12 @@
 package com.kenez92.betwinner.service.matches;
 
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
-import com.kenez92.betwinner.exception.BetWinnerException;
+import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
+import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
+import com.kenez92.betwinner.persistence.entity.weather.Weather;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.matches.MatchDayRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -17,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +48,7 @@ public class MatchDayServiceTestSuite {
         //Then
         Assert.assertEquals(matchDay.getId(), matchDayDto.getId());
         Assert.assertEquals(matchDay.getLocalDate(), matchDayDto.getLocalDate());
+        Assert.assertEquals(matchDay.getMatchesList().size(), matchDayDto.getMatchesList().size());
     }
 
     @Test
@@ -65,6 +71,7 @@ public class MatchDayServiceTestSuite {
         //Then
         Assert.assertEquals(matchDay.getId(), matchDayDto.getId());
         Assert.assertEquals(matchDay.getLocalDate(), matchDayDto.getLocalDate());
+        Assert.assertEquals(matchDay.getMatchesList().size(), matchDayDto.getMatchesList().size());
     }
 
     @Test
@@ -77,6 +84,7 @@ public class MatchDayServiceTestSuite {
         //Then
         Assert.assertEquals(matchDay.getId(), matchDayDto.getId());
         Assert.assertEquals(matchDay.getLocalDate(), matchDayDto.getLocalDate());
+        Assert.assertEquals(matchDay.getMatchesList().size(), matchDayDto.getMatchesList().size());
     }
 
     @Test
@@ -101,10 +109,31 @@ public class MatchDayServiceTestSuite {
     }
 
     private MatchDay createMatchDay() {
+        List<Match> matchList = new ArrayList<>();
+        matchList.add(createMatch());
+        matchList.add(createMatch());
+        matchList.add(createMatch());
         return MatchDay.builder()
                 .id(23423L)
                 .localDate(LocalDate.now())
-                .matchesList(new ArrayList<>())
+                .matchesList(matchList)
+                .build();
+    }
+
+    private Match createMatch() {
+        return Match.builder()
+                .footballId(-11234L)
+                .homeTeam(HOME_TEAM)
+                .awayTeam(AWAY_TEAM)
+                .competitionId(-202L)
+                .seasonId(-203L)
+                .date(new Date())
+                .round(23)
+                .matchStats(new MatchStats())
+                .matchDay(new MatchDay())
+                .matchScore(new MatchScore())
+                .weather(new Weather())
+                .couponTypeList(new ArrayList<>())
                 .build();
     }
 }

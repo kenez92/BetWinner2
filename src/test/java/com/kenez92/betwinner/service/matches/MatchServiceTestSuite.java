@@ -4,12 +4,12 @@ import com.kenez92.betwinner.domain.matches.MatchDayDto;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.domain.weather.WeatherDto;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
 import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
 import com.kenez92.betwinner.persistence.entity.weather.Weather;
-import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.matches.MatchRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -163,8 +163,8 @@ public class MatchServiceTestSuite {
                 .competitionId(202L)
                 .seasonId(203L)
                 .date(new Date())
-                .matchStats(new MatchStats())
                 .round(23)
+                .matchStats(new MatchStats())
                 .matchDay(new MatchDay())
                 .matchScore(new MatchScore())
                 .weather(new Weather())

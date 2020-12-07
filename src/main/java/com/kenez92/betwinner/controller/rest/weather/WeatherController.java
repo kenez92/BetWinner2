@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1/matches/weathers")
+@RequestMapping("/v1/weathers")
 public class WeatherController {
     private final WeatherService weatherService;
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(uses = {MatchMapper.class})
 @Component
 public interface MatchScoreMapper {
     MatchScore mapToMatchScore(MatchScoreDto matchScoreDto);
