@@ -4,9 +4,9 @@ import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.UserMapper;
-import com.kenez92.betwinner.persistence.entity.Order;
+import com.kenez92.betwinner.persistence.entity.Coupon;
 import com.kenez92.betwinner.persistence.entity.User;
-import com.kenez92.betwinner.persistence.repository.OrderRepository;
+import com.kenez92.betwinner.persistence.repository.CouponRepository;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    private final OrderRepository orderRepository;
+    private final CouponRepository couponRepository;
 
     public Long getQuantityOfUsers() {
         log.debug("Counting users");
@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
         user.setUserStrategy(userStrategy);
         User updateUser = userRepository.save(user);
-        setOrderList(updateUser);
+        setCouponList(updateUser);
         return userMapper.mapToUserDto(updateUser);
     }
 
@@ -65,7 +65,7 @@ public class UserService implements UserDetailsService {
         log.debug("Getting user by id: {}", userId);
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
-        setOrderList(user);
+        setCouponList(user);
         UserDto UserDto = userMapper.mapToUserDto(user);
         log.debug("Return user: {}", UserDto);
         return UserDto;
@@ -97,7 +97,7 @@ public class UserService implements UserDetailsService {
             log.debug("Updating user id: {}", userDto.getId());
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
             User updatedUser = userRepository.save(userMapper.mapToUser(userDto));
-            setOrderList(updatedUser);
+            setCouponList(updatedUser);
             UserDto updatedUserDto = userMapper.mapToUserDto(updatedUser);
             log.debug("Return updated user: {}", updatedUser);
             return updatedUserDto;
@@ -129,7 +129,7 @@ public class UserService implements UserDetailsService {
         user.setMoney(result);
         User savedUser = userRepository.save(user);
         log.debug("Added money to user successful");
-        setOrderList(savedUser);
+        setCouponList(savedUser);
         return userMapper.mapToUserDto(savedUser);
     }
 
@@ -154,18 +154,18 @@ public class UserService implements UserDetailsService {
         log.debug("Trying to log in user: {}", username);
         User user = userRepository.findByLogin(username)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_LOGIN_NOT_FOUND_EXCEPTION));
-        setOrderList(user);
+        setCouponList(user);
         UserDto userDto = userMapper.mapToUserDto(user);
 
         log.debug("Logging in user: {}", userDto.getLogin());
         return userDto;
     }
 
-    private void setOrderList(User user) {
-        List<Order> orderList = orderRepository.findByUser(user);
-        for (int i = 0; i < orderList.size(); i++) {
-            orderList.get(i).getCoupon().setCouponTypeList(new ArrayList<>());
+    private void setCouponList(User user) {
+        List<Coupon> couponList = couponRepository.findByUser(user);
+        for (int i = 0; i < couponList.size(); i++) {
+            couponList.get(i).setCouponTypeList(new ArrayList<>());
         }
-        user.setOrders(orderList);
+        user.setCoupons(couponList);
     }
 }

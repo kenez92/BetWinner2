@@ -54,7 +54,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.coupons", Matchers.hasSize(0)));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].money", Matchers.is("1200")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].orders", Matchers.hasSize(0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].coupons", Matchers.hasSize(0)));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.coupons", Matchers.hasSize(0)));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.coupons", Matchers.hasSize(0)));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.coupons", Matchers.hasSize(0)));
     }
 
     @Test
@@ -184,7 +184,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.coupons", Matchers.hasSize(0)));
     }
 
     @Test
@@ -212,7 +212,7 @@ public class UserControllerTestSuite {
                 .userStrategy(UserStrategy.NORMAL_STRATEGY)
                 .subscription(true)
                 .money("1200")
-                .orders(new ArrayList<>())
+                .coupons(new ArrayList<>())
                 .build();
     }
 }

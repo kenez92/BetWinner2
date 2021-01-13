@@ -68,7 +68,8 @@ public class User {
 
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,
-            targetEntity = Order.class,
+            targetEntity = Coupon.class,
+            cascade = CascadeType.ALL,
             mappedBy = "user")
-    private List<Order> orders = new ArrayList<>();
+    private List<Coupon> coupons = new ArrayList<>();
 }

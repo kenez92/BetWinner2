@@ -36,9 +36,13 @@ public class Coupon {
     @Column(name = "STATUS")
     private Status couponStatus;
 
+    @ManyToOne
+    private User user;
+
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY,
             targetEntity = CouponType.class,
+            cascade = CascadeType.ALL,
             mappedBy = "coupon")
     private List<CouponType> couponTypeList = new ArrayList<>();
 }

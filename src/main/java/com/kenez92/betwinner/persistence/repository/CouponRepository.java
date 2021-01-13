@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.persistence.repository;
 
 import com.kenez92.betwinner.persistence.entity.Coupon;
+import com.kenez92.betwinner.persistence.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,6 @@ public interface CouponRepository extends CrudRepository<Coupon, Long> {
 
     @Override
     Optional<Coupon> findById(Long couponId);
+
+    List<Coupon> findByUser(User user);
 }

@@ -170,7 +170,7 @@ public class UserServiceTestSuite {
                 .email("test@test.pl")
                 .userStrategy(UserStrategy.NORMAL_STRATEGY)
                 .subscription(true)
-                .orders(new ArrayList<>())
+                .coupons(new ArrayList<>())
                 .build();
     }
 
@@ -182,7 +182,7 @@ public class UserServiceTestSuite {
                 .password("Test password")
                 .role(UserRole.ROLE_ADMIN.toString())
                 .email("test@test.pl")
-                .orders(new ArrayList<>())
+                .coupons(new ArrayList<>())
                 .userStrategy(UserStrategy.NORMAL_STRATEGY)
                 .build();
     }

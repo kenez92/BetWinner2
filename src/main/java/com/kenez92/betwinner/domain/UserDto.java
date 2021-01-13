@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.domain;
 
 import com.kenez92.betwinner.common.enums.UserStrategy;
+import com.kenez92.betwinner.persistence.entity.Coupon;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class UserDto implements UserDetails {
     private UserStrategy userStrategy;
     private Boolean subscription;
     private String money;
-    private List<OrderDto> orders;
+    private List<Coupon> coupons;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
