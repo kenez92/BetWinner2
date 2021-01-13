@@ -1,5 +1,6 @@
 package com.kenez92.betwinner.domain;
 
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class UserDto implements UserDetails {
     private String password;
     private String role;
     private String email;
-    private String userStrategy;
+    private UserStrategy userStrategy;
     private Boolean subscription;
     private String money;
     private List<OrderDto> orders;

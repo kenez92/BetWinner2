@@ -13,6 +13,7 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_USER_NOT_DELETED = "User not deleted. Cannot delete this User!";
     public static final String ERR_LOGIN_NOT_FOUND_EXCEPTION = "User with this login not found";
     public static final String USER_WITH_LOGIN_OR_EMAIL_ALREADY_EXIST_EXCEPTION = "User with this login or email already exist!";
+    public static final String ERR_STRATEGY_NOT_EXIST = "Strategy with this name not exists";
 
     public static final String ERR_ORDER_ID_MUST_BE_NULL_OR_0_EXCEPTION = "Order ID must be null or 0!";
     public static final String ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION = "Order with this id already exists! ";

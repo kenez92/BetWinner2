@@ -1,10 +1,13 @@
 package com.kenez92.betwinner.controller.rest;
 
 import com.kenez92.betwinner.domain.UserDto;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +33,19 @@ public class UserController {
         UserDto userDto = userService.getUser(userId);
         log.info("Return player by id: {}", userId);
         return userDto;
+    }
+
+    @PostMapping(value = "/loggedIn", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto getLoggedUser(@AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
+        if(user != null) {
+            log.info("Getting logged user by name: {}", user.getPrincipal());
+            UserDto userDto = userService.getUserByLogin(String.valueOf(user.getPrincipal()));
+            log.info("Return player by name: {}", userDto);
+            return userDto;
+        }
+        else  {
+            throw new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION);
+        }
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

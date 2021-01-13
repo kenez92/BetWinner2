@@ -13,7 +13,6 @@ import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
 import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.OrderRepository;
-import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -42,9 +41,6 @@ public class OrderServiceTestSuite {
 
     @MockBean
     private OrderRepository orderRepository;
-
-    @Autowired
-    private UserStrategyFactory userStrategyFactory;
 
     @Test
     public void testGetOrders() {

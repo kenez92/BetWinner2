@@ -1,16 +1,18 @@
 package com.kenez92.betwinner.service;
 
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.domain.UserRole;
-import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.exception.BetWinnerException;
+import com.kenez92.betwinner.mapper.UserMapper;
+import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
-import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,6 @@ public class UserServiceTestSuite {
     private UserService userService;
     @MockBean
     private UserRepository userRepository;
-    @Autowired
-    private UserStrategyFactory userStrategyFactory;
 
     @Test
     public void testQuantityOfUsers() {
@@ -57,7 +57,7 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
         Assert.assertTrue(user.getSubscription());
-        Assert.assertEquals(UserStrategyFactory.NORMAL_STRATEGY, userDto.getUserStrategy());
+        Assert.assertEquals(UserStrategy.NORMAL_STRATEGY, userDto.getUserStrategy());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getPassword(), userDto.getPassword());
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
-        Assert.assertEquals(UserStrategyFactory.NORMAL_STRATEGY, userDto.getUserStrategy());
+        Assert.assertEquals(UserStrategy.NORMAL_STRATEGY, userDto.getUserStrategy());
     }
 
     @Test
@@ -168,7 +168,7 @@ public class UserServiceTestSuite {
                 .password("Test password")
                 .role(UserRole.ROLE_ADMIN)
                 .email("test@test.pl")
-                .userStrategy(userStrategyFactory.factory(UserStrategyFactory.NORMAL_STRATEGY))
+                .userStrategy(UserStrategy.NORMAL_STRATEGY)
                 .subscription(true)
                 .orders(new ArrayList<>())
                 .build();
@@ -183,6 +183,7 @@ public class UserServiceTestSuite {
                 .role(UserRole.ROLE_ADMIN.toString())
                 .email("test@test.pl")
                 .orders(new ArrayList<>())
+                .userStrategy(UserStrategy.NORMAL_STRATEGY)
                 .build();
     }
 }

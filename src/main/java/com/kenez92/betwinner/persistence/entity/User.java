@@ -1,8 +1,7 @@
 package com.kenez92.betwinner.persistence.entity;
 
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.UserRole;
-import com.kenez92.betwinner.service.users.strategy.UserStrategy;
-import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyConverter;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,6 +48,7 @@ public class User {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
     private UserRole role;
 
@@ -56,7 +56,7 @@ public class User {
     @Column(name = "E_MAIL", unique = true)
     private String email;
 
-    @Convert(converter = UserStrategyConverter.class)
+    @Enumerated(EnumType.STRING)
     @Column(name = "STRATEGY")
     private UserStrategy userStrategy;
 

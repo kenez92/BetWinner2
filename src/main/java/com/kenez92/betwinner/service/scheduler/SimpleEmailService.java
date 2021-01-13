@@ -1,5 +1,6 @@
 package com.kenez92.betwinner.service.scheduler;
 
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.scheduler.Mail;
 import com.kenez92.betwinner.persistence.entity.User;
@@ -42,10 +43,27 @@ public class SimpleEmailService {
     public List<Mail> prepareMails() {
         List<User> users = userRepository.usersForSubscription();
         List<Mail> mails = new ArrayList<>();
+        List<MatchDto> normalStrategy = preparePredictMatches(UserStrategy.EVERYTHING_STRATEGY);
+        List<MatchDto> defensiveStrategy = preparePredictMatches(UserStrategy.DEFENSIVE_STRATEGY);
+        List<MatchDto> aggressiveStrategy = preparePredictMatches(UserStrategy.AGGRESSIVE_STRATEGY);
+        List<MatchDto> everythingStrategy = preparePredictMatches(UserStrategy.EVERYTHING_STRATEGY);
         for (User user : users) {
-            List<MatchDto> matchDtoList = user.getUserStrategy().predictMatches();
+            List<MatchDto> predictMatches = new ArrayList<>();
+            switch (user.getUserStrategy()) {
+                case NORMAL_STRATEGY:
+                    predictMatches = new ArrayList<>(normalStrategy);
+                    break;
+                case DEFENSIVE_STRATEGY:
+                    predictMatches = new ArrayList<>(defensiveStrategy);
+                    break;
+                case AGGRESSIVE_STRATEGY:
+                    predictMatches = new ArrayList<>(aggressiveStrategy);
+                    break;
+                case EVERYTHING_STRATEGY:
+                    predictMatches = new ArrayList<>(everythingStrategy);
+            }
             String message = "";
-            for (MatchDto matchDto : matchDtoList) {
+            for (MatchDto matchDto : predictMatches) {
                 message = message + matchDto.getHomeTeam() + " vs " + matchDto.getAwayTeam() + " courses / chance to win : "
                         + matchDto.getMatchStats().getHomeTeamCourse() + " - " + matchDto.getMatchStats().getHomeTeamChance() + "% | "
                         + matchDto.getMatchStats().getAwayTeamCourse() + " - " + matchDto.getMatchStats().getAwayTeamChance() + "%  date: "
@@ -55,5 +73,9 @@ public class SimpleEmailService {
                     "Your matches for today : \n" + message));
         }
         return mails;
+    }
+
+    private List<MatchDto> preparePredictMatches(UserStrategy userStrategy) {
+        return new ArrayList<>();
     }
 }

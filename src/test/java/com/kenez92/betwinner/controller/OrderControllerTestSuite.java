@@ -1,6 +1,7 @@
 package com.kenez92.betwinner.controller;
 
 import com.google.gson.Gson;
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.domain.OrderDto;
 import com.kenez92.betwinner.domain.UserDto;
@@ -8,7 +9,6 @@ import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.domain.matches.*;
 import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.service.OrderService;
-import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -141,7 +141,7 @@ public class OrderControllerTestSuite {
                 .password("Test password")
                 .role("ROLE_ADMIN")
                 .email("test@test.pl")
-                .userStrategy(UserStrategyFactory.NORMAL_STRATEGY)
+                .userStrategy(UserStrategy.NORMAL_STRATEGY)
                 .subscription(true)
                 .money("1200")
                 .orders(new ArrayList<>())

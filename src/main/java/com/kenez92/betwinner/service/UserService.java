@@ -1,5 +1,6 @@
 package com.kenez92.betwinner.service;
 
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.UserMapper;
@@ -7,7 +8,6 @@ import com.kenez92.betwinner.persistence.entity.Order;
 import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.repository.OrderRepository;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
-import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -30,7 +30,6 @@ public class UserService implements UserDetailsService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final OrderRepository orderRepository;
-    private final UserStrategyFactory userStrategyFactory;
 
     public Long getQuantityOfUsers() {
         log.debug("Counting users");
@@ -40,9 +39,15 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto changeStrategy(Long userId, String strategy) {
+        UserStrategy userStrategy;
+        try {
+            userStrategy = UserStrategy.valueOf(strategy);
+        } catch (Exception e) {
+            throw new BetWinnerException(BetWinnerException.ERR_STRATEGY_NOT_EXIST);
+        }
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
-        user.setUserStrategy(userStrategyFactory.factory(strategy));
+        user.setUserStrategy(userStrategy);
         User updateUser = userRepository.save(user);
         setOrderList(updateUser);
         return userMapper.mapToUserDto(updateUser);
@@ -134,6 +139,15 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
+    public UserDto getUserByLogin(String login) {
+        log.debug("Getting user by login {}", login);
+        User user = userRepository.findByLogin(login).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
+        UserDto userDto = userMapper.mapToUserDto(user);
+        log.debug("Return user by login {}", userDto);
+        return userDto;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -154,5 +168,4 @@ public class UserService implements UserDetailsService {
         }
         user.setOrders(orderList);
     }
-
 }

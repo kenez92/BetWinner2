@@ -1,9 +1,10 @@
 package com.kenez92.betwinner.controller;
 
 import com.google.gson.Gson;
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.service.UserService;
-import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyFactory;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +51,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Matchers.is("Test password")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.role", Matchers.is("ROLE_ADMIN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("test@test.pl")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("Normal")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
@@ -77,7 +78,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].password", Matchers.is("Test password")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].role", Matchers.is("ROLE_ADMIN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].email", Matchers.is("test@test.pl")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].userStrategy", Matchers.is("Normal")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].money", Matchers.is("1200")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].orders", Matchers.hasSize(0)));
@@ -104,7 +105,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Matchers.is("Test password")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.role", Matchers.is("ROLE_ADMIN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("test@test.pl")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("Normal")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
@@ -132,7 +133,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Matchers.is("Test password")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.role", Matchers.is("ROLE_ADMIN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("test@test.pl")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("Normal")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
@@ -146,7 +147,7 @@ public class UserControllerTestSuite {
         Mockito.when(userService.changeStrategy(ArgumentMatchers.anyLong(), ArgumentMatchers.anyString())).thenReturn(userDto);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .put("/v1/users/2342/normal")
+                .put("/v1/users/2342/NORMAL_STRATEGY")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(123)))
@@ -156,7 +157,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Matchers.is("Test password")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.role", Matchers.is("ROLE_ADMIN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("test@test.pl")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("Normal")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
@@ -180,7 +181,7 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password", Matchers.is("Test password")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.role", Matchers.is("ROLE_ADMIN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("test@test.pl")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("Normal")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userStrategy", Matchers.is("NORMAL_STRATEGY")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.subscription", Matchers.is(true)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.money", Matchers.is("1200")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.orders", Matchers.hasSize(0)));
@@ -208,7 +209,7 @@ public class UserControllerTestSuite {
                 .password("Test password")
                 .role("ROLE_ADMIN")
                 .email("test@test.pl")
-                .userStrategy(UserStrategyFactory.NORMAL_STRATEGY)
+                .userStrategy(UserStrategy.NORMAL_STRATEGY)
                 .subscription(true)
                 .money("1200")
                 .orders(new ArrayList<>())

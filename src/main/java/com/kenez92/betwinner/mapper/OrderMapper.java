@@ -2,7 +2,6 @@ package com.kenez92.betwinner.mapper;
 
 import com.kenez92.betwinner.domain.OrderDto;
 import com.kenez92.betwinner.persistence.entity.Order;
-import com.kenez92.betwinner.service.users.strategy.factory.UserStrategyConverter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
@@ -11,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Mapper
 @Component
-@Mapper(uses = UserStrategyConverter.class)
 public interface OrderMapper {
 
     Order mapToOrder(OrderDto orderDto);

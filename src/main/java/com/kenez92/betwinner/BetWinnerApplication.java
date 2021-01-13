@@ -13,3 +13,15 @@ public class BetWinnerApplication {
     }
 
 }
+
+//@EnableAspectJAutoProxy
+//@SpringBootApplication
+//public class BetWinnerApplication extends SpringBootServletInitializer {
+//    public static void main(String[] args) {
+//        SpringApplication.run(BetWinnerApplication.class, args);
+//    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(BetWinnerApplication.class);
+//    }
+//}
