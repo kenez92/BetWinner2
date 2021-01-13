@@ -4,7 +4,6 @@ import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.domain.UserRole;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.mapper.UserMapper;
 import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
 import org.junit.Assert;
@@ -12,18 +11,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserServiceTestSuite {
     @Autowired
@@ -116,11 +115,14 @@ public class UserServiceTestSuite {
         //Given
         User user = createUser();
         UserDto tmpUserDto = createUserDto();
-        tmpUserDto.setId(343L);
+        tmpUserDto.setFirstName("test");
+        tmpUserDto.setLastName("test Last name");
+        tmpUserDto.setEmail("testUpdated@test.pl");
         Mockito.when(userRepository.save(ArgumentMatchers.any(User.class))).thenReturn(user);
-        Mockito.when(userRepository.existsById(ArgumentMatchers.anyLong())).thenReturn(true);
+        Mockito.when(userRepository.findByLogin(ArgumentMatchers.anyString())).thenReturn(Optional.ofNullable(user));
         //when
-        UserDto userDto = userService.updateUser(tmpUserDto);
+        UserDto userDto = userService.updateUser(tmpUserDto,
+                new UsernamePasswordAuthenticationToken("test", "test"));
         //Then
         Assert.assertEquals(user.getId(), userDto.getId());
         Assert.assertEquals(user.getFirstName(), userDto.getFirstName());
@@ -137,7 +139,8 @@ public class UserServiceTestSuite {
         UserDto userDto = createUserDto();
         //When
         //Then
-        Assertions.assertThrows(BetWinnerException.class, () -> userService.updateUser(userDto));
+        Assertions.assertThrows(BetWinnerException.class, () -> userService.updateUser(userDto,
+                new UsernamePasswordAuthenticationToken("test", "test")));
     }
 
     @Test

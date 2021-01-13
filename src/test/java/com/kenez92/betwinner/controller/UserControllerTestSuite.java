@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -116,7 +117,8 @@ public class UserControllerTestSuite {
     public void testUpdateUser() throws Exception {
         //Given
         UserDto userDto = createUserDto();
-        Mockito.when(userService.updateUser(ArgumentMatchers.any(UserDto.class))).thenReturn(userDto);
+        Mockito.when(userService.updateUser(ArgumentMatchers.any(UserDto.class),
+                ArgumentMatchers.any(UsernamePasswordAuthenticationToken.class))).thenReturn(userDto);
         Gson gson = new Gson();
         String jsonContent = gson.toJson(userDto);
         //When & Then

@@ -37,13 +37,12 @@ public class UserController {
 
     @PostMapping(value = "/loggedIn", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDto getLoggedUser(@AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
-        if(user != null) {
+        if (user != null) {
             log.info("Getting logged user by name: {}", user.getPrincipal());
             UserDto userDto = userService.getUserByLogin(String.valueOf(user.getPrincipal()));
             log.info("Return player by name: {}", userDto);
             return userDto;
-        }
-        else  {
+        } else {
             throw new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION);
         }
     }
@@ -57,9 +56,9 @@ public class UserController {
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDto updateUser(@RequestBody UserDto userDto) {
+    public UserDto updateUser(@RequestBody UserDto userDto, @AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
         log.info("Updating user: {}", userDto);
-        UserDto updatedUserDTo = userService.updateUser(userDto);
+        UserDto updatedUserDTo = userService.updateUser(userDto, user);
         log.info("Return updated user: {}", updatedUserDTo);
         return updatedUserDTo;
     }

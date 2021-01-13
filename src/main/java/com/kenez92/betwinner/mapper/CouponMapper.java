@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@Mapper
+@Mapper(uses = UserMapper.class)
 public interface CouponMapper {
 
     Coupon mapToCoupon(CouponDto couponDto);
