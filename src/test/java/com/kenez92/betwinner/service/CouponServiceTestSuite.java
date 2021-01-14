@@ -1,17 +1,21 @@
 package com.kenez92.betwinner.service;
 
-import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.common.enums.MatchType;
+import com.kenez92.betwinner.common.enums.UserStrategy;
+import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.domain.UserRole;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.entity.Coupon;
+import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
 import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
 import com.kenez92.betwinner.persistence.entity.weather.Weather;
-import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.CouponRepository;
+import com.kenez92.betwinner.persistence.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,6 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +42,8 @@ public class CouponServiceTestSuite {
     private CouponService couponService;
     @MockBean
     private CouponRepository couponRepository;
+    @MockBean
+    private UserRepository userRepository;
 
     @Test
     public void testGetCoupon() {
@@ -81,8 +88,9 @@ public class CouponServiceTestSuite {
     public void testCreateEmptyCoupon() {
         //Given
         Mockito.when(couponRepository.save(ArgumentMatchers.any(Coupon.class))).thenReturn(new Coupon());
+        Mockito.when(userRepository.findByLogin(ArgumentMatchers.anyString())).thenReturn(Optional.ofNullable(createUser()));
         //When
-        CouponDto tmpCouponDto = couponService.createEmptyCoupon();
+        CouponDto tmpCouponDto = couponService.createEmptyCoupon(new UsernamePasswordAuthenticationToken("test", "test"));
         //Then
         Assert.assertNotNull(tmpCouponDto);
     }
@@ -127,6 +135,20 @@ public class CouponServiceTestSuite {
                         .id(-5L)
                         .build())
                 .status(Status.WAITING)
+                .build();
+    }
+    private User createUser() {
+        return User.builder()
+                .id(123L)
+                .firstName("Test first name")
+                .lastName("Test last name")
+                .login("Test")
+                .password("Test password")
+                .role(UserRole.ROLE_ADMIN)
+                .email("test@test.pl")
+                .userStrategy(UserStrategy.NORMAL_STRATEGY)
+                .subscription(true)
+                .coupons(new ArrayList<>())
                 .build();
     }
 }

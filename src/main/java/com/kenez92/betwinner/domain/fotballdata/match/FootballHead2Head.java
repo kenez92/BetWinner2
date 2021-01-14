@@ -3,8 +3,12 @@ package com.kenez92.betwinner.domain.fotballdata.match;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kenez92.betwinner.domain.fotballdata.FootballTeam;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FootballHead2Head {

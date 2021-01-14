@@ -8,13 +8,16 @@ import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
 import com.kenez92.betwinner.mapper.coupons.CouponTypeMapper;
 import com.kenez92.betwinner.persistence.entity.Coupon;
+import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.repository.CouponRepository;
+import com.kenez92.betwinner.persistence.repository.UserRepository;
 import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
 import com.kenez92.betwinner.service.coupons.CouponTypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -29,6 +32,7 @@ public class CouponService {
     private final CouponTypeService couponTypeService;
     private final CouponTypeMapper couponTypeMapper;
     private final CouponTypeRepository couponTypeRepository;
+    private final UserRepository userRepository;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public List<CouponDto> getCoupons() {
@@ -52,13 +56,16 @@ public class CouponService {
         return couponDto;
     }
 
-    public CouponDto createEmptyCoupon() {
+    public CouponDto createEmptyCoupon(UsernamePasswordAuthenticationToken user) {
+        User dbUser = userRepository.findByLogin(user.getName()).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
         log.debug("Creating empty coupon");
         CouponDto couponDto = couponMapper.mapToCouponDto(couponRepository.save(Coupon.builder()
                 .course(0.0)
                 .rate(0.0)
                 .result(0.0)
                 .couponStatus(Status.WAITING)
+                .user(dbUser)
                 .build()));
         log.debug("Return created coupon: {}", couponDto);
         return couponDto;

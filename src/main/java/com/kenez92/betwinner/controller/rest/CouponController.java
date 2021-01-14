@@ -7,6 +7,8 @@ import com.kenez92.betwinner.service.CouponService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,9 +37,9 @@ public class CouponController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public CouponDto createEmptyCoupon() {
-        log.info("Creating empty coupon");
-        CouponDto couponDto = couponService.createEmptyCoupon();
+    public CouponDto createEmptyCoupon(@AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
+        log.info("Creating empty coupon for user :{}",  user.getPrincipal());
+        CouponDto couponDto = couponService.createEmptyCoupon(user);
         log.info("Return created coupon: {}", couponDto);
         return couponDto;
     }

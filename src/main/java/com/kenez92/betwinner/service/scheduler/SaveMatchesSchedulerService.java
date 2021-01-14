@@ -51,19 +51,29 @@ public class SaveMatchesSchedulerService {
 
 
     public void saveMatches(int delayUsingFootballDataApi) throws InterruptedException {
-        List<Long> footballMatchListIds = getFootballMatchListIds(delayUsingFootballDataApi);
-        for (Long footballMatchId : footballMatchListIds) {
-            TimeUnit.SECONDS.sleep(delayUsingFootballDataApi);
-            FootballMatchById footballMatchById = footballClient.getMatch(footballMatchId);
-            CompetitionTable competitionTable = getCompetitionTable(footballMatchById.getMatch().getMatchDay(),
-                    footballMatchById.getMatch().getSeason().getId());
-            MatchDay matchDay = saveMatchDaySchedulerService.process(footballMatchById.getMatch().getUtcDate());
-            MatchScore matchScore = saveMatchScoreSchedulerService.process(footballMatchById.getMatch().getScore(),
-                    footballMatchById.getMatch().getId());
-            MatchStats matchStats = saveMatchStatsSchedulerService.process(footballMatchById, footballMatchId, competitionTable);
-            Weather weather = saveWeatherSchedulerService.process(footballMatchById.getMatch().getUtcDate(),
-                    footballMatchById.getMatch().getCompetition().getArea().getName());
-            saveMatchSchedulerService.process(matchDay, matchScore, matchStats, weather, footballMatchById);
+        try {
+            List<Long> footballMatchListIds = getFootballMatchListIds(delayUsingFootballDataApi);
+            for (Long footballMatchId : footballMatchListIds) {
+                TimeUnit.SECONDS.sleep(delayUsingFootballDataApi);
+                FootballMatchById footballMatchById = footballClient.getMatch(footballMatchId);
+
+                CompetitionTable competitionTable = getCompetitionTable(footballMatchById.getMatch().getMatchDay(),
+                        footballMatchById.getMatch().getSeason().getId());
+
+                MatchDay matchDay = saveMatchDaySchedulerService.process(footballMatchById.getMatch().getUtcDate());
+
+                MatchScore matchScore = saveMatchScoreSchedulerService.process(footballMatchById.getMatch().getScore(),
+                        footballMatchById.getMatch().getId());
+
+                MatchStats matchStats = saveMatchStatsSchedulerService.process(footballMatchById, footballMatchId, competitionTable);
+
+                Weather weather = saveWeatherSchedulerService.process(footballMatchById.getMatch().getUtcDate(),
+                        footballMatchById.getMatch().getCompetition().getArea().getName());
+
+                saveMatchSchedulerService.process(matchDay, matchScore, matchStats, weather, footballMatchById);
+            }
+        }catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

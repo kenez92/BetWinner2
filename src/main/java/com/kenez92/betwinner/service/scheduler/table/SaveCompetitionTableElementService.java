@@ -30,12 +30,16 @@ public class SaveCompetitionTableElementService {
                     .goalDifference(footballTableElement.getGoalDifference())
                     .build();
             if (competitionTableElementRepository.existsByNameAndCompetitionTable(name, competitionTable)) {
-                CompetitionTableElement competitionTableElementFromDb = competitionTableElementRepository
-                        .findByNameAndCompetitionTable(name, competitionTable).orElseThrow(()
-                                -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_ELEMENT_NOT_FOUND_EXCEPTION));
+                try {
+                    CompetitionTableElement competitionTableElementFromDb = competitionTableElementRepository
+                            .findByNameAndCompetitionTable(name, competitionTable).orElseThrow(()
+                                    -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_TABLE_ELEMENT_NOT_FOUND_EXCEPTION));
                 if (!competitionTableElementFromDb.equals(competitionTableElement)) {
                     competitionTableElement.setId(competitionTableElementFromDb.getId());
                     competitionTableElementRepository.save(competitionTableElement);
+                }
+                } catch (Exception ex) {
+                    System.out.println("Error dla : " + name + " - id:" + competitionTable.getId());
                 }
 
             } else {

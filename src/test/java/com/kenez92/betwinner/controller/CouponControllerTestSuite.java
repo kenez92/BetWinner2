@@ -1,10 +1,15 @@
 package com.kenez92.betwinner.controller;
 
 import com.google.gson.Gson;
+import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
-import com.kenez92.betwinner.domain.matches.*;
+import com.kenez92.betwinner.domain.matches.MatchDayDto;
+import com.kenez92.betwinner.domain.matches.MatchDto;
+import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.domain.matches.MatchStatsDto;
 import com.kenez92.betwinner.domain.weather.WeatherDto;
 import com.kenez92.betwinner.service.CouponService;
 import org.hamcrest.Matchers;
@@ -17,6 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -80,8 +86,10 @@ public class CouponControllerTestSuite {
                 .rate(0.0)
                 .result(0.0)
                 .couponStatus("WAITING")
+                .user(createUserDto())
                 .build();
-        Mockito.when(couponService.createEmptyCoupon()).thenReturn(couponDto);
+        Mockito.when(couponService.createEmptyCoupon(ArgumentMatchers.any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(couponDto);
         Gson gson = new Gson();
         String jsonContent = gson.toJson(couponDto);
         //When & Then
@@ -94,6 +102,7 @@ public class CouponControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.course", Matchers.is(0.0)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.rate", Matchers.is(0.0)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result", Matchers.is(0.0)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.user", Matchers.notNullValue()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponStatus", Matchers.is("WAITING")));
     }
 
@@ -186,7 +195,22 @@ public class CouponControllerTestSuite {
         return CouponDto.builder()
                 .id(302L)
                 .couponTypeList(couponTypeDtoList)
+                .user(createUserDto())
                 .build();
     }
 
+    private UserDto createUserDto() {
+        return UserDto.builder()
+                .id(123L)
+                .firstName("Test first name")
+                .lastName("Test last name")
+                .login("Test")
+                .password("Test password")
+                .role("ROLE_ADMIN")
+                .email("test@test.pl")
+                .userStrategy(UserStrategy.NORMAL_STRATEGY)
+                .subscription(true)
+                .coupons(new ArrayList<>())
+                .build();
+    }
 }

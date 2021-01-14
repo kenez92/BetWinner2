@@ -18,5 +18,6 @@ public class CouponDto {
     private Double rate;
     private Double result;
     private String couponStatus;
+    private UserDto user;
     private List<CouponTypeDto> couponTypeList;
 }

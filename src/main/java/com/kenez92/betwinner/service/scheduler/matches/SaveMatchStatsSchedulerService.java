@@ -21,10 +21,10 @@ public class SaveMatchStatsSchedulerService {
         FootballHead2Head footballHead2Head = footballMatchById.getHead2head();
         MatchStats matchStats = MatchStats.builder()
                 .footballMatchId(footballMatchId)
-                .homeTeamWins(footballHead2Head.getHomeTeam().getWins())
-                .draws(footballHead2Head.getHomeTeam().getDraws())
-                .awayTeamWins(footballHead2Head.getAwayTeam().getWins())
-                .gamesPlayed(footballHead2Head.getNumberOfMatches())
+                .homeTeamWins(footballHead2Head != null ? footballHead2Head.getHomeTeam().getWins() : 0)
+                .draws(footballHead2Head != null ? footballHead2Head.getHomeTeam().getDraws() : 0)
+                .awayTeamWins(footballHead2Head != null ? footballHead2Head.getAwayTeam().getWins() : 0)
+                .gamesPlayed(footballHead2Head != null ? footballHead2Head.getNumberOfMatches() : 0)
                 .homeTeamPositionInTable(getPositionInTable(competitionTable, footballMatchById.getMatch()
                         .getHomeTeam().getName()))
                 .awayTeamPositionInTable(getPositionInTable(competitionTable, footballMatchById.getMatch()
@@ -63,9 +63,5 @@ public class SaveMatchStatsSchedulerService {
         } else {
             return 0;
         }
-    }
-
-    public void setCourse(MatchStats matchStats) {
-
     }
 }
