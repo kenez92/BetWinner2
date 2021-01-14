@@ -50,7 +50,8 @@ public class CouponControllerTestSuite {
         List<CouponDto> couponDtoList = new ArrayList<>();
         couponDtoList.add(createCouponDto());
         couponDtoList.add(createCouponDto());
-        Mockito.when(couponService.getCoupons()).thenReturn(couponDtoList);
+        Mockito.when(couponService.getUserCoupons(ArgumentMatchers.any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(couponDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/v1/coupons")

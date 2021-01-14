@@ -29,7 +29,8 @@ public class UserDto implements UserDetails {
     private UserStrategy userStrategy;
     private Boolean subscription;
     private String money;
-    private List<Coupon> coupons;
+    private String authorities;
+    private List<CouponDto> coupons;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
     id 'net.ltgt.apt' version '0.8'
-//    id 'war'
+    id 'war'
 }
 
 group = 'com.kenez92'

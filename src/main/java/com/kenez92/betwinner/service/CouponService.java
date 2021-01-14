@@ -35,9 +35,11 @@ public class CouponService {
     private final UserRepository userRepository;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-    public List<CouponDto> getCoupons() {
-        log.debug("Getting all coupons");
-        List<Coupon> couponList = couponRepository.findAll();
+    public List<CouponDto> getUserCoupons(UsernamePasswordAuthenticationToken user) {
+        User dbUser = userRepository.findByLogin(user.getName()).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
+        log.debug("Getting all user coupons");
+        List<Coupon> couponList = couponRepository.findAllByUser(dbUser);
         for (Coupon coupon : couponList) {
             setData(coupon);
         }

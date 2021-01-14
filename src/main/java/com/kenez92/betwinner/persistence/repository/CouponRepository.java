@@ -15,6 +15,8 @@ public interface CouponRepository extends CrudRepository<Coupon, Long> {
     @Override
     List<Coupon> findAll();
 
+    List<Coupon> findAllByUser(User user);
+
     @Override
     Optional<Coupon> findById(Long couponId);
 

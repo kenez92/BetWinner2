@@ -76,9 +76,10 @@ public class CouponServiceTestSuite {
         couponList.add(createCoupon());
         couponList.add(createCoupon());
         couponList.add(createCoupon());
-        Mockito.when(couponRepository.findAll()).thenReturn(couponList);
+        Mockito.when(userRepository.findByLogin(ArgumentMatchers.anyString())).thenReturn(Optional.ofNullable(createUser()));
+        Mockito.when(couponRepository.findAllByUser(ArgumentMatchers.any(User.class))).thenReturn(couponList);
         //When
-        List<CouponDto> couponDtoList = couponService.getCoupons();
+        List<CouponDto> couponDtoList = couponService.getUserCoupons(new UsernamePasswordAuthenticationToken("test", "test"));
         //Then
         Assert.assertNotNull(couponDtoList);
         Assert.assertEquals(3, couponDtoList.size());
@@ -137,6 +138,7 @@ public class CouponServiceTestSuite {
                 .status(Status.WAITING)
                 .build();
     }
+
     private User createUser() {
         return User.builder()
                 .id(123L)

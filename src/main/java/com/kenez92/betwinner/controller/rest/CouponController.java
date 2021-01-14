@@ -21,9 +21,9 @@ public class CouponController {
     private final CouponService couponService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CouponDto> getCoupons() {
+    public List<CouponDto> getAllUserCoupons(@AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
         log.info("Getting all coupons");
-        List<CouponDto> couponDtoList = couponService.getCoupons();
+        List<CouponDto> couponDtoList = couponService.getUserCoupons(user);
         log.info("Return all coupons: {}", couponDtoList);
         return couponDtoList;
     }
@@ -38,7 +38,7 @@ public class CouponController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CouponDto createEmptyCoupon(@AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
-        log.info("Creating empty coupon for user :{}",  user.getPrincipal());
+        log.info("Creating empty coupon for user :{}", user.getPrincipal());
         CouponDto couponDto = couponService.createEmptyCoupon(user);
         log.info("Return created coupon: {}", couponDto);
         return couponDto;
