@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService {
     public List<UserDto> getUsers() {
         log.debug("Getting all users");
         List<User> userList = userRepository.findAll();
-        for(User user: userList) {
+        for (User user : userList) {
             setCouponList(user);
         }
         List<UserDto> userDtoList = userMapper.mapToUserDtoList(userList);
@@ -101,22 +101,22 @@ public class UserService implements UserDetailsService {
         User dbUser = userRepository.findByLogin(user.getName()).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
         log.debug("Updating user {}", dbUser);
-        if(userDto.getFirstName() != null) {
+        if (userDto.getFirstName() != null) {
             dbUser.setFirstName(userDto.getFirstName());
         }
-        if(userDto.getLastName() != null) {
+        if (userDto.getLastName() != null) {
             dbUser.setLastName(userDto.getLastName());
         }
-        if(userDto.getPassword() != null) {
+        if (userDto.getPassword() != null) {
             dbUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
-        if(userDto.getEmail() != null) {
+        if (userDto.getEmail() != null) {
             dbUser.setEmail(userDto.getEmail());
         }
-        if(userDto.getUserStrategy() != null) {
+        if (userDto.getUserStrategy() != null) {
             dbUser.setUserStrategy(userDto.getUserStrategy());
         }
-        if(userDto.getSubscription() != null) {
+        if (userDto.getSubscription() != null) {
             dbUser.setSubscription(userDto.getSubscription());
         }
         User updatedUser = userRepository.save(dbUser);
@@ -176,7 +176,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_LOGIN_NOT_FOUND_EXCEPTION));
         setCouponList(user);
         UserDto userDto = userMapper.mapToUserDto(user);
-
+        userDto.setPassword(user.getPassword());
         log.debug("Logging in user: {}", userDto.getLogin());
         return userDto;
     }
