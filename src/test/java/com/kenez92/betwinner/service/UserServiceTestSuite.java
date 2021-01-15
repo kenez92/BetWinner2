@@ -52,7 +52,7 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getFirstName(), userDto.getFirstName());
         Assert.assertEquals(user.getLastName(), userDto.getLastName());
         Assert.assertEquals(user.getLogin(), userDto.getLogin());
-        Assert.assertEquals(user.getPassword(), userDto.getPassword());
+        Assert.assertEquals(null, userDto.getPassword());
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
         Assert.assertTrue(user.getSubscription());
@@ -94,7 +94,7 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getFirstName(), userDto.getFirstName());
         Assert.assertEquals(user.getLastName(), userDto.getLastName());
         Assert.assertEquals(user.getLogin(), userDto.getLogin());
-        Assert.assertEquals(user.getPassword(), userDto.getPassword());
+        Assert.assertEquals(null, userDto.getPassword());
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
         Assert.assertEquals(UserStrategy.NORMAL_STRATEGY, userDto.getUserStrategy());
@@ -128,7 +128,7 @@ public class UserServiceTestSuite {
         Assert.assertEquals(user.getFirstName(), userDto.getFirstName());
         Assert.assertEquals(user.getLastName(), userDto.getLastName());
         Assert.assertEquals(user.getLogin(), userDto.getLogin());
-        Assert.assertEquals(user.getPassword(), userDto.getPassword());
+        Assert.assertEquals(null, userDto.getPassword());
         Assert.assertEquals(user.getRole().toString(), userDto.getRole());
         Assert.assertEquals(user.getEmail(), userDto.getEmail());
     }

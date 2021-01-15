@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.service.coupons;
 
 import com.kenez92.betwinner.common.enums.MatchType;
-import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.persistence.entity.Coupon;
@@ -51,8 +51,8 @@ public class CouponTypeServiceTestSuite {
         CouponTypeDto couponTypeDto = couponTypeService.getCouponType(2303L);
         //Then
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
-        Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType());
-        Assert.assertEquals("WAITING", couponTypeDto.getStatus());
+        Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType().toString());
+        Assert.assertEquals("WAITING", couponTypeDto.getCouponStatus().toString());
     }
 
     @Test
@@ -88,8 +88,8 @@ public class CouponTypeServiceTestSuite {
         CouponTypeDto couponTypeDto = couponTypeService.createCouponType(new CouponTypeDto());
         //Then
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
-        Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType());
-        Assert.assertEquals("WAITING", couponTypeDto.getStatus());
+        Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType().toString());
+        Assert.assertEquals("WAITING", couponTypeDto.getCouponStatus().toString());
     }
 
     @Test
@@ -120,8 +120,8 @@ public class CouponTypeServiceTestSuite {
         CouponTypeDto couponTypeDto = couponTypeService.updateCouponType(new CouponTypeDto());
         //Then
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
-        Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType());
-        Assert.assertEquals("WAITING", couponTypeDto.getStatus());
+        Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType().toString());
+        Assert.assertEquals("WAITING", couponTypeDto.getCouponStatus().toString());
 
     }
 
@@ -138,8 +138,8 @@ public class CouponTypeServiceTestSuite {
         //When
         couponTypeService.checkCouponTypes();
         //Then
-        Assert.assertEquals(Status.WIN, couponTypeList.get(0).getStatus());
-        Assert.assertEquals(Status.LOST, couponTypeList.get(1).getStatus());
+        Assert.assertEquals(CouponStatus.WIN, couponTypeList.get(0).getCouponStatus());
+        Assert.assertEquals(CouponStatus.LOST, couponTypeList.get(1).getCouponStatus());
 
     }
 
@@ -147,7 +147,7 @@ public class CouponTypeServiceTestSuite {
         return CouponType.builder()
                 .id(2303L)
                 .matchType(MatchType.HOME_TEAM)
-                .status(Status.WAITING)
+                .couponStatus(CouponStatus.WAITING)
                 .match(createMatch())
                 .coupon(createCoupon())
                 .build();

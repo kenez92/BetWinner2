@@ -3,7 +3,7 @@ package com.kenez92.betwinner.service;
 import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.domain.UserRole;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.entity.Coupon;
@@ -135,7 +135,7 @@ public class CouponServiceTestSuite {
                 .coupon(Coupon.builder()
                         .id(-5L)
                         .build())
-                .status(Status.WAITING)
+                .couponStatus(CouponStatus.WAITING)
                 .build();
     }
 

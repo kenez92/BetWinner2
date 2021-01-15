@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.persistence.entity.coupons;
 
 import com.kenez92.betwinner.common.enums.MatchType;
-import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.persistence.entity.Coupon;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.sun.istack.NotNull;
@@ -37,7 +37,7 @@ public class CouponType {
     @Builder.Default
     @Enumerated(value = EnumType.STRING)
     @Column(name = "TYPE_STATUS")
-    private Status status = Status.WAITING;
+    private CouponStatus couponStatus = CouponStatus.WAITING;
 
     @ManyToOne
     private Match match;

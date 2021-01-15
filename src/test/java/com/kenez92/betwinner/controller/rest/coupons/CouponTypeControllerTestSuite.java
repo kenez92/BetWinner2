@@ -3,7 +3,7 @@ package com.kenez92.betwinner.controller.rest.coupons;
 import com.google.gson.Gson;
 import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.common.enums.MatchType;
-import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.domain.matches.*;
 import com.kenez92.betwinner.domain.weather.WeatherDto;
@@ -70,7 +70,7 @@ public class CouponTypeControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].status", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].couponStatus", Matchers.is("WAITING")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].match.id", Matchers.is(832983)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].coupon.id", Matchers.is(302)));
     }
@@ -87,7 +87,7 @@ public class CouponTypeControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.status", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.couponStatus", Matchers.is("WAITING")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.match.id", Matchers.is(832983)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.coupon.id", Matchers.is(302)));
     }
@@ -125,7 +125,7 @@ public class CouponTypeControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.status", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.couponStatus", Matchers.is("WAITING")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.match.id", Matchers.is(832983)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.coupon.id", Matchers.is(302)));
     }
@@ -146,8 +146,8 @@ public class CouponTypeControllerTestSuite {
     private CouponTypeDto createCouponTypeDto() {
         return CouponTypeDto.builder()
                 .id(2303L)
-                .matchType(MatchType.HOME_TEAM.toString())
-                .status(Status.WAITING.toString())
+                .matchType(MatchType.HOME_TEAM)
+                .couponStatus(CouponStatus.WAITING)
                 .match(createMatchDto())
                 .coupon(createCouponDto())
                 .build();

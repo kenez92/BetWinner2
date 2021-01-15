@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.persistence.entity;
 
-import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +34,7 @@ public class Coupon {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
-    private Status couponStatus;
+    private CouponStatus couponStatus;
 
     @ManyToOne
     private User user;

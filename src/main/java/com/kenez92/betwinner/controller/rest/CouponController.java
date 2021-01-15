@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.controller.rest;
 
+import com.kenez92.betwinner.common.enums.CouponStatus;
+import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.Status;
-import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.service.CouponService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,17 +45,20 @@ public class CouponController {
     }
 
     @PutMapping(value = "/check/{couponId}")
-    public Status checkCoupon(@PathVariable Long couponId) {
+    public CouponStatus checkCoupon(@PathVariable Long couponId) {
         log.info("Checking coupon id: {}", couponId);
-        Status result = couponService.checkCoupon(couponId);
+        CouponStatus result = couponService.checkCoupon(couponId);
         log.info("Result of the coupon with id : {}{}", couponId, " :" + result);
         return result;
     }
 
-    @PutMapping(value = "/{couponId}")
-    public CouponDto addMatch(@PathVariable Long couponId, @RequestBody CouponTypeDto couponTypeDto) {
-        log.info("Adding coupon type to coupon id: {}{}", couponId, couponTypeDto);
-        CouponDto couponDto = couponService.addMatch(couponId, couponTypeDto);
+    @PostMapping(value = "/{couponId}/{matchId}")
+    public CouponDto addMatch(@PathVariable Long couponId,
+                              @PathVariable Long matchId,
+                              @RequestBody MatchType matchType,
+                              @AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
+        log.info("Adding match to coupon id: {}, matchId: {}, matchType: {}", couponId, matchId, matchType);
+        CouponDto couponDto = couponService.addMatch(couponId, matchId, matchType, user);
         log.info("Return coupon: {}", couponDto);
         return couponDto;
     }

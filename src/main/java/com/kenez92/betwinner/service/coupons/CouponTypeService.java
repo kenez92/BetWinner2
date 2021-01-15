@@ -1,6 +1,6 @@
 package com.kenez92.betwinner.service.coupons;
 
-import com.kenez92.betwinner.domain.Status;
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
@@ -77,14 +77,14 @@ public class CouponTypeService {
         List<CouponType> couponTypeList = couponTypeRepository.couponsForCheck();
         for (CouponType couponType : couponTypeList) {
             log.debug("Check coupon type id: {}", couponType.getId());
-            if (couponType.getStatus().toString().equals(Status.WAITING.toString())) {
+            if (couponType.getCouponStatus().toString().equals(CouponStatus.WAITING.toString())) {
                 MatchScoreDto matchScoreDto = matchScoreService.getByMatchId(couponType.getMatch().getId());
                 if (matchScoreDto.getWinner() != null) {
                     if (couponType.getMatchType().toString().equals(matchScoreDto.getWinner())) {
-                        couponType.setStatus(Status.WIN);
+                        couponType.setCouponStatus(CouponStatus.WIN);
                         log.debug("Coupon type win!");
                     } else {
-                        couponType.setStatus(Status.LOST);
+                        couponType.setCouponStatus(CouponStatus.LOST);
                         log.debug("CouponType lost!");
                     }
                     couponTypeRepository.save(couponType);

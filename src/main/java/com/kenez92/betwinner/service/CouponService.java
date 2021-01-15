@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.service;
 
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
@@ -14,6 +14,7 @@ import com.kenez92.betwinner.persistence.entity.matches.Match;
 import com.kenez92.betwinner.persistence.repository.CouponRepository;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
 import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
+import com.kenez92.betwinner.persistence.repository.matches.MatchRepository;
 import com.kenez92.betwinner.service.coupons.CouponTypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class CouponService {
     private final CouponTypeMapper couponTypeMapper;
     private final CouponTypeRepository couponTypeRepository;
     private final UserRepository userRepository;
+    private final MatchRepository matchRepository;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public List<CouponDto> getUserCoupons(UsernamePasswordAuthenticationToken user) {
@@ -66,7 +68,7 @@ public class CouponService {
                 .course(0.0)
                 .rate(0.0)
                 .result(0.0)
-                .couponStatus(Status.WAITING)
+                .couponStatus(CouponStatus.WAITING)
                 .user(dbUser)
                 .build()));
         log.debug("Return created coupon: {}", couponDto);
@@ -100,7 +102,7 @@ public class CouponService {
         }
     }
 
-    public Status checkCoupon(Long couponId) {
+    public CouponStatus checkCoupon(Long couponId) {
         log.debug("Checking coupon id: {}", couponId);
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
@@ -108,39 +110,51 @@ public class CouponService {
         int counter = 0;
         for (int i = 0; i < size; i++) {
             CouponType couponType = coupon.getCouponTypeList().get(i);
-            if (couponType.getStatus().equals(Status.WIN)) {
+            if (couponType.getCouponStatus().equals(CouponStatus.WIN)) {
                 counter++;
-            } else if (couponType.getStatus().equals(Status.LOST)) {
-                coupon.setCouponStatus(Status.LOST);
+            } else if (couponType.getCouponStatus().equals(CouponStatus.LOST)) {
+                coupon.setCouponStatus(CouponStatus.LOST);
                 couponRepository.save(coupon);
-                return Status.LOST;
-            } else if (couponType.getStatus().equals(Status.WAITING)) {
-                return Status.WAITING;
+                return CouponStatus.LOST;
+            } else if (couponType.getCouponStatus().equals(CouponStatus.WAITING)) {
+                return CouponStatus.WAITING;
             } else {
                 throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
             }
         }
         if (counter == size) {
-            coupon.setCouponStatus(Status.WIN);
+            coupon.setCouponStatus(CouponStatus.WIN);
             couponRepository.save(coupon);
         }
-        return Status.WIN;
+        return CouponStatus.WIN;
     }
 
-    public CouponDto addMatch(Long couponId, CouponTypeDto couponTypeDto) {
-        log.debug("Adding match to coupon id: {}{}", couponId, couponTypeDto);
-        Coupon coupon = couponRepository.findById(couponId)
-                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
-        CouponTypeDto savedCouponTypeDto = couponTypeService.createCouponType(couponTypeDto);
-        CouponType savedCouponType = couponTypeMapper.mapToCouponType(savedCouponTypeDto);
-        setData(coupon);
-        coupon.getCouponTypeList().add(savedCouponType);
-        countFields(coupon);
-        Coupon savedCoupon = couponRepository.save(coupon);
-        setData(savedCoupon);
-        CouponDto couponDto = couponMapper.mapToCouponDto(savedCoupon);
-        log.debug("Return coupon: {}", couponDto);
-        return couponDto;
+    public CouponDto addMatch(Long couponId, Long matchId, MatchType matchType, UsernamePasswordAuthenticationToken user) {
+        Coupon coupon = couponRepository.findById(couponId).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+        Match match = matchRepository.findById(matchId).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
+        if (coupon.getUser().getLogin().equals(user.getName())) {
+            log.debug("Adding match to coupon id: {}, matchId: {}, matchType: {}", couponId, matchId, matchType);
+            CouponType couponType = CouponType.builder()
+                    .matchType(matchType)
+                    .match(match)
+                    .coupon(coupon)
+                    .build();
+            for(CouponType type : coupon.getCouponTypeList()) {
+                if(type.getMatch().getId().equals(couponType.getMatch().getId())) {
+                    throw new BetWinnerException(BetWinnerException.ERR_COUPON_TYPE_EXISTS_IN_COUPON);
+                }
+            }
+            coupon.getCouponTypeList().add(couponType);
+            countFields(coupon);
+            Coupon savedCoupon = couponRepository.save(coupon);
+            CouponDto couponDto = couponMapper.mapToCouponDto(savedCoupon);
+            log.debug("Return coupon: {}", couponDto);
+            return couponDto;
+        } else {
+            throw new BetWinnerException(BetWinnerException.ERR_THIS_COUPON_DONT_BELONGS_TO_LOGGED_USER);
+        }
     }
 
     private void setData(Coupon coupon) {
@@ -169,8 +183,10 @@ public class CouponService {
                 switch (matchType) {
                     case AWAY_TEAM:
                         course = course + match.getMatchStats().getAwayTeamCourse();
+                        break;
                     case HOME_TEAM:
                         course = course + match.getMatchStats().getHomeTeamCourse();
+                        break;
                     case DRAW:
                         course = course + match.getMatchStats().getDrawCourse();
                 }

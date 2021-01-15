@@ -1,9 +1,10 @@
 package com.kenez92.betwinner.controller;
 
 import com.google.gson.Gson;
+import com.kenez92.betwinner.common.enums.CouponStatus;
+import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.Status;
 import com.kenez92.betwinner.domain.UserDto;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.domain.matches.MatchDayDto;
@@ -74,7 +75,7 @@ public class CouponControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].status", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].couponStatus", Matchers.is("WAITING")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].match.id", Matchers.is(832983)));
     }
 
@@ -111,7 +112,7 @@ public class CouponControllerTestSuite {
     @WithMockUser(username = "admin")
     public void testCheckCoupon() throws Exception {
         //Given
-        Mockito.when(couponService.checkCoupon(ArgumentMatchers.anyLong())).thenReturn(Status.WAITING);
+        Mockito.when(couponService.checkCoupon(ArgumentMatchers.anyLong())).thenReturn(CouponStatus.WAITING);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
                 .put("/v1/coupons/check/234")
@@ -124,13 +125,14 @@ public class CouponControllerTestSuite {
     @WithMockUser(username = "admin")
     public void testAddMatch() throws Exception {
         //Given
-        Mockito.when(couponService.addMatch(ArgumentMatchers.anyLong(), ArgumentMatchers.any(CouponTypeDto.class)))
+        Mockito.when(couponService.addMatch(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(),
+                ArgumentMatchers.any(MatchType.class), ArgumentMatchers.any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(createCouponDto());
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(createCouponTypeDto());
+        String jsonContent = gson.toJson(MatchType.HOME_TEAM);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .put("/v1/coupons/333")
+                .post("/v1/coupons/333/545")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonContent)
                 .characterEncoding("UTF-8"))
@@ -166,8 +168,8 @@ public class CouponControllerTestSuite {
     private CouponTypeDto createCouponTypeDto() {
         return CouponTypeDto.builder()
                 .id(2303L)
-                .matchType("HOME_TEAM")
-                .status("WAITING")
+                .matchType(MatchType.HOME_TEAM)
+                .couponStatus(CouponStatus.WAITING)
                 .match(createMatchDto())
                 .build();
     }

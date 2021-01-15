@@ -15,16 +15,12 @@ public class BetWinnerException extends RuntimeException {
     public static final String USER_WITH_LOGIN_OR_EMAIL_ALREADY_EXIST_EXCEPTION = "User with this login or email already exist!";
     public static final String ERR_STRATEGY_NOT_EXIST = "Strategy with this name not exists";
 
-    public static final String ERR_ORDER_ID_MUST_BE_NULL_OR_0_EXCEPTION = "Order ID must be null or 0!";
-    public static final String ERR_ORDER_WITH_THIS_ID_ALREADY_EXISTS_EXCEPTION = "Order with this id already exists! ";
-    public static final String ERR_ORDER_ID_MUST_BE_NOT_NULL_EXCEPTION = "Order ID must be not null!";
-    public static final String ERR_ORDER_NOT_FOUND_EXCEPTION = "Order not found!";
-    public static final String ERR_ORDER_NOT_DELETED = "Order not deleted. Cannot delete this order!";
-    public static final String ERR_ORDER_NOT_EXIST_EXCEPTION = "This order not exist!";
 
     public static final String ERR_COUPON_NOT_FOUND_EXCEPTION = "Coupon not found!";
     public static final String ERR_COUPON_RATE_IS_LOWER_THAN_0 = "Coupon rate cant be lower than 0!";
     public static final String ERR_COUPON_TYPE_NOT_FOUND_EXCEPTION = "Coupon type not found!";
+    public static final String ERR_THIS_COUPON_DONT_BELONGS_TO_LOGGED_USER = "This coupon dont belongs to logged user";
+    public static final String ERR_COUPON_TYPE_EXISTS_IN_COUPON = "This match already exists in your coupon";
 
     public static final String ERR_MATCH_NOT_FOUND_EXCEPTION = "Match not found!";
     public static final String ERR_MATCH_DAY_NOT_FOUND_EXCEPTION = "Match day not found!";
