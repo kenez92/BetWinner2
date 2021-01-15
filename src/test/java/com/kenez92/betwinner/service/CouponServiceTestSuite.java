@@ -91,7 +91,7 @@ public class CouponServiceTestSuite {
         Mockito.when(couponRepository.save(ArgumentMatchers.any(Coupon.class))).thenReturn(new Coupon());
         Mockito.when(userRepository.findByLogin(ArgumentMatchers.anyString())).thenReturn(Optional.ofNullable(createUser()));
         //When
-        CouponDto tmpCouponDto = couponService.createEmptyCoupon(new UsernamePasswordAuthenticationToken("test", "test"));
+        CouponDto tmpCouponDto = couponService.createEmptyCouponOrReturnOpenCoupon(new UsernamePasswordAuthenticationToken("test", "test"));
         //Then
         Assert.assertNotNull(tmpCouponDto);
     }

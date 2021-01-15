@@ -90,7 +90,7 @@ public class CouponControllerTestSuite {
                 .couponStatus("WAITING")
                 .user(createUserDto())
                 .build();
-        Mockito.when(couponService.createEmptyCoupon(ArgumentMatchers.any(UsernamePasswordAuthenticationToken.class)))
+        Mockito.when(couponService.createEmptyCouponOrReturnOpenCoupon(ArgumentMatchers.any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(couponDto);
         Gson gson = new Gson();
         String jsonContent = gson.toJson(couponDto);

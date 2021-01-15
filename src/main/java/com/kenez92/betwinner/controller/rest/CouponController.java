@@ -39,7 +39,7 @@ public class CouponController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CouponDto createEmptyCoupon(@AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
         log.info("Creating empty coupon for user :{}", user.getPrincipal());
-        CouponDto couponDto = couponService.createEmptyCoupon(user);
+        CouponDto couponDto = couponService.createEmptyCouponOrReturnOpenCoupon(user);
         log.info("Return created coupon: {}", couponDto);
         return couponDto;
     }

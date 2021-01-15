@@ -3,7 +3,6 @@ package com.kenez92.betwinner.service;
 import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.domain.CouponDto;
-import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
 import com.kenez92.betwinner.mapper.coupons.CouponTypeMapper;
@@ -60,19 +59,30 @@ public class CouponService {
         return couponDto;
     }
 
-    public CouponDto createEmptyCoupon(UsernamePasswordAuthenticationToken user) {
-        User dbUser = userRepository.findByLogin(user.getName()).orElseThrow(()
-                -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
-        log.debug("Creating empty coupon");
-        CouponDto couponDto = couponMapper.mapToCouponDto(couponRepository.save(Coupon.builder()
-                .course(0.0)
-                .rate(0.0)
-                .result(0.0)
-                .couponStatus(CouponStatus.WAITING)
-                .user(dbUser)
-                .build()));
-        log.debug("Return created coupon: {}", couponDto);
-        return couponDto;
+    public CouponDto createEmptyCouponOrReturnOpenCoupon(UsernamePasswordAuthenticationToken user) {
+        Coupon coupon = null;
+        try {
+            coupon = couponRepository.findByUserAndAndCouponStatus(user.getName(), CouponStatus.OPEN).orElse(null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
+        }
+        if (coupon == null) {
+            User dbUser = userRepository.findByLogin(user.getName()).orElseThrow(()
+                    -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
+            log.debug("Creating empty coupon");
+            CouponDto couponDto = couponMapper.mapToCouponDto(couponRepository.save(Coupon.builder()
+                    .course(0.0)
+                    .rate(0.0)
+                    .result(0.0)
+                    .couponStatus(CouponStatus.OPEN)
+                    .user(dbUser)
+                    .build()));
+            log.debug("Return created coupon: {}", couponDto);
+            return couponDto;
+        } else {
+            return couponMapper.mapToCouponDto(coupon);
+        }
     }
 
     public CouponDto setRate(Long couponId, Double rate) {
@@ -135,14 +145,17 @@ public class CouponService {
         Match match = matchRepository.findById(matchId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
         if (coupon.getUser().getLogin().equals(user.getName())) {
+            if (coupon.getCouponStatus() != CouponStatus.OPEN) {
+                throw new BetWinnerException(BetWinnerException.ERR_THIS_COUPON_IS_CLOSED);
+            }
             log.debug("Adding match to coupon id: {}, matchId: {}, matchType: {}", couponId, matchId, matchType);
             CouponType couponType = CouponType.builder()
                     .matchType(matchType)
                     .match(match)
                     .coupon(coupon)
                     .build();
-            for(CouponType type : coupon.getCouponTypeList()) {
-                if(type.getMatch().getId().equals(couponType.getMatch().getId())) {
+            for (CouponType type : coupon.getCouponTypeList()) {
+                if (type.getMatch().getId().equals(couponType.getMatch().getId())) {
                     throw new BetWinnerException(BetWinnerException.ERR_COUPON_TYPE_EXISTS_IN_COUPON);
                 }
             }

@@ -21,6 +21,7 @@ public class BetWinnerException extends RuntimeException {
     public static final String ERR_COUPON_TYPE_NOT_FOUND_EXCEPTION = "Coupon type not found!";
     public static final String ERR_THIS_COUPON_DONT_BELONGS_TO_LOGGED_USER = "This coupon dont belongs to logged user";
     public static final String ERR_COUPON_TYPE_EXISTS_IN_COUPON = "This match already exists in your coupon";
+    public static final String ERR_THIS_COUPON_IS_CLOSED = "This coupon is already closed !";
 
     public static final String ERR_MATCH_NOT_FOUND_EXCEPTION = "Match not found!";
     public static final String ERR_MATCH_DAY_NOT_FOUND_EXCEPTION = "Match day not found!";
