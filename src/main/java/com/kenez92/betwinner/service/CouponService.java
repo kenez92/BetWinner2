@@ -91,7 +91,7 @@ public class CouponService {
             Coupon coupon = couponRepository.findById(couponId)
                     .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
             coupon.setRate(rate);
-            coupon.setResult(Double.parseDouble(decimalFormat.format(rate * coupon.getCourse())));
+            coupon.setResult(rate * coupon.getCourse());
             Coupon savedCoupon = couponRepository.save(coupon);
             setData(savedCoupon);
             return couponMapper.mapToCouponDto(savedCoupon);
