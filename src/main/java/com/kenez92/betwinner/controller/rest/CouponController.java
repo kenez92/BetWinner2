@@ -71,6 +71,13 @@ public class CouponController {
         return couponDto;
     }
 
+    @PostMapping(value = "/{couponId}")
+    public void activeCoupon(@PathVariable Long couponId, @AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
+        log.info("Activating coupon id : {}", couponId);
+        couponService.activeCoupon(couponId, user);
+        log.info("Coupon activated: {}", couponId);
+    }
+
     @DeleteMapping("/{couponId}")
     public boolean deleteCoupon(@PathVariable Long couponId) {
         log.info("Deleting coupon id: {}", couponId);

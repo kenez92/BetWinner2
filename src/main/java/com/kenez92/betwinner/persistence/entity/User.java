@@ -63,7 +63,7 @@ public class User {
     @Column(name = "SUBSCRIPTION")
     private Boolean subscription;
 
-    @Column(name = "MONEY")
+    @Column(name = "MONEY", nullable = false)
     private BigDecimal money;
 
     @Builder.Default

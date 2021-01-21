@@ -20,7 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -34,7 +36,7 @@ public class CouponService {
     private final CouponTypeRepository couponTypeRepository;
     private final UserRepository userRepository;
     private final MatchRepository matchRepository;
-    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private final UserService userService;
 
     public List<CouponDto> getUserCoupons(UsernamePasswordAuthenticationToken user) {
         User dbUser = userRepository.findByLogin(user.getName()).orElseThrow(()
@@ -62,7 +64,7 @@ public class CouponService {
     public CouponDto createEmptyCouponOrReturnOpenCoupon(UsernamePasswordAuthenticationToken user) {
         Coupon coupon = null;
         try {
-            coupon = couponRepository.findByUserAndAndCouponStatus(user.getName(), CouponStatus.OPEN).orElse(null);
+            coupon = couponRepository.findByUserAndAndCouponStatus(user.getName(), CouponStatus.WAITING).orElse(null);
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
@@ -75,7 +77,7 @@ public class CouponService {
                     .course(0.0)
                     .rate(0.0)
                     .result(0.0)
-                    .couponStatus(CouponStatus.OPEN)
+                    .couponStatus(CouponStatus.WAITING)
                     .user(dbUser)
                     .build()));
             log.debug("Return created coupon: {}", couponDto);
@@ -96,7 +98,7 @@ public class CouponService {
             setData(savedCoupon);
             return couponMapper.mapToCouponDto(savedCoupon);
         } else {
-            throw new BetWinnerException(BetWinnerException.ERR_COUPON_RATE_IS_LOWER_THAN_0);
+            throw new BetWinnerException(BetWinnerException.ERR_COUPON_RATE_IS_LOWER_THAN_1);
         }
     }
 
@@ -126,8 +128,8 @@ public class CouponService {
                 coupon.setCouponStatus(CouponStatus.LOST);
                 couponRepository.save(coupon);
                 return CouponStatus.LOST;
-            } else if (couponType.getCouponStatus().equals(CouponStatus.WAITING)) {
-                return CouponStatus.WAITING;
+            } else if (couponType.getCouponStatus().equals(CouponStatus.ACTIVE)) {
+                return CouponStatus.ACTIVE;
             } else {
                 throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
             }
@@ -145,8 +147,8 @@ public class CouponService {
         Match match = matchRepository.findById(matchId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
         if (coupon.getUser().getLogin().equals(user.getName())) {
-            if (coupon.getCouponStatus() != CouponStatus.OPEN) {
-                throw new BetWinnerException(BetWinnerException.ERR_THIS_COUPON_IS_CLOSED);
+            if (coupon.getCouponStatus() != CouponStatus.WAITING) {
+                throw new BetWinnerException(BetWinnerException.ERR_COUPON_IS_CLOSED);
             }
             log.debug("Adding match to coupon id: {}, matchId: {}, matchType: {}", couponId, matchId, matchType);
             CouponType couponType = CouponType.builder()
@@ -166,7 +168,7 @@ public class CouponService {
             log.debug("Return coupon: {}", couponDto);
             return couponDto;
         } else {
-            throw new BetWinnerException(BetWinnerException.ERR_THIS_COUPON_DONT_BELONGS_TO_LOGGED_USER);
+            throw new BetWinnerException(BetWinnerException.ERR_COUPON_DONT_BELONGS_TO_LOGGED_USER);
         }
     }
 
@@ -204,14 +206,45 @@ public class CouponService {
                         course = course + match.getMatchStats().getDrawCourse();
                 }
             }
-            course = (course * 0.9) / coupon.getCouponTypeList().size();
-            if (coupon.getRate() != null && coupon.getRate() > 0) {
+            course = (course * 0.9);
+            if (coupon.getRate() != null && coupon.getRate() >= 1) {
                 rate = coupon.getRate();
-                result = Double.parseDouble(decimalFormat.format(course * rate));
+                result = course * rate;
             }
         }
         coupon.setCourse(course);
         coupon.setRate(rate);
         coupon.setResult(result);
+    }
+
+    @Transactional
+    public void activeCoupon(Long couponId, UsernamePasswordAuthenticationToken user) {
+        try {
+            Coupon coupon = couponRepository.findById(couponId).orElseThrow(()
+                    -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+            validateCoupon(coupon);
+            userService.takePointsForCoupon(BigDecimal.valueOf(coupon.getRate()), user);
+            coupon.setCouponStatus(CouponStatus.ACTIVE);
+            couponRepository.save(coupon);
+        } catch (Exception ex) {
+            log.error("Exception : {}", ex.getMessage());
+            throw ex;
+        }
+    }
+
+    private void validateCoupon(Coupon coupon) {
+        if (coupon.getCouponTypeList().size() == 0) {
+            throw new BetWinnerException(BetWinnerException.ERR_COUPON_IS_EMPTY);
+        }
+        long timeNow = new Date().getTime();
+        for (CouponType couponType : coupon.getCouponTypeList()) {
+            if (couponType.getMatch().getDate().getTime() <= timeNow) {
+                throw new BetWinnerException(BetWinnerException.ERR_COUPON_MATCH_ALREADY_STARTED +
+                        couponType.getMatch().getHomeTeam() + " : " + couponType.getMatch().getAwayTeam());
+            }
+        }
+        if (coupon.getRate() < 1) {
+            throw new BetWinnerException(BetWinnerException.ERR_COUPON_RATE_IS_LOWER_THAN_1);
+        }
     }
 }

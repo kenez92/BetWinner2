@@ -135,7 +135,7 @@ public class CouponServiceTestSuite {
                 .coupon(Coupon.builder()
                         .id(-5L)
                         .build())
-                .couponStatus(CouponStatus.WAITING)
+                .couponStatus(CouponStatus.ACTIVE)
                 .build();
     }
 

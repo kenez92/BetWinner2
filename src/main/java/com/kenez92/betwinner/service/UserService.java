@@ -188,4 +188,14 @@ public class UserService implements UserDetailsService {
         }
         user.setCoupons(couponList);
     }
+
+    public void takePointsForCoupon(BigDecimal rate, UsernamePasswordAuthenticationToken user) {
+        User userFromDb = userRepository.findByLogin(user.getName()).orElseThrow(()
+                -> new BetWinnerException(BetWinnerException.ERR_USER_NOT_FOUND_EXCEPTION));
+        if (userFromDb.getMoney().compareTo(rate) == -1) {
+            throw new BetWinnerException(BetWinnerException.ERR_USER_DONT_HAVE_ENOUGH_MONEY);
+        }
+        userFromDb.setMoney(userFromDb.getMoney().subtract(rate));
+        userRepository.save(userFromDb);
+    }
 }

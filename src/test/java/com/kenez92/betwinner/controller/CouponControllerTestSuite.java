@@ -112,7 +112,7 @@ public class CouponControllerTestSuite {
     @WithMockUser(username = "admin")
     public void testCheckCoupon() throws Exception {
         //Given
-        Mockito.when(couponService.checkCoupon(ArgumentMatchers.anyLong())).thenReturn(CouponStatus.WAITING);
+        Mockito.when(couponService.checkCoupon(ArgumentMatchers.anyLong())).thenReturn(CouponStatus.ACTIVE);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
                 .put("/v1/coupons/check/234")
@@ -169,7 +169,7 @@ public class CouponControllerTestSuite {
         return CouponTypeDto.builder()
                 .id(2303L)
                 .matchType(MatchType.HOME_TEAM)
-                .couponStatus(CouponStatus.WAITING)
+                .couponStatus(CouponStatus.ACTIVE)
                 .match(createMatchDto())
                 .build();
     }

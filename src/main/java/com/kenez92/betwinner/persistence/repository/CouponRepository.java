@@ -26,4 +26,5 @@ public interface CouponRepository extends CrudRepository<Coupon, Long> {
 
     @Query("SELECT c FROM Coupon c JOIN c.user u WHERE c.user.login = ?1 AND c.couponStatus = ?2")
     Optional<Coupon> findByUserAndAndCouponStatus(String login, CouponStatus couponStatus);
+
 }

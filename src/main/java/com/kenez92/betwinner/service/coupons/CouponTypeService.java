@@ -77,7 +77,7 @@ public class CouponTypeService {
         List<CouponType> couponTypeList = couponTypeRepository.couponsForCheck();
         for (CouponType couponType : couponTypeList) {
             log.debug("Check coupon type id: {}", couponType.getId());
-            if (couponType.getCouponStatus().toString().equals(CouponStatus.WAITING.toString())) {
+            if (couponType.getCouponStatus().toString().equals(CouponStatus.ACTIVE.toString())) {
                 MatchScoreDto matchScoreDto = matchScoreService.getByMatchId(couponType.getMatch().getId());
                 if (matchScoreDto.getWinner() != null) {
                     if (couponType.getMatchType().toString().equals(matchScoreDto.getWinner())) {

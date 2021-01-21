@@ -37,7 +37,7 @@ public class CouponType {
     @Builder.Default
     @Enumerated(value = EnumType.STRING)
     @Column(name = "TYPE_STATUS")
-    private CouponStatus couponStatus = CouponStatus.WAITING;
+    private CouponStatus couponStatus = CouponStatus.ACTIVE;
 
     @ManyToOne
     private Match match;

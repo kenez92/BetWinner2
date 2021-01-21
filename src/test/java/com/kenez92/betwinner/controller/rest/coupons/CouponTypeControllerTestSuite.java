@@ -147,7 +147,7 @@ public class CouponTypeControllerTestSuite {
         return CouponTypeDto.builder()
                 .id(2303L)
                 .matchType(MatchType.HOME_TEAM)
-                .couponStatus(CouponStatus.WAITING)
+                .couponStatus(CouponStatus.ACTIVE)
                 .match(createMatchDto())
                 .coupon(createCouponDto())
                 .build();
