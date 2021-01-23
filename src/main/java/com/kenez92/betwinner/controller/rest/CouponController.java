@@ -90,4 +90,12 @@ public class CouponController {
             return false;
         }
     }
+
+    @DeleteMapping("/{couponId}/{couponTypeId}")
+    public boolean deleteMatchFromCoupon(@PathVariable Long couponId, @PathVariable Long couponTypeId) {
+        log.info("Deleting match id: {} from coupon id: {}", couponId, couponTypeId);
+        boolean result = couponService.deleteCouponTypeFromCoupon(couponId, couponTypeId);
+        log.info("Deleting match type result : {}", result);
+        return result;
+    }
 }

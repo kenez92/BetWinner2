@@ -5,7 +5,6 @@ import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.domain.CouponDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.CouponMapper;
-import com.kenez92.betwinner.mapper.coupons.CouponTypeMapper;
 import com.kenez92.betwinner.persistence.entity.Coupon;
 import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
@@ -14,7 +13,6 @@ import com.kenez92.betwinner.persistence.repository.CouponRepository;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
 import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
 import com.kenez92.betwinner.persistence.repository.matches.MatchRepository;
-import com.kenez92.betwinner.service.coupons.CouponTypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,8 +29,6 @@ import java.util.List;
 public class CouponService {
     private final CouponRepository couponRepository;
     private final CouponMapper couponMapper;
-    private final CouponTypeService couponTypeService;
-    private final CouponTypeMapper couponTypeMapper;
     private final CouponTypeRepository couponTypeRepository;
     private final UserRepository userRepository;
     private final MatchRepository matchRepository;
@@ -221,9 +217,9 @@ public class CouponService {
     public void activeCoupon(Long couponId, UsernamePasswordAuthenticationToken user) {
         try {
             Coupon coupon = couponRepository.getCouponWithAllFields(couponId).orElse(null);
-            if(coupon == null) {
+            if (coupon == null) {
                 coupon = couponRepository.findById(couponId).orElseThrow(()
-                  -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+                        -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
             }
             validateCoupon(coupon, user.getName());
             userService.takePointsForCoupon(BigDecimal.valueOf(coupon.getRate()), user);
@@ -235,8 +231,26 @@ public class CouponService {
         }
     }
 
+    @Transactional
+    public boolean deleteCouponTypeFromCoupon(Long couponId, Long couponTypeId) {
+        Coupon coupon = couponRepository.getCouponWithAllFields(couponId).orElse(null);
+        if (coupon == null || coupon.getCouponTypeList() == null || coupon.getCouponTypeList().size() == 0) {
+            return false;
+        }
+        for (CouponType type : coupon.getCouponTypeList()) {
+            if (type.getId().equals(couponTypeId)) {
+                coupon.getCouponTypeList().remove(type);
+                couponTypeRepository.delete(type);
+                countFields(coupon);
+                couponRepository.save(coupon);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void validateCoupon(Coupon coupon, String login) {
-        if(!coupon.getUser().getLogin().equals(login)) {
+        if (!coupon.getUser().getLogin().equals(login)) {
             throw new BetWinnerException(BetWinnerException.ERR_COUPON_DONT_BELONGS_TO_LOGGED_USER);
         }
         if (coupon.getCouponTypeList().size() == 0) {
