@@ -220,9 +220,12 @@ public class CouponService {
     @Transactional
     public void activeCoupon(Long couponId, UsernamePasswordAuthenticationToken user) {
         try {
-            Coupon coupon = couponRepository.findById(couponId).orElseThrow(()
-                    -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
-            validateCoupon(coupon);
+            Coupon coupon = couponRepository.getCouponWithAllFields(couponId).orElse(null);
+            if(coupon == null) {
+                coupon = couponRepository.findById(couponId).orElseThrow(()
+                  -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+            }
+            validateCoupon(coupon, user.getName());
             userService.takePointsForCoupon(BigDecimal.valueOf(coupon.getRate()), user);
             coupon.setCouponStatus(CouponStatus.ACTIVE);
             couponRepository.save(coupon);
@@ -232,7 +235,10 @@ public class CouponService {
         }
     }
 
-    private void validateCoupon(Coupon coupon) {
+    private void validateCoupon(Coupon coupon, String login) {
+        if(!coupon.getUser().getLogin().equals(login)) {
+            throw new BetWinnerException(BetWinnerException.ERR_COUPON_DONT_BELONGS_TO_LOGGED_USER);
+        }
         if (coupon.getCouponTypeList().size() == 0) {
             throw new BetWinnerException(BetWinnerException.ERR_COUPON_IS_EMPTY);
         }
