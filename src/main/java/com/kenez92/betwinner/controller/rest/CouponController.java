@@ -29,9 +29,9 @@ public class CouponController {
     }
 
     @GetMapping(value = "/{couponId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CouponDto getCoupon(@PathVariable Long couponId) {
+    public CouponDto getCoupon(@PathVariable Long couponId, @AuthenticationPrincipal UsernamePasswordAuthenticationToken user) {
         log.info("Getting coupon by id: {}", couponId);
-        CouponDto couponDto = couponService.getCoupon(couponId);
+        CouponDto couponDto = couponService.getCoupon(couponId, user);
         log.info("Return coupon: {}", couponDto);
         return couponDto;
     }

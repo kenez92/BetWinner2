@@ -47,11 +47,13 @@ public class CouponService {
         return couponDtoList;
     }
 
-    public CouponDto getCoupon(Long couponId) {
-        log.debug("Getting coupon by id: {}", couponId);
-        Coupon coupon = couponRepository.findById(couponId).orElseThrow(()
+    public CouponDto getCoupon(Long couponId, UsernamePasswordAuthenticationToken user) {
+        log.debug("Getting coupon by id: {} by user: {}", couponId, user.getName());
+        Coupon coupon = couponRepository.getCouponWithAllFields(couponId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
-        setData(coupon);
+        if(!user.getName().equals(coupon.getUser().getLogin())) {
+            throw new BetWinnerException(BetWinnerException.ERR_COUPON_DONT_BELONGS_TO_LOGGED_USER);
+        }
         CouponDto couponDto = couponMapper.mapToCouponDto(coupon);
         log.debug("Return coupon: {}", couponDto);
         return couponDto;
