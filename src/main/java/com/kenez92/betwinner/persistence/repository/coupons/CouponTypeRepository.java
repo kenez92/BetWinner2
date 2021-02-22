@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @Transactional
@@ -17,6 +18,7 @@ public interface CouponTypeRepository extends CrudRepository<CouponType, Long> {
 
     List<CouponType> findByCoupon(Coupon coupon);
 
-    @Query
-    List<CouponType> couponsForCheck();
+    @Query("SELECT DISTINCT t FROM CouponType t JOIN FETCH t.match m JOIN FETCH m.matchDay d JOIN FETCH m.matchScore " +
+            "JOIN FETCH m.matchStats JOIN FETCH m.weather JOIN FETCH t.coupon WHERE t.couponStatus='ACTIVE' AND d.localDate <=?1")
+    List<CouponType> couponsForCheck(LocalDate localDate);
 }

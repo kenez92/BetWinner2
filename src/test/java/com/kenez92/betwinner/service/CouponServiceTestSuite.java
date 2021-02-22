@@ -50,9 +50,9 @@ public class CouponServiceTestSuite {
         //Given
         Coupon coupon = createCoupon();
         Long number = coupon.getId();
-        Mockito.when(couponRepository.findById(number)).thenReturn(Optional.of(coupon));
+        Mockito.when(couponRepository.getCouponWithAllFields(number)).thenReturn(Optional.of(coupon));
         //When
-        CouponDto tmpCoupon = couponService.getCoupon(number);
+        CouponDto tmpCoupon = couponService.getCoupon(number, new UsernamePasswordAuthenticationToken("Test",""));
         //Then
         Assert.assertEquals(number, tmpCoupon.getId());
         Assert.assertEquals(coupon.getCourse(), tmpCoupon.getCourse());
@@ -63,10 +63,11 @@ public class CouponServiceTestSuite {
     @Test
     public void testGetCouponShouldThrowBetWinnerExceptionWhenCouponNotFound() {
         //Given
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("","");
         //When
         Mockito.when(couponRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.empty());
         //Then
-        Assertions.assertThrows(BetWinnerException.class, () -> couponService.getCoupon(6L));
+        Assertions.assertThrows(BetWinnerException.class, () -> couponService.getCoupon(6L, user));
     }
 
     @Test
@@ -104,6 +105,7 @@ public class CouponServiceTestSuite {
                 .rate(10.0)
                 .result(202d)
                 .couponTypeList(createCouponTypeList())
+                .user(createUser())
                 .build();
     }
 

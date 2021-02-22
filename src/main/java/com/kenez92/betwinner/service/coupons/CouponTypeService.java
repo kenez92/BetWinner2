@@ -6,13 +6,16 @@ import com.kenez92.betwinner.domain.matches.MatchScoreDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.coupons.CouponTypeMapper;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
+import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
 import com.kenez92.betwinner.service.matches.MatchScoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -74,13 +77,13 @@ public class CouponTypeService {
     }
 
     public void checkCouponTypes() {
-        List<CouponType> couponTypeList = couponTypeRepository.couponsForCheck();
+        List<CouponType> couponTypeList = couponTypeRepository.couponsForCheck(LocalDate.now());
         for (CouponType couponType : couponTypeList) {
             log.debug("Check coupon type id: {}", couponType.getId());
-            if (couponType.getCouponStatus().toString().equals(CouponStatus.ACTIVE.toString())) {
-                MatchScoreDto matchScoreDto = matchScoreService.getByMatchId(couponType.getMatch().getId());
-                if (matchScoreDto.getWinner() != null) {
-                    if (couponType.getMatchType().toString().equals(matchScoreDto.getWinner())) {
+            if (couponType.getCouponStatus().equals(CouponStatus.ACTIVE)) {
+                MatchScore matchScore = couponType.getMatch().getMatchScore();
+                if (matchScore.getWinner() != null) {
+                    if (couponType.getMatchType().toString().equals(matchScore.getWinner())) {
                         couponType.setCouponStatus(CouponStatus.WIN);
                         log.debug("Coupon type win!");
                     } else {

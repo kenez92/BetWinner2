@@ -1,9 +1,10 @@
 package com.kenez92.betwinner.service.coupons;
 
-import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.common.enums.CouponStatus;
+import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
 import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.entity.Coupon;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import com.kenez92.betwinner.persistence.entity.matches.Match;
@@ -11,7 +12,6 @@ import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
 import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
 import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
 import com.kenez92.betwinner.persistence.entity.weather.Weather;
-import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
 import com.kenez92.betwinner.service.matches.MatchScoreService;
 import org.junit.Assert;
@@ -52,7 +52,7 @@ public class CouponTypeServiceTestSuite {
         //Then
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
         Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType().toString());
-        Assert.assertEquals("WAITING", couponTypeDto.getCouponStatus().toString());
+        Assert.assertEquals("ACTIVE", couponTypeDto.getCouponStatus().toString());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class CouponTypeServiceTestSuite {
         //Then
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
         Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType().toString());
-        Assert.assertEquals("WAITING", couponTypeDto.getCouponStatus().toString());
+        Assert.assertEquals("ACTIVE", couponTypeDto.getCouponStatus().toString());
     }
 
     @Test
@@ -121,25 +121,7 @@ public class CouponTypeServiceTestSuite {
         //Then
         Assert.assertEquals(2303L, couponTypeDto.getId(), 0.01);
         Assert.assertEquals("HOME_TEAM", couponTypeDto.getMatchType().toString());
-        Assert.assertEquals("WAITING", couponTypeDto.getCouponStatus().toString());
-
-    }
-
-    @Test
-    public void testCheckCouponTypes() {
-        //Given
-        List<CouponType> couponTypeList = new ArrayList<>();
-        couponTypeList.add(createCouponType());
-        couponTypeList.add(createCouponType());
-        couponTypeList.get(1).setMatchType(MatchType.AWAY_TEAM);
-        Mockito.when(couponTypeRepository.couponsForCheck()).thenReturn(couponTypeList);
-        Mockito.when(couponTypeRepository.save(ArgumentMatchers.any(CouponType.class))).thenReturn(null);
-        Mockito.when(matchScoreService.getByMatchId(ArgumentMatchers.anyLong())).thenReturn(createMatchScoreDto());
-        //When
-        couponTypeService.checkCouponTypes();
-        //Then
-        Assert.assertEquals(CouponStatus.WIN, couponTypeList.get(0).getCouponStatus());
-        Assert.assertEquals(CouponStatus.LOST, couponTypeList.get(1).getCouponStatus());
+        Assert.assertEquals("ACTIVE", couponTypeDto.getCouponStatus().toString());
 
     }
 

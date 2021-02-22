@@ -65,7 +65,8 @@ public class CouponControllerTestSuite {
     @WithMockUser(username = "admin")
     public void testGetCoupon() throws Exception {
         //Given
-        Mockito.when(couponService.getCoupon(ArgumentMatchers.anyLong())).thenReturn(createCouponDto());
+        Mockito.when(couponService.getCoupon(ArgumentMatchers.anyLong(),
+                ArgumentMatchers.any(UsernamePasswordAuthenticationToken.class))).thenReturn(createCouponDto());
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/v1/coupons/33")
@@ -75,7 +76,7 @@ public class CouponControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].couponStatus", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].couponStatus", Matchers.is("ACTIVE")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.couponTypeList.[0].match.id", Matchers.is(832983)));
     }
 
@@ -118,7 +119,7 @@ public class CouponControllerTestSuite {
                 .put("/v1/coupons/check/234")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is("WAITING")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is("ACTIVE")));
     }
 
     @Test

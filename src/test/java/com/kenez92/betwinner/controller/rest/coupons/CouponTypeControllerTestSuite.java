@@ -70,7 +70,7 @@ public class CouponTypeControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].couponStatus", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].couponStatus", Matchers.is("ACTIVE")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].match.id", Matchers.is(832983)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].coupon.id", Matchers.is(302)));
     }
@@ -87,7 +87,7 @@ public class CouponTypeControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.couponStatus", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.couponStatus", Matchers.is("ACTIVE")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.match.id", Matchers.is(832983)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.coupon.id", Matchers.is(302)));
     }
@@ -125,7 +125,7 @@ public class CouponTypeControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(2303)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchType", Matchers.is("HOME_TEAM")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.couponStatus", Matchers.is("WAITING")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.couponStatus", Matchers.is("ACTIVE")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.match.id", Matchers.is(832983)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.coupon.id", Matchers.is(302)));
     }

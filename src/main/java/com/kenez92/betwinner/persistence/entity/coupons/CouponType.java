@@ -12,11 +12,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NamedNativeQuery(
-        name = "CouponType.couponsForCheck",
-        query = "SELECT * FROM coupon_type WHERE TYPE_STATUS = 'WAITING'",
-        resultClass = CouponType.class
-)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
