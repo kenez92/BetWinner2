@@ -44,6 +44,8 @@ dependencies {
         options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
     }
     implementation 'org.junit.jupiter:junit-jupiter'
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 test {
     useJUnitPlatform()

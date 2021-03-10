@@ -5,6 +5,8 @@ src/main/resources/application.properties
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+src/main/java/com/kenez92/betwinner/controller/scheduler/PrivateCouponScheduler.java
+src/test/resources/application.properties
 
 ### STS ###
 .apt_generated

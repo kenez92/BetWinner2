@@ -1,10 +1,10 @@
 package com.kenez92.betwinner.service.scheduler;
 
-import com.kenez92.betwinner.common.enums.UserStrategy;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.domain.scheduler.Mail;
 import com.kenez92.betwinner.persistence.entity.User;
 import com.kenez92.betwinner.persistence.repository.UserRepository;
+import com.kenez92.betwinner.service.matches.MatchDayService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
@@ -12,8 +12,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.kenez92.betwinner.config.StrategyConfiguration.*;
 
 @Service
 @Slf4j
@@ -21,6 +24,8 @@ import java.util.List;
 public class SimpleEmailService {
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
+    private final MatchDayService matchDayService;
+
 
     public void send(final Mail mail) {
         try {
@@ -32,35 +37,60 @@ public class SimpleEmailService {
         }
     }
 
-    private SimpleMailMessage createMailMessage(final Mail mail) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(mail.getMailTo());
-        mailMessage.setSubject(mail.getSubject());
-        mailMessage.setText(mail.getMessage());
-        return mailMessage;
-    }
-
     public List<Mail> prepareMails() {
         List<User> users = userRepository.usersForSubscription();
         List<Mail> mails = new ArrayList<>();
-        List<MatchDto> normalStrategy = preparePredictMatches(UserStrategy.EVERYTHING_STRATEGY);
-        List<MatchDto> defensiveStrategy = preparePredictMatches(UserStrategy.DEFENSIVE_STRATEGY);
-        List<MatchDto> aggressiveStrategy = preparePredictMatches(UserStrategy.AGGRESSIVE_STRATEGY);
-        List<MatchDto> everythingStrategy = preparePredictMatches(UserStrategy.EVERYTHING_STRATEGY);
+        List<MatchDto> normalStrategy = new ArrayList<>();
+        List<MatchDto> defensiveStrategy = new ArrayList<>();
+        List<MatchDto> aggressiveStrategy = new ArrayList<>();
+        List<MatchDto> percent70Strategy = new ArrayList<>();
+        List<MatchDto> everythingStrategy = new ArrayList<>();
+        List<MatchDto> matchDtoList = matchDayService.getByLocalDate(LocalDate.now()).getMatchesList();
+        for (MatchDto matchDto : matchDtoList) {
+            try {
+                double homeTeamChance = matchDto.getMatchStats().getHomeTeamChance();
+                double awayTeamChance = matchDto.getMatchStats().getAwayTeamChance();
+                if ((homeTeamChance >= EVERYTHING_STRATEGY_FROM && homeTeamChance <= EVERYTHING_STRATEGY_TO) ||
+                        (awayTeamChance >= EVERYTHING_STRATEGY_FROM && awayTeamChance <= EVERYTHING_STRATEGY_TO)) {
+                    everythingStrategy.add(matchDto);
+                }
+                if ((homeTeamChance >= DEFENSIVE_STRATEGY_FROM && homeTeamChance <= DEFENSIVE_STRATEGY_TO) ||
+                        (awayTeamChance >= DEFENSIVE_STRATEGY_FROM && awayTeamChance <= DEFENSIVE_STRATEGY_TO)) {
+                    defensiveStrategy.add(matchDto);
+                }
+                if ((homeTeamChance >= NORMAL_STRATEGY_FROM && homeTeamChance <= NORMAL_STRATEGY_TO) ||
+                        (awayTeamChance >= NORMAL_STRATEGY_FROM && awayTeamChance <= NORMAL_STRATEGY_TO)) {
+                    normalStrategy.add(matchDto);
+                }
+                if ((homeTeamChance >= AGGRESSIVE_STRATEGY_FROM && homeTeamChance <= AGGRESSIVE_STRATEGY_TO) ||
+                        (awayTeamChance >= AGGRESSIVE_STRATEGY_FROM && awayTeamChance <= AGGRESSIVE_STRATEGY_TO)) {
+                    aggressiveStrategy.add(matchDto);
+                }
+                if ((homeTeamChance >= PERCENT_70_STRATEGY_FROM && homeTeamChance <= PERCENT_70_STRATEGY_TO) ||
+                        (awayTeamChance >= PERCENT_70_STRATEGY_FROM && awayTeamChance <= PERCENT_70_STRATEGY_TO)) {
+                    percent70Strategy.add(matchDto);
+                }
+            } catch (Exception ex) {
+                log.error("Error while getting team chances: " + matchDto);
+            }
+        }
         for (User user : users) {
             List<MatchDto> predictMatches = new ArrayList<>();
             switch (user.getUserStrategy()) {
                 case NORMAL_STRATEGY:
-                    predictMatches = new ArrayList<>(normalStrategy);
+                    predictMatches = normalStrategy;
                     break;
                 case DEFENSIVE_STRATEGY:
-                    predictMatches = new ArrayList<>(defensiveStrategy);
+                    predictMatches = defensiveStrategy;
                     break;
                 case AGGRESSIVE_STRATEGY:
-                    predictMatches = new ArrayList<>(aggressiveStrategy);
+                    predictMatches = aggressiveStrategy;
                     break;
                 case EVERYTHING_STRATEGY:
-                    predictMatches = new ArrayList<>(everythingStrategy);
+                    predictMatches = everythingStrategy;
+                    break;
+                case PERCENT_70_STRATEGY:
+                    predictMatches = percent70Strategy;
             }
             String message = "";
             for (MatchDto matchDto : predictMatches) {
@@ -70,12 +100,16 @@ public class SimpleEmailService {
                         + matchDto.getDate() + "\n";
             }
             mails.add(new Mail(user.getEmail(), "Your matches",
-                    "Your matches for today : \n" + message));
+                    "Your matches for today with " + user.getUserStrategy().toString() + "\n" + message));
         }
         return mails;
     }
 
-    private List<MatchDto> preparePredictMatches(UserStrategy userStrategy) {
-        return new ArrayList<>();
+    private SimpleMailMessage createMailMessage(final Mail mail) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(mail.getMailTo());
+        mailMessage.setSubject(mail.getSubject());
+        mailMessage.setText(mail.getMessage());
+        return mailMessage;
     }
 }
