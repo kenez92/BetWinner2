@@ -28,9 +28,6 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
     List<Match> findByWeather(final Weather weather);
 
     @Query
-    List<Match> predictMatches(@Param("NUMBER_ONE") double numberOne, @Param("NUMBER_TWO") double numberTwo);
-
-    @Query
     List<Match> findMatchesAtDate(@Param("DATE") Date date);
 
     boolean existsByFootballId(Long footballId);

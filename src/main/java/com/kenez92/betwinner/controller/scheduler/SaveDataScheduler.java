@@ -14,19 +14,20 @@ public class SaveDataScheduler {
     private final SaveTablesSchedulerService saveTablesSchedulerService;
     private final SaveMatchesSchedulerService saveMatchesSchedulerService;
 
-    private static final int DELAY_USING_FOOTBALL_DATA_API = 6;
+    private static final int DELAY_USING_FOOTBALL_DATA_API = 7;
 
     @Scheduled(cron = "0 0 1,23 * * *")
-//    @Scheduled(fixedDelay = 1000)
     public void saveData() throws InterruptedException {
-        log.info("Start saving data");
+        log.info("Start saving tables");
         long start = System.currentTimeMillis();
         saveTablesSchedulerService.saveTables(DELAY_USING_FOOTBALL_DATA_API);
         long end = System.currentTimeMillis();
-        log.info("Finished saving data time : {}", end - start);
+        log.info("Finished saving tables time : {}", end - start);
 
         log.info("Start saving matches");
+        start = System.currentTimeMillis();
         saveMatchesSchedulerService.saveMatches(DELAY_USING_FOOTBALL_DATA_API);
-        log.info("finished saving matches");
+        end = System.currentTimeMillis();
+        log.info("Finished saving matches time: {}", end - start);
     }
 }

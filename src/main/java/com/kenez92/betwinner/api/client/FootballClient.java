@@ -26,7 +26,11 @@ public class FootballClient {
     private String tokenName;
 
     public FootballMatchList getMatches(LocalDate localDate) {
-        String url = "https://api.football-data.org/v2/matches?dateFrom=" + localDate + "&dateTo=" + localDate;
+        return getMatches(localDate, localDate);
+    }
+
+    public FootballMatchList getMatches(LocalDate localDateFrom, LocalDate localDateTo) {
+        String url = "https://api.football-data.org/v2/matches?dateFrom=" + localDateFrom + "&dateTo=" + localDateTo;
         HttpEntity entity = createEntity();
         ResponseEntity<FootballMatchList> response = null;
         try {
@@ -53,6 +57,7 @@ public class FootballClient {
             } else if (e.getRawStatusCode() == 403) {
                 throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_MATCH_WE_DONT_HAVE_ACCESS_EXCEPTION);
             } else {
+                System.out.println(e.getMessage());
                 throw new BetWinnerException(BetWinnerException.ERR_FOOTBALL_SOMETHING_WENT_WRONG_EXCEPTION);
             }
         }

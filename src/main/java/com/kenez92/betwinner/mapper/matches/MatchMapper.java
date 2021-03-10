@@ -23,7 +23,7 @@ public interface MatchMapper {
     MatchDto mapToMatchDto(final Match match);
 
     @Mapping(target = "weather", qualifiedByName = "weatherDtoForMatchDto")
-    @Mapping(target = "couponTypeList", qualifiedByName = "couponTypeDtosForMatchDto")
+    @Mapping(target = "couponTypeList", ignore = true)
     @Mapping(target = "matchDay", ignore = true)
     MatchDto mapToMatchDtoForMatchDayDto(final Match match);
 

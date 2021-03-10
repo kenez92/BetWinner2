@@ -1,6 +1,5 @@
 package com.kenez92.betwinner.service.matches;
 
-import com.kenez92.betwinner.domain.fotballdata.matches.FootballMatch;
 import com.kenez92.betwinner.domain.matches.MatchDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.mapper.matches.MatchMapper;
@@ -37,12 +36,6 @@ public class MatchService {
         return matchDto;
     }
 
-    public boolean existsByFields(final String homeTeam, final String awayTeam, final Integer round) {
-        boolean result = matchRepository.existsByHomeTeamAndAwayTeamAndRound(homeTeam, awayTeam, round);
-        log.debug("Match exists in repository: {}", result);
-        return result;
-    }
-
     public MatchDto findByFields(final String homeTeam, final String awayTeam, final Integer round) {
         log.debug("Find match by fields: {}{}{}", homeTeam, awayTeam, round);
         Match match = matchRepository.findByHomeTeamAndAwayTeamAndRound(homeTeam, awayTeam, round)
@@ -61,14 +54,6 @@ public class MatchService {
         return savedMatchDto;
     }
 
-    public List<MatchDto> predictMatches(double numberOne, double numberTwo) {
-        log.debug("Getting matches where chance is bigger and lower than : {}{}", numberOne, numberTwo);
-        List<Match> matches = matchRepository.predictMatches(numberOne, numberTwo);
-        List<MatchDto> matchDtoList = matchMapper.mapToMatchDtoList(matches);
-        log.debug("Return matches : {}", matchDtoList);
-        return matchDtoList;
-    }
-
     public List<MatchDto> getMatchesAtDay(final String date) {
         log.debug("Getting matches at: {}", date);
         Date sqlDate;
@@ -81,17 +66,5 @@ public class MatchService {
         List<MatchDto> matchDtoList = matchMapper.mapToMatchDtoList(matches);
         log.debug("Return matches: {}", matchDtoList);
         return matchDtoList;
-    }
-
-    public boolean isNotEqualOrNotExists(FootballMatch footballMatch) {
-        boolean result = true;
-        if (matchRepository.existsByFootballId(footballMatch.getId())) {
-            Match match = matchRepository.findByFootballId(footballMatch.getId()).orElseThrow(()
-                    -> new BetWinnerException(BetWinnerException.ERR_MATCH_NOT_FOUND_EXCEPTION));
-            result = !match.getMatchScore().getStatus().equals(footballMatch.getStatus())
-                    || match.getDate().getTime() != footballMatch.getUtcDate().getTime()
-                    || !match.getMatchScore().getWinner().equals(footballMatch.getScore().getWinner());
-        }
-        return result;
     }
 }

@@ -36,4 +36,6 @@ public interface CurrentMatchDayRepository extends CrudRepository<CurrentMatchDa
 
     @Query("SELECT c FROM CurrentMatchDay c WHERE c.matchDay=?1 AND c.competitionSeason.footballId = ?2")
     Optional<CurrentMatchDay> findByCurrentMatchDayNumberAndCompetitionSeasonId(Integer currentMatchDayNumber, Long competitionSeasonId);
+
+    List<CurrentMatchDay> findByCompetitionSeason_FootballId(Long competitionSeasonFootballId);
 }

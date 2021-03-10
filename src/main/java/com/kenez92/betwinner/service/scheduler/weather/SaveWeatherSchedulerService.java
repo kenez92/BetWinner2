@@ -89,7 +89,7 @@ public class SaveWeatherSchedulerService {
                 return weatherRepository.save(weather);
             }
         }
-        return weatherRepository.save(weather);
+        return weather != null ? weatherRepository.save(weather) : null;
     }
 
     private Weather getWeatherIfExists(Date date, String country) {
