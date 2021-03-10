@@ -45,11 +45,9 @@ public class CouponController {
     }
 
     @PutMapping(value = "/check/{couponId}")
-    public CouponStatus checkCoupon(@PathVariable Long couponId) {
+    public void checkCoupon(@PathVariable Long couponId) {
         log.info("Checking coupon id: {}", couponId);
-        CouponStatus result = couponService.checkCoupon(couponId);
-        log.info("Result of the coupon with id : {}{}", couponId, " :" + result);
-        return result;
+        couponService.checkCoupon(couponId);
     }
 
     @PostMapping(value = "/{couponId}/{matchId}")

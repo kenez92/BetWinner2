@@ -111,19 +111,6 @@ public class CouponControllerTestSuite {
 
     @Test
     @WithMockUser(username = "admin")
-    public void testCheckCoupon() throws Exception {
-        //Given
-        Mockito.when(couponService.checkCoupon(ArgumentMatchers.anyLong())).thenReturn(CouponStatus.ACTIVE);
-        //When & Then
-        mockMvc.perform(MockMvcRequestBuilders
-                .put("/v1/coupons/check/234")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is("ACTIVE")));
-    }
-
-    @Test
-    @WithMockUser(username = "admin")
     public void testAddMatch() throws Exception {
         //Given
         Mockito.when(couponService.addMatch(ArgumentMatchers.anyLong(), ArgumentMatchers.anyLong(),

@@ -51,7 +51,7 @@ public class CouponService {
         log.debug("Getting coupon by id: {} by user: {}", couponId, user.getName());
         Coupon coupon = couponRepository.getCouponWithAllFields(couponId).orElseThrow(()
                 -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
-        if(!user.getName().equals(coupon.getUser().getLogin())) {
+        if (!user.getName().equals(coupon.getUser().getLogin())) {
             throw new BetWinnerException(BetWinnerException.ERR_COUPON_DONT_BELONGS_TO_LOGGED_USER);
         }
         CouponDto couponDto = couponMapper.mapToCouponDto(coupon);
@@ -112,10 +112,8 @@ public class CouponService {
         }
     }
 
-    public CouponStatus checkCoupon(Long couponId) {
-        log.debug("Checking coupon id: {}", couponId);
-        Coupon coupon = couponRepository.findById(couponId)
-                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+    @Transactional
+    public void checkCoupon(Coupon coupon) {
         int size = coupon.getCouponTypeList().size();
         int counter = 0;
         for (int i = 0; i < size; i++) {
@@ -125,18 +123,24 @@ public class CouponService {
             } else if (couponType.getCouponStatus().equals(CouponStatus.LOST)) {
                 coupon.setCouponStatus(CouponStatus.LOST);
                 couponRepository.save(coupon);
-                return CouponStatus.LOST;
             } else if (couponType.getCouponStatus().equals(CouponStatus.ACTIVE)) {
-                return CouponStatus.ACTIVE;
+                return;
             } else {
                 throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
             }
         }
         if (counter == size) {
             coupon.setCouponStatus(CouponStatus.WIN);
+            userService.putMoney(coupon.getUser().getId(), coupon.getResult());
             couponRepository.save(coupon);
         }
-        return CouponStatus.WIN;
+    }
+
+    public void checkCoupon(Long couponId) {
+        log.debug("Checking coupon id: {}", couponId);
+        Coupon coupon = couponRepository.findById(couponId)
+                .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COUPON_NOT_FOUND_EXCEPTION));
+        checkCoupon(coupon);
     }
 
     public CouponDto addMatch(Long couponId, Long matchId, MatchType matchType, UsernamePasswordAuthenticationToken user) {
@@ -249,6 +253,13 @@ public class CouponService {
             }
         }
         return false;
+    }
+
+    public void checkActiveCoupons() {
+        List<Coupon> couponList = couponRepository.findCouponByCouponStatus(CouponStatus.ACTIVE);
+        for (Coupon coupon : couponList) {
+            checkCoupon(coupon);
+        }
     }
 
     private void validateCoupon(Coupon coupon, String login) {

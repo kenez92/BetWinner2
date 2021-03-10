@@ -1,5 +1,6 @@
 package com.kenez92.betwinner.persistence.repository.coupons;
 
+import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.persistence.entity.Coupon;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +19,7 @@ public interface CouponTypeRepository extends CrudRepository<CouponType, Long> {
 
     List<CouponType> findByCoupon(Coupon coupon);
 
-    @Query("SELECT DISTINCT t FROM CouponType t JOIN FETCH t.match m JOIN FETCH m.matchDay d JOIN FETCH m.matchScore " +
-            "JOIN FETCH m.matchStats JOIN FETCH m.weather JOIN FETCH t.coupon WHERE t.couponStatus='ACTIVE' AND d.localDate <=?1")
+    @Query("SELECT t FROM CouponType t JOIN FETCH t.match m JOIN FETCH m.matchDay d JOIN FETCH m.matchScore " +
+            "JOIN FETCH m.matchStats JOIN FETCH t.coupon WHERE t.couponStatus='ACTIVE' AND d.localDate <=?1")
     List<CouponType> couponsForCheck(LocalDate localDate);
 }

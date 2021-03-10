@@ -27,7 +27,10 @@ public interface CouponRepository extends CrudRepository<Coupon, Long> {
     @Query("SELECT c FROM Coupon c JOIN c.user u WHERE c.user.login = ?1 AND c.couponStatus = ?2")
     Optional<Coupon> findByUserAndAndCouponStatus(String login, CouponStatus couponStatus);
 
-    @Query("SELECT c FROM Coupon c JOIN c.user JOIN c.couponTypeList t JOIN t.match m JOIN m.matchScore JOIN m.matchDay JOIN m.matchStats WHERE c.id = ?1 ")
+    @Query("SELECT c FROM Coupon c JOIN FETCH c.user JOIN FETCH c.couponTypeList t JOIN FETCH t.match m JOIN FETCH m.matchScore JOIN FETCH m.matchDay JOIN FETCH m.matchStats WHERE c.id = ?1 ")
     Optional<Coupon> getCouponWithAllFields(Long couponId);
+
+    @Query("SELECT c FROM Coupon c JOIN FETCH c.user JOIN FETCH c.couponTypeList t JOIN t.match m JOIN m.matchScore JOIN m.matchDay JOIN m.matchStats WHERE c.couponStatus = ?1 ")
+    List<Coupon> findCouponByCouponStatus(CouponStatus couponStatus);
 
 }
