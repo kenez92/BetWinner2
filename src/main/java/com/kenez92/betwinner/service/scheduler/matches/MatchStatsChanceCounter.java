@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 public class MatchStatsChanceCounter {
 
     public void process(final MatchStats matchStats) {
-        setChanceBasedOnTheTable(matchStats);
-
         int totalMatches = matchStats.getGamesPlayed();
         int resultHomeTeam = matchStats.getHomeTeamWins() - matchStats.getAwayTeamWins() - matchStats.getDraws();
         int resultAwayTeam = matchStats.getAwayTeamWins() - matchStats.getHomeTeamWins() - matchStats.getDraws();
@@ -27,31 +25,38 @@ public class MatchStatsChanceCounter {
             matchStats.setHomeTeamChance(matchStats.getHomeTeamChance() - 10);
             matchStats.setAwayTeamChance(matchStats.getAwayTeamChance() + 10);
         }
+        matchStats.setHomeTeamChanceH2H(matchStats.getHomeTeamChance());
+        matchStats.setAwayTeamChanceH2H(matchStats.getAwayTeamChance());
+        setChanceBasedOnTheTable(matchStats);
     }
 
     private void setChanceBasedOnTheTable(MatchStats matchStats) {
         Double homeTeamChance = matchStats.getHomeTeamChance();
         Double awayTeamChance = matchStats.getAwayTeamChance();
         int differenceInTable = Math.abs(matchStats.getHomeTeamPositionInTable() - matchStats.getAwayTeamPositionInTable());
+        int chancesBasedOnDifferenceInTable = getChances(differenceInTable);
         if (matchStats.getHomeTeamPositionInTable() < matchStats.getAwayTeamPositionInTable()) {
-            setChances(homeTeamChance, awayTeamChance, differenceInTable);
+            homeTeamChance += chancesBasedOnDifferenceInTable;
+            awayTeamChance -= chancesBasedOnDifferenceInTable;
         } else {
-            setChances(awayTeamChance, homeTeamChance, differenceInTable);
+            homeTeamChance -= chancesBasedOnDifferenceInTable;
+            awayTeamChance += chancesBasedOnDifferenceInTable;
         }
         matchStats.setHomeTeamChance(homeTeamChance);
         matchStats.setAwayTeamChance(awayTeamChance);
     }
 
-    private void setChances(Double higherTeamInTable, Double LowerTeamInTable, int differenceInTable) {
-        if (differenceInTable <= 3) {
-            higherTeamInTable += 5;
-            LowerTeamInTable -= 5;
-        } else if (differenceInTable > 3 && differenceInTable < 8) {
-            higherTeamInTable += 10;
-            LowerTeamInTable -= 10;
+    private int getChances(int differenceInTable) {
+        if (differenceInTable == 1) {
+            return 1;
+        } else if (differenceInTable <= 3) {
+            return 5;
+        } else if (differenceInTable < 8) {
+            return 10;
         } else if (differenceInTable >= 8) {
-            higherTeamInTable += 20;
-            LowerTeamInTable -= 20;
+            return 20;
+        } else {
+            return 0;
         }
     }
 }

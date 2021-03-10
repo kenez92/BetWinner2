@@ -31,6 +31,8 @@ public class SaveMatchStatsSchedulerService {
                         .getAwayTeam().getName()))
                 .homeTeamChance(50D)
                 .awayTeamChance(50D)
+                .homeTeamChanceH2H(50D)
+                .awayTeamChanceH2H(50D)
                 .homeTeamCourse(0D)
                 .drawCourse(0D)
                 .awayTeamCourse(0D)
@@ -41,10 +43,8 @@ public class SaveMatchStatsSchedulerService {
             MatchStats matchStatsFromDb = matchStatsRepository.findByFootballMatchId(footballMatchId).orElseThrow(()
                     -> new BetWinnerException(BetWinnerException.ERR_MATCH_STATS_NOT_FOUND_EXCEPTION));
             if (matchStatsFromDb.equals(matchStats)) {
-                System.out.println("RETURN SAVED");
                 return matchStatsFromDb;
             } else {
-                System.out.println("UPDATED");
                 matchStats.setId(matchStatsFromDb.getId());
                 return matchStatsRepository.save(matchStats);
             }

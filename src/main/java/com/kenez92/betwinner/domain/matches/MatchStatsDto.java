@@ -20,6 +20,8 @@ public class MatchStatsDto {
     private Integer awayTeamPositionInTable;
     private Double homeTeamChance;
     private Double awayTeamChance;
+    private Double homeTeamChanceH2H;
+    private Double awayTeamChanceH2H;
     private Double homeTeamCourse;
     private Double drawCourse;
     private Double awayTeamCourse;

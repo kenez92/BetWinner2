@@ -41,19 +41,25 @@ public class MatchStats {
     @Column(name = "AWAY_TEAM_POSITION_IN_TABLE")
     private Integer awayTeamPositionInTable;
 
-    @Column(name = "HOME_TEAM_CHANCE")
+    @Column(name = "HOME_TEAM_CHANCE", columnDefinition = "DECIMAL(4,2)")
     private Double homeTeamChance;
 
-    @Column(name = "AWAY_TEAM_CHANCE")
+    @Column(name = "AWAY_TEAM_CHANCE", columnDefinition = "DECIMAL(4,2)")
     private Double awayTeamChance;
 
-    @Column(name = "HOME_TEAM_COURSE")
+    @Column(name = "HOME_TEAM_CHANCE_H2H", columnDefinition = "DECIMAL(4,2)")
+    private Double homeTeamChanceH2H;
+
+    @Column(name = "AWAY_TEAM_CHANCE_H2H", columnDefinition = "DECIMAL(4,2)")
+    private Double awayTeamChanceH2H;
+
+    @Column(name = "HOME_TEAM_COURSE", columnDefinition = "DECIMAL(16,2)")
     private Double homeTeamCourse;
 
-    @Column(name = "DRAW_COURSE")
+    @Column(name = "DRAW_COURSE", columnDefinition = "DECIMAL(16,2)")
     private Double drawCourse;
 
-    @Column(name = "AWAY_TEAM_COURSE")
+    @Column(name = "AWAY_TEAM_COURSE", columnDefinition = "DECIMAL(16,2)")
     private Double awayTeamCourse;
 
     public boolean equals(MatchStats matchStats) {
@@ -68,6 +74,8 @@ public class MatchStats {
         if (!Objects.equals(awayTeamPositionInTable, matchStats.awayTeamPositionInTable)) return false;
         if (!Objects.equals(homeTeamChance, matchStats.homeTeamChance)) return false;
         if (!Objects.equals(awayTeamChance, matchStats.awayTeamChance)) return false;
+        if (!Objects.equals(homeTeamChanceH2H, matchStats.homeTeamChanceH2H)) return false;
+        if (!Objects.equals(awayTeamChanceH2H, matchStats.awayTeamChanceH2H)) return false;
         if (!Objects.equals(homeTeamCourse, matchStats.homeTeamCourse)) return false;
         if (!Objects.equals(drawCourse, matchStats.drawCourse)) return false;
         return Objects.equals(awayTeamCourse, matchStats.awayTeamCourse);
