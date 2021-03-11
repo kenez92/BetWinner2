@@ -17,7 +17,8 @@ import java.util.Objects;
         indexes = {@Index(name = "MatchStat_footballMatchId_index", columnList = "FOOTBALL_MATCH_ID")})
 public class MatchStats {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "FOOTBALL_MATCH_ID", nullable = false)

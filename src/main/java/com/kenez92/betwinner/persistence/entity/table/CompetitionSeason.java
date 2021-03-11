@@ -17,7 +17,7 @@ import java.util.List;
 @Table
 public class CompetitionSeason {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

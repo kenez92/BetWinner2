@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class CompetitionTable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
