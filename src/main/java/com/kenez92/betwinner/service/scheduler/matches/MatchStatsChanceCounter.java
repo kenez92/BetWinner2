@@ -9,6 +9,7 @@ public class MatchStatsChanceCounter {
     private static final int DECIMAL_VALUE_PLACE = 2;
     private static final double MIN_TEAM_CHANCE = 5.00;
     private static final double MAX_CHANCE = 100.00;
+    public static final double MAX_DRAW_CHANCE = 90.00;
 
     public void process(final MatchStats matchStats) {
         setH2HChances(matchStats);
@@ -71,6 +72,10 @@ public class MatchStatsChanceCounter {
         double homeTeamChance = matchStats.getHomeTeamChance();
         double awayTeamChance = matchStats.getAwayTeamChance();
         double drawChance = matchStats.getDrawChance();
+        if (drawChance > MAX_DRAW_CHANCE) {
+            drawChance = MAX_DRAW_CHANCE;
+            matchStats.setDrawChance(MAX_DRAW_CHANCE);
+        }
         if (homeTeamChance < MIN_TEAM_CHANCE || awayTeamChance < MIN_TEAM_CHANCE) {
             if (homeTeamChance < MIN_TEAM_CHANCE) {
                 matchStats.setHomeTeamChance(MIN_TEAM_CHANCE);
