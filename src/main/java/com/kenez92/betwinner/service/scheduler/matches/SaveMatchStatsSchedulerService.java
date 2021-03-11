@@ -49,7 +49,7 @@ public class SaveMatchStatsSchedulerService {
                 return matchStatsRepository.save(matchStats);
             }
         } else {
-            return matchStatsRepository.save(matchStats);
+            return matchStats;
         }
     }
 

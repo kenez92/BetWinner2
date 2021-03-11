@@ -37,7 +37,7 @@ public class SaveMatchScoreSchedulerService {
                 return matchScoreRepository.save(matchScore);
             }
         } else {
-            return matchScoreRepository.save(matchScore);
+            return matchScore;
         }
     }
 }
