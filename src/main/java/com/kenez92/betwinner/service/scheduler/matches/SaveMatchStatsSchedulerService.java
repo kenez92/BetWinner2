@@ -29,13 +29,14 @@ public class SaveMatchStatsSchedulerService {
                         .getHomeTeam().getName()))
                 .awayTeamPositionInTable(getPositionInTable(competitionTable, footballMatchById.getMatch()
                         .getAwayTeam().getName()))
-                .homeTeamChance(50D)
-                .awayTeamChance(50D)
-                .homeTeamChanceH2H(50D)
-                .awayTeamChanceH2H(50D)
-                .homeTeamCourse(0D)
-                .drawCourse(0D)
-                .awayTeamCourse(0D)
+                .homeTeamChance(50.00d)
+                .drawChance(0.00d)
+                .awayTeamChance(50.00d)
+                .homeTeamChanceH2H(50.00d)
+                .awayTeamChanceH2H(50.00d)
+                .homeTeamCourse(0.00d)
+                .drawCourse(0.00d)
+                .awayTeamCourse(0.00d)
                 .build();
         chanceCounter.process(matchStats);
         matchStatsCourseCounter.process(matchStats);
