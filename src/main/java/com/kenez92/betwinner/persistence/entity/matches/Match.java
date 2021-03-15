@@ -1,5 +1,6 @@
 package com.kenez92.betwinner.persistence.entity.matches;
 
+import com.kenez92.betwinner.common.enums.ResultType;
 import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
 import com.kenez92.betwinner.persistence.entity.weather.Weather;
 import lombok.*;
@@ -51,6 +52,22 @@ public class Match {
     @Column(name = "ROUND")
     private Integer round;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "DEFENSIVE_STRATEGY_RESULT_TYPE")
+    private ResultType defensiveStrategyResultType;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "NORMAL_STRATEGY_RESULT_TYPE")
+    private ResultType normalStrategyResultType;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "AGGRESSIVE_STRATEGY_RESULT_TYPE")
+    private ResultType aggressiveStrategyResultType;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "PERCENT_70_STRATEGY_RESULT_TYPE")
+    private ResultType percent70StrategyResultType;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "MATCH_STATS_ID")
     private MatchStats matchStats;
@@ -83,6 +100,10 @@ public class Match {
         if (!Objects.equals(date.getTime(), match.getDate().getTime())) return false;
         if (!Objects.equals(matchStats, match.getMatchStats())) return false;
         if (!Objects.equals(round, match.getRound())) return false;
+        if (!Objects.equals(defensiveStrategyResultType, match.getDefensiveStrategyResultType())) return false;
+        if (!Objects.equals(normalStrategyResultType, match.getNormalStrategyResultType())) return false;
+        if (!Objects.equals(aggressiveStrategyResultType, match.getAggressiveStrategyResultType())) return false;
+        if (!Objects.equals(percent70StrategyResultType, match.getPercent70StrategyResultType())) return false;
         if (!Objects.equals(matchDay, match.getMatchDay())) return false;
         if (!Objects.equals(matchScore, match.getMatchScore())) return false;
         if (!Objects.equals(weather, match.getWeather())) return false;
