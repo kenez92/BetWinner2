@@ -61,7 +61,10 @@ public class MatchStatsChanceCounter {
         final double draws = matchStats.getDraws();
         final double gamesPlayed = matchStats.getGamesPlayed();
         if (matchStats.getGamesPlayed() != null && matchStats.getDraws() != null) {
-            double result = draws / gamesPlayed * 100;
+            double result = 0.0;
+            if(gamesPlayed != 0.0) {
+                result = draws / gamesPlayed * 100;
+            }
             matchStats.setHomeTeamChance(Utils.round(matchStats.getHomeTeamChance() - (result / 2), DECIMAL_VALUE_PLACE));
             matchStats.setAwayTeamChance(Utils.round(matchStats.getAwayTeamChance() - (result / 2), DECIMAL_VALUE_PLACE));
             matchStats.setDrawChance(Utils.round(result, DECIMAL_VALUE_PLACE));

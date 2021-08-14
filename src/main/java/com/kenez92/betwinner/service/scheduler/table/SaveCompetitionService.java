@@ -17,7 +17,8 @@ public class SaveCompetitionService {
         if (competitionRepository.existsByFootballId(competitionFootballId)) {
             Competition competitionFromDb = competitionRepository.findByFootballId(competitionFootballId)
                     .orElseThrow(() -> new BetWinnerException(BetWinnerException.ERR_COMPETITION_NOT_FOUND_EXCEPTION));
-            if (competitionFromDb.getLastSavedRound().equals(footballTable.getSeason().getCurrentMatchday())) {
+            if (competitionFromDb.getLastSavedRound() != null
+                    && competitionFromDb.getLastSavedRound().equals(footballTable.getSeason().getCurrentMatchday())) {
                 return competitionFromDb;
             } else {
                 competitionFromDb.setLastSavedRound(footballTable.getSeason().getCurrentMatchday());
