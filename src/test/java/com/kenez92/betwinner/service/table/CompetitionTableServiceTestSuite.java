@@ -1,15 +1,16 @@
 package com.kenez92.betwinner.service.table;
 
-import com.kenez92.betwinner.domain.table.CompetitionDto;
-import com.kenez92.betwinner.domain.table.CompetitionSeasonDto;
-import com.kenez92.betwinner.domain.table.CompetitionTableDto;
-import com.kenez92.betwinner.domain.table.CurrentMatchDayDto;
-import com.kenez92.betwinner.persistence.entity.table.Competition;
-import com.kenez92.betwinner.persistence.entity.table.CompetitionSeason;
-import com.kenez92.betwinner.persistence.entity.table.CompetitionTable;
-import com.kenez92.betwinner.persistence.entity.table.CurrentMatchDay;
+import com.kenez92.betwinner.competitionTable.CompetitionTableService;
+import com.kenez92.betwinner.competitions.CompetitionDto;
+import com.kenez92.betwinner.competitionSeason.CompetitionSeasonDto;
+import com.kenez92.betwinner.competitionTable.CompetitionTableDto;
+import com.kenez92.betwinner.currentMatchDay.CurrentMatchDayDto;
+import com.kenez92.betwinner.competitions.Competition;
+import com.kenez92.betwinner.competitionSeason.CompetitionSeason;
+import com.kenez92.betwinner.competitionTable.CompetitionTable;
+import com.kenez92.betwinner.currentMatchDay.CurrentMatchDay;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.persistence.repository.table.CompetitionTableRepository;
+import com.kenez92.betwinner.competitionTable.CompetitionTableRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

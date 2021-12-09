@@ -1,0 +1,135 @@
+package com.kenez92.betwinner.match;
+
+import com.kenez92.betwinner.common.enums.ResultType;
+import com.kenez92.betwinner.couponTypes.CouponType;
+import com.kenez92.betwinner.matchDay.MatchDay;
+import com.kenez92.betwinner.matchScore.MatchScore;
+import com.kenez92.betwinner.matchStats.MatchStats;
+import com.kenez92.betwinner.weather.Weather;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+@NamedQueries({
+        @NamedQuery(
+                name = "Match.findMatchesAtDate",
+                query = "FROM Match WHERE DATE_FORMAT(DATE, '%m/%d/%Y') = DATE_FORMAT(:DATE, '%m/%d/%Y')"
+        )
+})
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
+@Getter
+@Setter
+@Entity
+@Table(name = "\"MATCH\"")
+public class Match {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name = "FOOTBALL_ID", nullable = false)
+    private Long footballId;
+
+    @Column(name = "HOME_TEAM", nullable = false)
+    private String homeTeam;
+
+    @Column(name = "AWAY_TEAM", nullable = false)
+    private String awayTeam;
+
+    @Column(name = "COMPETITION_ID", nullable = false)
+    private Long competitionId;
+
+    @Column(name = "SEASON_ID", nullable = false)
+    private Long seasonId;
+
+    @Column(name = "DATE", nullable = false)
+    private Date date;
+
+    @Column(name = "ROUND")
+    private Integer round;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "DEFENSIVE_STRATEGY_RESULT_TYPE")
+    private ResultType defensiveStrategyResultType;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "NORMAL_STRATEGY_RESULT_TYPE")
+    private ResultType normalStrategyResultType;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "AGGRESSIVE_STRATEGY_RESULT_TYPE")
+    private ResultType aggressiveStrategyResultType;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "PERCENT_70_STRATEGY_RESULT_TYPE")
+    private ResultType percent70StrategyResultType;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MATCH_STATS_ID")
+    private MatchStats matchStats;
+
+    @ManyToOne
+    private MatchDay matchDay;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MATCH_SCORE_ID")
+    private MatchScore matchScore;
+
+    @ManyToOne
+    private Weather weather;
+
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY,
+            targetEntity = CouponType.class,
+            mappedBy = "match")
+    private List<CouponType> couponTypeList = new ArrayList<>();
+
+    public boolean equals(Match match) {
+        if (match == null) {
+            return false;
+        }
+        if (!Objects.equals(footballId, match.getFootballId())) return false;
+        if (!Objects.equals(homeTeam, match.getHomeTeam())) return false;
+        if (!Objects.equals(awayTeam, match.getAwayTeam())) return false;
+        if (!Objects.equals(competitionId, match.getCompetitionId())) return false;
+        if (!Objects.equals(seasonId, match.getSeasonId())) return false;
+        if (!Objects.equals(date.getTime(), match.getDate().getTime())) return false;
+        if (!Objects.equals(matchStats, match.getMatchStats())) return false;
+        if (!Objects.equals(round, match.getRound())) return false;
+        if (!Objects.equals(defensiveStrategyResultType, match.getDefensiveStrategyResultType())) return false;
+        if (!Objects.equals(normalStrategyResultType, match.getNormalStrategyResultType())) return false;
+        if (!Objects.equals(aggressiveStrategyResultType, match.getAggressiveStrategyResultType())) return false;
+        if (!Objects.equals(percent70StrategyResultType, match.getPercent70StrategyResultType())) return false;
+        if (!Objects.equals(matchDay, match.getMatchDay())) return false;
+        if (!Objects.equals(matchScore, match.getMatchScore())) return false;
+        if (!Objects.equals(weather, match.getWeather())) return false;
+        return Objects.equals(couponTypeList, match.getCouponTypeList());
+    }
+}

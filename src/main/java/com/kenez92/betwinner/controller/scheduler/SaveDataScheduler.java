@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.controller.scheduler;
 
-import com.kenez92.betwinner.service.scheduler.SaveMatchesSchedulerService;
-import com.kenez92.betwinner.service.scheduler.SaveTablesSchedulerService;
+import com.kenez92.betwinner.competitionTable.SaveTablesSchedulerService;
+import com.kenez92.betwinner.match.SaveMatchesSchedulerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

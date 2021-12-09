@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.controller.scheduler;
 
-import com.kenez92.betwinner.domain.scheduler.Mail;
-import com.kenez92.betwinner.service.scheduler.SimpleEmailService;
+import com.kenez92.betwinner.mail.Mail;
+import com.kenez92.betwinner.mail.SimpleEmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

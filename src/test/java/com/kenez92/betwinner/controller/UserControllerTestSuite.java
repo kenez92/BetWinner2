@@ -2,8 +2,8 @@ package com.kenez92.betwinner.controller;
 
 import com.google.gson.Gson;
 import com.kenez92.betwinner.common.enums.UserStrategy;
-import com.kenez92.betwinner.domain.UserDto;
-import com.kenez92.betwinner.service.UserService;
+import com.kenez92.betwinner.users.UserDto;
+import com.kenez92.betwinner.users.UserService;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;

@@ -2,18 +2,19 @@ package com.kenez92.betwinner.service.coupons;
 
 import com.kenez92.betwinner.common.enums.CouponStatus;
 import com.kenez92.betwinner.common.enums.MatchType;
-import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
-import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.couponTypes.CouponTypeDto;
+import com.kenez92.betwinner.couponTypes.CouponTypeService;
+import com.kenez92.betwinner.matchScore.MatchScoreDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.persistence.entity.Coupon;
-import com.kenez92.betwinner.persistence.entity.coupons.CouponType;
-import com.kenez92.betwinner.persistence.entity.matches.Match;
-import com.kenez92.betwinner.persistence.entity.matches.MatchDay;
-import com.kenez92.betwinner.persistence.entity.matches.MatchScore;
-import com.kenez92.betwinner.persistence.entity.matches.MatchStats;
-import com.kenez92.betwinner.persistence.entity.weather.Weather;
-import com.kenez92.betwinner.persistence.repository.coupons.CouponTypeRepository;
-import com.kenez92.betwinner.service.matches.MatchScoreService;
+import com.kenez92.betwinner.coupons.Coupon;
+import com.kenez92.betwinner.couponTypes.CouponType;
+import com.kenez92.betwinner.match.Match;
+import com.kenez92.betwinner.matchDay.MatchDay;
+import com.kenez92.betwinner.matchScore.MatchScore;
+import com.kenez92.betwinner.matchStats.MatchStats;
+import com.kenez92.betwinner.weather.Weather;
+import com.kenez92.betwinner.couponTypes.CouponTypeRepository;
+import com.kenez92.betwinner.matchScore.MatchScoreService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -136,7 +137,7 @@ public class CouponTypeServiceTestSuite {
     }
 
     private Match createMatch() {
-        return com.kenez92.betwinner.persistence.entity.matches.Match.builder()
+        return Match.builder()
                 .id(832983L)
                 .footballId(11234L)
                 .homeTeam("HOME_TEAM")

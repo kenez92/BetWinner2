@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.controller.matches;
 
-import com.kenez92.betwinner.domain.weather.WeatherDto;
+import com.kenez92.betwinner.weather.WeatherDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.service.matches.WeatherService;
+import com.kenez92.betwinner.weather.WeatherService;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

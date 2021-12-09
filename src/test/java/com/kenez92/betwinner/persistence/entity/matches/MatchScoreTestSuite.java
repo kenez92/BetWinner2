@@ -1,7 +1,8 @@
 package com.kenez92.betwinner.persistence.entity.matches;
 
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.persistence.repository.matches.MatchScoreRepository;
+import com.kenez92.betwinner.matchScore.MatchScore;
+import com.kenez92.betwinner.matchScore.MatchScoreRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

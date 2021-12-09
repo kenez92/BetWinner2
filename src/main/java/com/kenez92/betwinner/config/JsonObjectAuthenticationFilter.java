@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kenez92.betwinner.domain.LoginCredentials;
+import com.kenez92.betwinner.login.LoginCredentials;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

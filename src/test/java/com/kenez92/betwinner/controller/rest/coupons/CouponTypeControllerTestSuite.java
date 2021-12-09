@@ -1,14 +1,17 @@
 package com.kenez92.betwinner.controller.rest.coupons;
 
 import com.google.gson.Gson;
-import com.kenez92.betwinner.domain.CouponDto;
+import com.kenez92.betwinner.coupons.CouponDto;
 import com.kenez92.betwinner.common.enums.MatchType;
 import com.kenez92.betwinner.common.enums.CouponStatus;
-import com.kenez92.betwinner.domain.coupons.CouponTypeDto;
-import com.kenez92.betwinner.domain.matches.*;
-import com.kenez92.betwinner.domain.weather.WeatherDto;
+import com.kenez92.betwinner.couponTypes.CouponTypeDto;
+import com.kenez92.betwinner.weather.WeatherDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.service.coupons.CouponTypeService;
+import com.kenez92.betwinner.match.MatchDto;
+import com.kenez92.betwinner.matchDay.MatchDayDto;
+import com.kenez92.betwinner.matchScore.MatchScoreDto;
+import com.kenez92.betwinner.matchStats.MatchStatsDto;
+import com.kenez92.betwinner.couponTypes.CouponTypeService;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

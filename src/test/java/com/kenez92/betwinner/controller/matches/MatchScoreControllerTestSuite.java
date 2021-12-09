@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.controller.matches;
 
-import com.kenez92.betwinner.domain.matches.MatchScoreDto;
+import com.kenez92.betwinner.matchScore.MatchScoreDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.service.matches.MatchScoreService;
+import com.kenez92.betwinner.matchScore.MatchScoreService;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

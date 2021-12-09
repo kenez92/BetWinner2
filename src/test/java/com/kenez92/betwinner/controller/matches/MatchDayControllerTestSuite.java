@@ -1,9 +1,12 @@
 package com.kenez92.betwinner.controller.matches;
 
-import com.kenez92.betwinner.domain.matches.*;
-import com.kenez92.betwinner.domain.weather.WeatherDto;
+import com.kenez92.betwinner.weather.WeatherDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.service.matches.MatchDayService;
+import com.kenez92.betwinner.match.MatchDto;
+import com.kenez92.betwinner.matchDay.MatchDayDto;
+import com.kenez92.betwinner.matchScore.MatchScoreDto;
+import com.kenez92.betwinner.matchStats.MatchStatsDto;
+import com.kenez92.betwinner.matchDay.MatchDayService;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

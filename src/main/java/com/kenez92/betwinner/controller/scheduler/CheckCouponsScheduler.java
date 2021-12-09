@@ -1,7 +1,7 @@
 package com.kenez92.betwinner.controller.scheduler;
 
-import com.kenez92.betwinner.service.CouponService;
-import com.kenez92.betwinner.service.coupons.CouponTypeService;
+import com.kenez92.betwinner.couponTypes.CouponTypeService;
+import com.kenez92.betwinner.coupons.CouponService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

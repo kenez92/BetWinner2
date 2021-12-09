@@ -1,10 +1,14 @@
 package com.kenez92.betwinner.persistence.entity.matches;
 
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.persistence.entity.weather.Weather;
-import com.kenez92.betwinner.persistence.repository.matches.MatchDayRepository;
-import com.kenez92.betwinner.persistence.repository.matches.MatchRepository;
-import com.kenez92.betwinner.persistence.repository.matches.WeatherRepository;
+import com.kenez92.betwinner.match.Match;
+import com.kenez92.betwinner.matchDay.MatchDay;
+import com.kenez92.betwinner.matchScore.MatchScore;
+import com.kenez92.betwinner.matchStats.MatchStats;
+import com.kenez92.betwinner.weather.Weather;
+import com.kenez92.betwinner.matchDay.MatchDayRepository;
+import com.kenez92.betwinner.match.MatchRepository;
+import com.kenez92.betwinner.weather.WeatherRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

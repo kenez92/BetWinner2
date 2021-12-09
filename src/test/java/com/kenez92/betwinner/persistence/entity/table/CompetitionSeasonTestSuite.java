@@ -1,8 +1,10 @@
 package com.kenez92.betwinner.persistence.entity.table;
 
+import com.kenez92.betwinner.competitionSeason.CompetitionSeason;
+import com.kenez92.betwinner.competitions.Competition;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.persistence.repository.table.CompetitionRepository;
-import com.kenez92.betwinner.persistence.repository.table.CompetitionSeasonRepository;
+import com.kenez92.betwinner.competitions.CompetitionRepository;
+import com.kenez92.betwinner.competitionSeason.CompetitionSeasonRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

@@ -1,8 +1,8 @@
 package com.kenez92.betwinner.controller.table;
 
-import com.kenez92.betwinner.domain.table.CompetitionDto;
+import com.kenez92.betwinner.competitions.CompetitionDto;
 import com.kenez92.betwinner.exception.BetWinnerException;
-import com.kenez92.betwinner.service.table.CompetitionService;
+import com.kenez92.betwinner.competitions.CompetitionService;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
