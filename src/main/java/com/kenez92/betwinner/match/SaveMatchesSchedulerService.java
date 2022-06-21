@@ -48,8 +48,8 @@ public class SaveMatchesSchedulerService {
     private final CompetitionTableElementRepository competitionTableElementRepository;
     private final CurrentMatchDayRepository currentMatchDayRepository;
 
-    private final String COMPETITION_STAGE = "REGULAR_SEASON";
-    private final String COMPETITION_TYPE = "TOTAL";
+    private static final String COMPETITION_STAGE = "REGULAR_SEASON";
+    private static final String COMPETITION_TYPE = "TOTAL";
 
 
     public void saveMatches(int delayUsingFootballDataApi) {

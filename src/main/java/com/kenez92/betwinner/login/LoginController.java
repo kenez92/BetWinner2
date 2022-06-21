@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.controller.rest;
+package com.kenez92.betwinner.login;
 
 import com.kenez92.betwinner.users.UserDto;
 import org.springframework.web.bind.annotation.PostMapping;

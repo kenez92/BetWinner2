@@ -21,7 +21,7 @@ public class RefreshController {
             saveDataScheduler.saveData();
         } catch (Exception ex) {
             ex.printStackTrace();
-            log.error("Exception occured : {}", ex.getMessage());
+            log.error("Exception occurred : {}", ex.getMessage());
             throw new BetWinnerException(BetWinnerException.ERR_SOMETHING_WENT_WRONG_EXCEPTION);
         }
     }

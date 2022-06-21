@@ -1,4 +1,4 @@
-package com.kenez92.betwinner.controller.rest;
+package com.kenez92.betwinner.users;
 
 import com.kenez92.betwinner.exception.BetWinnerException;
 import com.kenez92.betwinner.users.UserDto;
